@@ -4,6 +4,8 @@ part 'weather.g.dart';
 @JsonSerializable()
 class Weather {
   final double temperature;
+  // specifies that the JSON key corresponding to the weatherCode
+  // property in the Dart model is "weathercode".
   @JsonKey(name: "weathercode")
   final double weatherCode;
 
