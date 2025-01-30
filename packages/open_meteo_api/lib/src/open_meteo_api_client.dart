@@ -48,6 +48,7 @@ class OpenMeteoApiClient {
     return Location.fromJson(result.first as Map<String, dynamic>);
   }
 
+  /// Fetches [Weather] for a given [Latitude] and  [Longitude].
   Future<Weather> getWeather({
     required double latitude,
     required double longitude,
