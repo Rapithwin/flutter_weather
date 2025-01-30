@@ -9,8 +9,10 @@ class LocationRequestFailure implements Exception {}
 /// Exception thrown when location is not found.
 class LocationNotFoundFailure implements Exception {}
 
+/// Exception thrown when when weather for provided location is not found.
 class WeatherFoundFailure implements Exception {}
 
+/// Exception thrown when `getWeather()` fails.
 class WeatherRequestFailure implements Exception {}
 
 /// {@template opoen_meteo_api}
@@ -49,5 +51,26 @@ class OpenMeteoApiClient {
   Future<Weather> getWeather({
     required double latitude,
     required double longitude,
-  }) {}
+  }) async {
+    final weatherRequest = Uri.https(
+      _baseUrlWeather,
+      "/v1/forecast",
+      {
+        "latitude": latitude,
+        "longitude": longitude,
+      },
+    );
+
+    final weatherResponse = await _httpClient.get(weatherRequest);
+
+    if (weatherResponse.statusCode != 200) throw WeatherRequestFailure();
+
+    final bodyJson = jsonDecode(weatherResponse.body) as Map<String, dynamic>;
+
+    if (!bodyJson.containsKey("current_weather")) throw WeatherFoundFailure();
+
+    final weatherJson = bodyJson["current_weather"] as Map<String, dynamic>;
+
+    return Weather.fromJson(weatherJson);
+  }
 }
