@@ -9,6 +9,10 @@ class LocationRequestFailure implements Exception {}
 /// Exception thrown when location is not found.
 class LocationNotFoundFailure implements Exception {}
 
+class WeatherFoundFailure implements Exception {}
+
+class WeatherRequestFailure implements Exception {}
+
 /// {@template opoen_meteo_api}
 ///  Dart API Client which wraps the [Open Meteo API](https://open-meteo.com).
 /// {@endtemplate}
@@ -41,4 +45,9 @@ class OpenMeteoApiClient {
 
     return Location.fromJson(result.first as Map<String, dynamic>);
   }
+
+  Future<Weather> getWeather({
+    required double latitude,
+    required double longitude,
+  }) {}
 }
