@@ -31,7 +31,11 @@ void main() {
       apiClient = OpenMeteoApiClient(httpClient: httpClient);
     });
   });
-  group("constructor", () {});
+  group("constructor", () {
+    test("Does not require an httpClient", () {
+      expect(OpenMeteoApiClient(), isNotNull);
+    });
+  });
   group("locationSearch", () {});
   group("getWeather", () {});
 }
