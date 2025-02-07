@@ -30,12 +30,32 @@ void main() {
       httpClient = MockHttpClient();
       apiClient = OpenMeteoApiClient(httpClient: httpClient);
     });
-  });
-  group("constructor", () {
-    test("Does not require an httpClient", () {
-      expect(OpenMeteoApiClient(), isNotNull);
+    group("constructor", () {
+      test("Does not require an httpClient", () {
+        expect(OpenMeteoApiClient(), isNotNull);
+      });
     });
+    group("locationSearch", () {
+      final query = "mock-query";
+      test("makes correct http request", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        try {
+          await apiClient.locationSearch(query);
+        } catch (_) {}
+        verify(
+          () => httpClient.get(
+            Uri.https(
+              "geocoding-api.open-meteo.com",
+              "/v1/search",
+              {"name": query, "count": "1"},
+            ),
+          ),
+        ).called(1);
+      });
+    });
+    group("getWeather", () {});
   });
-  group("locationSearch", () {});
-  group("getWeather", () {});
 }
