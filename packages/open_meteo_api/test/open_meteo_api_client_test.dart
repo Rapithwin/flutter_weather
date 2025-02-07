@@ -61,8 +61,8 @@ void main() {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(400);
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
-        expect(
-          () async => apiClient.locationSearch(query),
+        await expectLater(
+          apiClient.locationSearch(query),
           throwsA(isA<LocationRequestFailure>()),
         );
       });
