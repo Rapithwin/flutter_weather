@@ -88,6 +88,34 @@ void main() {
           throwsA(isA<LocationNotFoundFailure>()),
         );
       });
+
+      test("returns location on valid response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn(
+          '''
+{
+  "results": [
+    {
+      "id": 4887398,
+      "name": "Chicago",
+      "latitude": 41.85003,
+      "longitude": -87.65005
+    }
+  ]
+}''',
+        );
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        final actual = await apiClient.locationSearch(query);
+        expect(
+          actual,
+          isA<Location>()
+              .having((l) => l.id, "id", 4887398)
+              .having((l) => l.name, "name", "Chicago")
+              .having((l) => l.latitude, "latitude", 41.85003)
+              .having((l) => l.longitude, "longitude", -87.65005),
+        );
+      });
     });
 
     group("getWeather", () {});
