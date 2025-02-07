@@ -32,7 +32,7 @@ class OpenMeteoApiClient {
     final locationRequest = Uri.https(
       _baseUrlGeocoding,
       "/v1/search",
-      {"name": query, "count": 1},
+      {"name": query, "count": "1"},
     );
 
     final locationResponse = await _httpClient.get(locationRequest);
