@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -63,6 +64,17 @@ void main() {
         expect(
           () async => apiClient.locationSearch(query),
           throwsA(isA<LocationRequestFailure>()),
+        );
+      });
+
+      test("throws LocationNotFoundFailure on error response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.locationSearch(query),
+          throwsA(isA<LocationNotFoundFailure>()),
         );
       });
     });
