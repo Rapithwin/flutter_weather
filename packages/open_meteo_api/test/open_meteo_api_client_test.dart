@@ -155,6 +155,32 @@ void main() {
           throwsA(isA<WeatherRequestFailure>()),
         );
       });
+      test("throws WeatherNotFoundFailure on error response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getWeather(
+            latitude: latitude,
+            longitude: longitude,
+          ),
+          throwsA(isA<WeatherNotFoundFailure>()),
+        );
+      });
+      test("throws WeatherNotFoundFailure on empty response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn('{"results": []}');
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getWeather(
+            latitude: latitude,
+            longitude: longitude,
+          ),
+          throwsA(isA<WeatherNotFoundFailure>()),
+        );
+      });
     });
   });
 }
