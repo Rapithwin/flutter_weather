@@ -1,6 +1,3 @@
-import 'dart:collection';
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 import 'package:open_meteo_api/open_meteo_api.dart';
@@ -118,6 +115,34 @@ void main() {
       });
     });
 
-    group("getWeather", () {});
+    group("getWeather", () {
+      const latitude = 41.85003;
+      const longitude = -87.6500;
+      test("makes correct http request", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        try {
+          await apiClient.getWeather(
+            latitude: latitude,
+            longitude: longitude,
+          );
+        } catch (_) {}
+        verify(
+          () => httpClient.get(
+            Uri.https(
+              "api.open-meteo.com",
+              "/v1/forecast",
+              {
+                "latitude": "$latitude",
+                "longitude": "$longitude",
+                "current_weather": "true",
+              },
+            ),
+          ),
+        ).called(1);
+      });
+    });
   });
 }
