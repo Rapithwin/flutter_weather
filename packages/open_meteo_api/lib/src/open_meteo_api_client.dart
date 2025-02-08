@@ -10,7 +10,7 @@ class LocationRequestFailure implements Exception {}
 class LocationNotFoundFailure implements Exception {}
 
 /// Exception thrown when when weather for provided location is not found.
-class WeatherFoundFailure implements Exception {}
+class WeatherNotFoundFailure implements Exception {}
 
 /// Exception thrown when `getWeather()` fails.
 class WeatherRequestFailure implements Exception {}
@@ -71,7 +71,9 @@ class OpenMeteoApiClient {
 
     final bodyJson = jsonDecode(weatherResponse.body) as Map<String, dynamic>;
 
-    if (!bodyJson.containsKey("current_weather")) throw WeatherFoundFailure();
+    if (!bodyJson.containsKey("current_weather")) {
+      throw WeatherNotFoundFailure();
+    }
 
     final weatherJson = bodyJson["current_weather"] as Map<String, dynamic>;
 
