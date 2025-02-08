@@ -143,6 +143,18 @@ void main() {
           ),
         ).called(1);
       });
+      test("throws WeatherRequestFailure on non-200 response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(400);
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getWeather(
+            latitude: latitude,
+            longitude: longitude,
+          ),
+          throwsA(isA<WeatherRequestFailure>()),
+        );
+      });
     });
   });
 }
