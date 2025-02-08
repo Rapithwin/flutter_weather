@@ -59,8 +59,9 @@ class OpenMeteoApiClient {
       _baseUrlWeather,
       "/v1/forecast",
       {
-        "latitude": latitude,
-        "longitude": longitude,
+        "latitude": "$latitude",
+        "longitude": "$longitude",
+        "current_weather": "true",
       },
     );
 
