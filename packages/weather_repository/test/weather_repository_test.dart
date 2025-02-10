@@ -11,4 +11,16 @@ class MockLocation extends Mock implements open_meteo_api.Location {}
 
 class MockWeather extends Mock implements open_meteo_api.Weather {}
 
-void main() {}
+void main() {
+  group("WeatherRepository", () {
+    late open_meteo_api.OpenMeteoApiClient weatherApiClient;
+    late WeatherRepository weatherRepository;
+
+    setUp(() {
+      weatherApiClient = MockOpenMeteoApiClient();
+      weatherRepository = WeatherRepository(
+        weatherApiClient: weatherApiClient,
+      );
+    });
+  });
+}
