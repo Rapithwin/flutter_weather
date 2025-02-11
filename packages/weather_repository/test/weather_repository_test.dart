@@ -39,6 +39,15 @@ void main() {
           () => weatherApiClient.locationSearch(city),
         ).called(1);
       });
+
+      test("throws when locationSerach fails", () {
+        final exception = Exception("oops");
+        when(() => weatherApiClient.locationSearch(any())).thenThrow(exception);
+        expectLater(
+          () => weatherRepository.getWeather(city),
+          throwsA(exception),
+        );
+      });
     });
   });
 }
