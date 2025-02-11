@@ -48,6 +48,22 @@ void main() {
           throwsA(exception),
         );
       });
+
+      test("calls getWeather with correct latitude/longitude", () async {
+        final location = MockLocation();
+        when(() => location.latitude).thenReturn(latitude);
+        when(() => location.longitude).thenReturn(longitude);
+        when(() => weatherApiClient.locationSearch(any()))
+            .thenAnswer((_) async => location);
+
+        try {
+          await weatherRepository.getWeather(city);
+        } catch (_) {}
+        verify(() => weatherApiClient.getWeather(
+              latitude: latitude,
+              longitude: longitude,
+            )).called(1);
+      });
     });
   });
 }
