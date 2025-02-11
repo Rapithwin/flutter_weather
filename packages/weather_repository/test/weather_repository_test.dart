@@ -22,5 +22,10 @@ void main() {
         weatherApiClient: weatherApiClient,
       );
     });
+    group('constructor', () {
+      test('instantiates internal weather api client when not injected', () {
+        expect(WeatherRepository(), isNotNull);
+      });
+    });
   });
 }
