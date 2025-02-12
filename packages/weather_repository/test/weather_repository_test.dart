@@ -82,6 +82,29 @@ void main() {
           throwsA(exception),
         );
       });
+      test("returns correct response on success (clear)", () async {
+        final location = MockLocation();
+        final weather = MockWeather();
+        when(() => location.name).thenReturn(city);
+        when(() => location.latitude).thenReturn(latitude);
+        when(() => location.longitude).thenReturn(longitude);
+        when(() => weather.temperature).thenReturn(42.42);
+        when(() => weather.weatherCode).thenReturn(0);
+        when(() => weatherApiClient.locationSearch(any()))
+            .thenAnswer((_) async => location);
+        when(() => weatherApiClient.getWeather(
+              latitude: any(named: "latitude"),
+              longitude: any(named: "longitude"),
+            )).thenAnswer((_) async => weather);
+        final actual = await weatherRepository.getWeather(city);
+        expect(
+            actual,
+            Weather(
+              location: city,
+              temperature: 42.42,
+              condition: WeatherCondition.clear,
+            ));
+      });
     });
   });
 }
