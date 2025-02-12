@@ -64,6 +64,24 @@ void main() {
               longitude: longitude,
             )).called(1);
       });
+
+      test("throws when getWeather fails", () async {
+        final location = MockLocation();
+        final exception = Exception("oops");
+        when(() => location.latitude).thenReturn(latitude);
+        when(() => location.longitude).thenReturn(longitude);
+        when(
+          () => weatherApiClient.locationSearch(any()),
+        ).thenAnswer((_) async => location);
+        when(() => weatherApiClient.getWeather(
+              latitude: any(named: "latitude"),
+              longitude: any(named: "longitude"),
+            )).thenThrow(exception);
+        expect(
+          weatherRepository.getWeather(city),
+          throwsA(exception),
+        );
+      });
     });
   });
 }
