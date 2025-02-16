@@ -44,6 +44,8 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
     }
   }
 
+  /// Retrieves a new weather object using the weather repository
+  /// given the current weather state
   Future<void> refreshWeather() async {
     if (!state.status.isSuccess) return;
     if (state.weather == Weather.empty) return;
@@ -72,6 +74,7 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
     }
   }
 
+  /// Toggles the state between Celsius and Fahrenheit
   void toggleUnits() {
     final units = state.temperatureUnits.isFahrenheit
         ? TemperatureUnits.celsius
