@@ -37,5 +37,10 @@ void main() {
         () => weatherRepository.getWeather(any()),
       ).thenAnswer((_) async => weather);
     });
+
+    test("Initial state is correct", () {
+      final weatherCubit = WeatherCubit(weatherRepository);
+      expect(weatherCubit.state, WeatherState());
+    });
   });
 }
