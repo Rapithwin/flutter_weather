@@ -39,7 +39,7 @@ void main() {
     });
 
     test("Initial state is correct", () {
-      final weatherCubit = WeatherCubit(weatherRepository);
+      weatherCubit = WeatherCubit(weatherRepository);
       expect(weatherCubit.state, WeatherState());
     });
 
