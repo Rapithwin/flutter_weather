@@ -72,6 +72,33 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
     }
   }
 
+  void toggleUnits() {
+    final units = state.temperatureUnits.isFahrenheit
+        ? TemperatureUnits.celsius
+        : TemperatureUnits.fahrenheit;
+
+    if (!state.status.isSuccess) {
+      emit(state.copyWith(temperatureUnits: units));
+      return;
+    }
+
+    final weather = state.weather;
+    if (weather != Weather.empty) {
+      final temperature = weather.temperature;
+      final value = units.isCelsius
+          ? temperature.value.toCelsius()
+          : temperature.value.toFahrenheit();
+      emit(
+        state.copyWith(
+          temperatureUnits: units,
+          weather: weather.copyWith(
+            temperature: Temperature(value: value),
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   WeatherState? fromJson(Map<String, dynamic> json) {
     // TODO: implement fromJson
