@@ -4,6 +4,8 @@ import 'package:weather_repository/weather_repository.dart' hide Weather;
 import 'package:weather_repository/weather_repository.dart'
     as weather_repository;
 
+part 'weather.g.dart';
+
 enum TemperatureUnits { fahrenheit, celsius }
 
 extension TemperatureUnitsX on TemperatureUnits {
@@ -40,7 +42,8 @@ class Weather extends Equatable {
     required this.temperature,
   });
 
-  factory Weather.fromJson(Map<String, dynamic> json) => _$WeatherFromJson;
+  factory Weather.fromJson(Map<String, dynamic> json) =>
+      _$WeatherFromJson(json);
 
   factory Weather.fromRepository(weather_repository.Weather weather) {
     return Weather(
