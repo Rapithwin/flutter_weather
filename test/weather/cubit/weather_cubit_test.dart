@@ -42,5 +42,16 @@ void main() {
       final weatherCubit = WeatherCubit(weatherRepository);
       expect(weatherCubit.state, WeatherState());
     });
+
+    group("toJson/fromJson", () {
+      test("works properly", () {
+        final weatherCubit = WeatherCubit(weatherRepository);
+        expect(
+            weatherCubit.fromJson(
+              weatherCubit.toJson(weatherCubit.state),
+            ),
+            weatherCubit.state);
+      });
+    });
   });
 }
