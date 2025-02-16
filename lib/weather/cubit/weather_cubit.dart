@@ -25,7 +25,7 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
       );
       final units = state.temperatureUnits;
       final value = units.isFahrenheit
-          ? weather.temperature.value.toFahrenheit() // TODO
+          ? weather.temperature.value.toFahrenheit()
           : weather.temperature.value;
 
       emit(
@@ -42,6 +42,46 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
         status: WeatherStatus.failure,
       ));
     }
+  }
+
+  Future<void> refreshWeather() async {
+    if (!state.status.isSuccess) return;
+    if (state.weather == Weather.empty) return;
+    try {
+      final weather = Weather.fromRepository(
+        await _weatherRepository.getWeather(state.weather.location),
+      );
+      final units = state.temperatureUnits;
+      final value = units.isFahrenheit
+          ? weather.temperature.value.toFahrenheit()
+          : weather.temperature.value;
+
+      emit(
+        state.copyWith(
+          status: WeatherStatus.success,
+          temperatureUnits: units,
+          weather: weather.copyWith(
+            temperature: Temperature(value: value),
+          ),
+        ),
+      );
+    } on Exception {
+      emit(
+        state,
+      );
+    }
+  }
+
+  @override
+  WeatherState? fromJson(Map<String, dynamic> json) {
+    // TODO: implement fromJson
+    throw UnimplementedError();
+  }
+
+  @override
+  Map<String, dynamic>? toJson(WeatherState state) {
+    // TODO: implement toJson
+    throw UnimplementedError();
   }
 }
 
