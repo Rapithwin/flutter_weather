@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_weather/weather/weather.dart';
 import 'package:mocktail/mocktail.dart';
@@ -17,4 +18,24 @@ class MockWeatherRepository extends Mock
 
 class MockWeather extends Mock implements weather_repository.Weather {}
 
-void main() {}
+void main() {
+  initHydratedStorage();
+
+  group("weatherCubit", () {
+    late weather_repository.Weather weather;
+    late weather_repository.WeatherRepository weatherRepository;
+    late WeatherCubit weatherCubit;
+
+    setUp(() async {
+      weather = MockWeather();
+      weatherRepository = MockWeatherRepository();
+      weatherCubit = WeatherCubit(weatherRepository);
+      when(() => weather.condition).thenReturn(weatherCondition);
+      when(() => weather.location).thenReturn(weatherLocation);
+      when(() => weather.temperature).thenReturn(weatherTemperature);
+      when(
+        () => weatherRepository.getWeather(any()),
+      ).thenAnswer((_) async => weather);
+    });
+  });
+}
