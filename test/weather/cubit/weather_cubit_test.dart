@@ -53,5 +53,13 @@ void main() {
             weatherCubit.state);
       });
     });
+    group("fetchWeather", () {
+      blocTest<WeatherCubit, WeatherState>(
+        "emits nothing when city is null",
+        build: () => weatherCubit,
+        act: (cubit) => cubit.fetchWeather(null),
+        expect: () => <WeatherState>[],
+      );
+    });
   });
 }
