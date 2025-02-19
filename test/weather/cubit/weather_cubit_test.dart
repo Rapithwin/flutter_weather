@@ -67,6 +67,17 @@ void main() {
         act: (cubit) => cubit.fetchWeather(""),
         expect: () => <WeatherState>[],
       );
+
+      blocTest<WeatherCubit, WeatherState>(
+        'calls getWeather with correct city.',
+        build: () => weatherCubit,
+        act: (cubit) => cubit.fetchWeather(weatherLocation),
+        verify: (_) {
+          verify(
+            () => weatherRepository.getWeather(weatherLocation),
+          ).called(1);
+        },
+      );
     });
   });
 }
