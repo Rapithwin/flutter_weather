@@ -202,6 +202,28 @@ void main() {
                 .called(1);
           },
         );
+
+        blocTest(
+          "emits nothing when exception is thrown",
+          setUp: () {
+            when(() => weatherRepository.getWeather(any()))
+                .thenThrow(Exception("oops"));
+          },
+          build: () => weatherCubit,
+          seed: () => WeatherState(
+            status: WeatherStatus.success,
+            weahter: Weather(
+              condition: weatherCondition,
+              lastUpdated: DateTime(2020),
+              location: weatherLocation,
+              temperature: Temperature(
+                value: weatherTemperature,
+              ),
+            ),
+          ),
+          act: (cubit) => cubit.refreshWeather(),
+          expect: () => <WeatherState>[],
+        );
       },
     );
   });
