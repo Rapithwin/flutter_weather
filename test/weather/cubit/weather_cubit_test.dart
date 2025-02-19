@@ -158,5 +158,18 @@ void main() {
         ],
       );
     });
+    group(
+      "refreshWeather",
+      () {
+        blocTest<WeatherCubit, WeatherState>(
+            'emits nothing when status is not success.',
+            build: () => weatherCubit,
+            act: (cubit) => cubit.refreshWeather(),
+            expect: () => const <WeatherState>[],
+            verify: (_) {
+              verifyNever(() => weatherRepository.getWeather(any()));
+            });
+      },
+    );
   });
 }
