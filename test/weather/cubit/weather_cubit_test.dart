@@ -224,6 +224,78 @@ void main() {
           act: (cubit) => cubit.refreshWeather(),
           expect: () => <WeatherState>[],
         );
+        blocTest<WeatherCubit, WeatherState>(
+          'emits updated weather (celsius)',
+          build: () => weatherCubit,
+          seed: () => WeatherState(
+            status: WeatherStatus.success,
+            weahter: Weather(
+              condition: weatherCondition,
+              lastUpdated: DateTime(2020),
+              location: weatherLocation,
+              temperature: Temperature(
+                value: weatherTemperature,
+              ),
+            ),
+          ),
+          act: (cubit) => cubit.refreshWeather(),
+          expect: () => <Matcher>[
+            isA<WeatherState>()
+                .having((w) => w.status, "status", WeatherStatus.success)
+                .having(
+                  (w) => w.weather,
+                  "weather",
+                  isA<Weather>()
+                      .having((w) => w.condition, "condition", weatherCondition)
+                      .having((w) => w.lastUpdated, "lastUpdated", isNotNull)
+                      .having((w) => w.location, "location", weatherLocation)
+                      .having(
+                        (w) => w.temperature,
+                        "temperature (celsius)",
+                        Temperature(
+                          value: weatherTemperature,
+                        ),
+                      ),
+                )
+          ],
+        );
+
+        blocTest<WeatherCubit, WeatherState>(
+          'emits updated weather (fahrenheit)',
+          build: () => weatherCubit,
+          seed: () => WeatherState(
+            status: WeatherStatus.success,
+            temperatureUnits: TemperatureUnits.fahrenheit,
+            weahter: Weather(
+              condition: weatherCondition,
+              lastUpdated: DateTime(2020),
+              location: weatherLocation,
+              temperature: Temperature(
+                value: weatherTemperature,
+              ),
+            ),
+          ),
+          act: (cubit) => cubit.refreshWeather(),
+          expect: () => <Matcher>[
+            isA<WeatherState>()
+                .having((w) => w.status, "status", WeatherStatus.success)
+                .having(
+                  (w) => w.weather,
+                  "weather",
+                  isA<Weather>()
+                      .having((w) => w.condition, "condition", weatherCondition)
+                      .having((w) => w.lastUpdated, "lastUpdated", isNotNull)
+                      .having((w) => w.location, "location", weatherLocation)
+                      .having(
+                        (w) => w.temperature,
+                        "temperature (fahrenheit)",
+                        Temperature(
+                          value: weatherTemperature.toFahrenheit(),
+                        ),
+                      ),
+                )
+          ],
+        );
       },
     );
   });
