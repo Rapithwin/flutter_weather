@@ -181,6 +181,27 @@ void main() {
             verifyNever(() => weatherRepository.getWeather(any()));
           },
         );
+
+        blocTest<WeatherCubit, WeatherState>(
+          'invokes getWeather with correct location',
+          build: () => weatherCubit,
+          seed: () => WeatherState(
+            status: WeatherStatus.success,
+            weahter: Weather(
+              condition: weatherCondition,
+              lastUpdated: DateTime(2020),
+              location: weatherLocation,
+              temperature: Temperature(
+                value: weatherTemperature,
+              ),
+            ),
+          ),
+          act: (cubit) => cubit.refreshWeather(),
+          verify: (_) {
+            verify(() => weatherRepository.getWeather(weatherLocation))
+                .called(1);
+          },
+        );
       },
     );
   });
