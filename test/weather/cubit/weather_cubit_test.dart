@@ -93,6 +93,34 @@ void main() {
           WeatherState(status: WeatherStatus.failure),
         ],
       );
+
+      blocTest<WeatherCubit, WeatherState>(
+        'emits [loading, success] when getWeather returns (culsius).',
+        build: () => weatherCubit,
+        act: (cubit) => cubit.fetchWeather(weatherLocation),
+        expect: () => <dynamic>[
+          WeatherState(status: WeatherStatus.loading),
+          isA<WeatherState>()
+              .having(
+                (w) => w.status,
+                "status",
+                WeatherStatus.success,
+              )
+              .having(
+                (w) => w.weather,
+                "weather",
+                isA<Weather>()
+                    .having((w) => w.lastUpdated, "lastUpdated", isNotNull)
+                    .having((w) => w.condition, "condition", weatherCondition)
+                    .having(
+                      (w) => w.temperature,
+                      "temperature (celsius)",
+                      Temperature(value: weatherTemperature),
+                    )
+                    .having((w) => w.location, "location", weatherLocation),
+              )
+        ],
+      );
     });
   });
 }
