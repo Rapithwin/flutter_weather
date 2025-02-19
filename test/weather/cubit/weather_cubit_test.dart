@@ -78,6 +78,21 @@ void main() {
           ).called(1);
         },
       );
+
+      blocTest<WeatherCubit, WeatherState>(
+        'emits [loading, failure] when getWeather throws.',
+        setUp: () {
+          when(() => weatherRepository.getWeather(any())).thenThrow(
+            Exception("oops"),
+          );
+        },
+        build: () => weatherCubit,
+        act: (cubit) => cubit.fetchWeather(weatherLocation),
+        expect: () => <WeatherState>[
+          WeatherState(status: WeatherStatus.loading),
+          WeatherState(status: WeatherStatus.failure),
+        ],
+      );
     });
   });
 }
