@@ -162,13 +162,25 @@ void main() {
       "refreshWeather",
       () {
         blocTest<WeatherCubit, WeatherState>(
-            'emits nothing when status is not success.',
-            build: () => weatherCubit,
-            act: (cubit) => cubit.refreshWeather(),
-            expect: () => const <WeatherState>[],
-            verify: (_) {
-              verifyNever(() => weatherRepository.getWeather(any()));
-            });
+          'emits nothing when status is not success.',
+          build: () => weatherCubit,
+          act: (cubit) => cubit.refreshWeather(),
+          expect: () => const <WeatherState>[],
+          verify: (_) {
+            verifyNever(() => weatherRepository.getWeather(any()));
+          },
+        );
+
+        blocTest<WeatherCubit, WeatherState>(
+          'emits nothing when location is null.',
+          build: () => weatherCubit,
+          seed: () => WeatherState(status: WeatherStatus.success),
+          act: (cubit) => cubit.refreshWeather(),
+          expect: () => const <WeatherState>[],
+          verify: (_) {
+            verifyNever(() => weatherRepository.getWeather(any()));
+          },
+        );
       },
     );
   });
