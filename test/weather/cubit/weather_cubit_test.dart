@@ -121,6 +121,42 @@ void main() {
               )
         ],
       );
+      blocTest(
+        "emits [loading, success] when getWeather returns (fahrenheit)",
+        build: () => weatherCubit,
+        // seed is used to set an initial state for the bloc
+        // before act. In this case we're changing the temperature in the
+        // initial state from celsius to fahrenheit for the test.
+        seed: () => WeatherState(
+          temperatureUnits: TemperatureUnits.fahrenheit,
+        ),
+        act: (cubit) => cubit.fetchWeather(weatherLocation),
+        expect: () => <dynamic>[
+          WeatherState(
+            status: WeatherStatus.loading,
+            temperatureUnits: TemperatureUnits.fahrenheit,
+          ),
+          isA<WeatherState>()
+              .having(
+                (w) => w.status,
+                "status",
+                WeatherStatus.success,
+              )
+              .having(
+                (w) => w.weather,
+                "weather",
+                isA<Weather>()
+                    .having((w) => w.lastUpdated, "lastUpdated", isNotNull)
+                    .having((w) => w.condition, "condition", weatherCondition)
+                    .having(
+                      (w) => w.temperature,
+                      "temperature (fahrenheit)",
+                      Temperature(value: weatherTemperature.toFahrenheit()),
+                    )
+                    .having((w) => w.location, "location", weatherLocation),
+              )
+        ],
+      );
     });
   });
 }
