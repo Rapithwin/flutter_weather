@@ -60,6 +60,13 @@ void main() {
         act: (cubit) => cubit.fetchWeather(null),
         expect: () => <WeatherState>[],
       );
+
+      blocTest<WeatherCubit, WeatherState>(
+        "emits nothing when city is empty",
+        build: () => weatherCubit,
+        act: (cubit) => cubit.fetchWeather(""),
+        expect: () => <WeatherState>[],
+      );
     });
   });
 }
