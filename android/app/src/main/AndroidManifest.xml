@@ -3,6 +3,11 @@
         android:label="bloc_weather"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- Added mete-data tag below 
+             to disable impeller -->
+        <meta-data
+    android:name="io.flutter.embedding.android.EnableImpeller"
+    android:value="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
