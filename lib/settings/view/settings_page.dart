@@ -1,5 +1,10 @@
+import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
+import 'package:bloc_weather/weather/models/weather.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+/// This page allows users to update their preferences for
+/// the temperature units.
 class SettingsPage extends StatelessWidget {
   const SettingsPage._();
 
@@ -11,6 +16,34 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Settings"),
+      ),
+      body: ListView(
+        children: <Widget>[
+          BlocBuilder<WeatherCubit, WeatherState>(
+            //Without buildWhen, the widget would rebuild every time
+            // any part of the state changes (even if temperatureUnits didn't change).
+            // This improves performance by avoiding unnecessary UI updates.
+            buildWhen: (previous, current) =>
+                previous.temperatureUnits != current.temperatureUnits,
+            builder: (context, state) {
+              return ListTile(
+                title: const Text("Temperature Units"),
+                isThreeLine: true,
+                subtitle: const Text(
+                  "User metric measurements for temperature units",
+                ),
+                trailing: Switch(
+                  value: state.temperatureUnits.isCelsius,
+                  onChanged: (_) => context.read<WeatherCubit>().toggleUnits(),
+                ),
+              );
+            },
+          )
+        ],
+      ),
+    );
   }
 }
