@@ -308,6 +308,37 @@ void main() {
           WeatherState(temperatureUnits: TemperatureUnits.fahrenheit),
         ],
       );
+      blocTest<WeatherCubit, WeatherState>(
+        'emits updated units and temperature'
+        'when status is success (celsius)',
+        build: () => weatherCubit,
+        seed: () => WeatherState(
+          status: WeatherStatus.success,
+          temperatureUnits: TemperatureUnits.fahrenheit,
+          weahter: Weather(
+            condition: weatherCondition,
+            lastUpdated: DateTime(2020),
+            location: weatherLocation,
+            temperature: Temperature(
+              value: weatherTemperature,
+            ),
+          ),
+        ),
+        act: (cubit) => cubit.toggleUnits(),
+        expect: () => <WeatherState>[
+          WeatherState(
+            status: WeatherStatus.success,
+            weahter: Weather(
+              condition: weatherCondition,
+              lastUpdated: DateTime(2020),
+              location: weatherLocation,
+              temperature: Temperature(
+                value: weatherTemperature.toCelsius(),
+              ),
+            ),
+          ),
+        ],
+      );
     });
   });
 }
