@@ -298,5 +298,16 @@ void main() {
         );
       },
     );
+
+    group("toggleUnits", () {
+      blocTest<WeatherCubit, WeatherState>(
+        'emits updated units when status is not success',
+        build: () => weatherCubit,
+        act: (cubit) => cubit.toggleUnits(),
+        expect: () => <WeatherState>[
+          WeatherState(temperatureUnits: TemperatureUnits.fahrenheit),
+        ],
+      );
+    });
   });
 }
