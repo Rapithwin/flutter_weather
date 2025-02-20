@@ -5,6 +5,8 @@ import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../search/view/search_page.dart';
+
 /// Uses [BlocProvider] in order to provide an instance of the
 /// [WeatherCubit] to the widget tree.
 class WeatherPage extends StatelessWidget {
@@ -44,7 +46,7 @@ class WeatherPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final city = await Navigator.of(context).push(SearchPage().route());
+          final city = await Navigator.of(context).push(SearchPage.route());
           if (!context.mounted) return;
           await context.read<WeatherCubit>().fetchWeather(city);
         },
