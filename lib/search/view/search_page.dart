@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// Allows users to enter the name of their desired city and provides
+/// the search result to the previous route via `Navigator.of(context).pop`
 class SearchPage extends StatefulWidget {
   const SearchPage._();
 
