@@ -328,12 +328,46 @@ void main() {
         expect: () => <WeatherState>[
           WeatherState(
             status: WeatherStatus.success,
+            temperatureUnits: TemperatureUnits.celsius,
             weahter: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
               location: weatherLocation,
               temperature: Temperature(
                 value: weatherTemperature.toCelsius(),
+              ),
+            ),
+          ),
+        ],
+      );
+
+      blocTest<WeatherCubit, WeatherState>(
+        'emits updated units and temperature'
+        'when status is success (fahrenheit)',
+        build: () => weatherCubit,
+        seed: () => WeatherState(
+          status: WeatherStatus.success,
+          temperatureUnits: TemperatureUnits.celsius,
+          weahter: Weather(
+            condition: weatherCondition,
+            lastUpdated: DateTime(2020),
+            location: weatherLocation,
+            temperature: Temperature(
+              value: weatherTemperature,
+            ),
+          ),
+        ),
+        act: (cubit) => cubit.toggleUnits(),
+        expect: () => <WeatherState>[
+          WeatherState(
+            status: WeatherStatus.success,
+            temperatureUnits: TemperatureUnits.fahrenheit,
+            weahter: Weather(
+              condition: weatherCondition,
+              lastUpdated: DateTime(2020),
+              location: weatherLocation,
+              temperature: Temperature(
+                value: weatherTemperature.toFahrenheit(),
               ),
             ),
           ),
