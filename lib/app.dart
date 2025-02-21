@@ -26,3 +26,22 @@ class WeatherAppView extends StatelessWidget {
     return const Placeholder();
   }
 }
+
+extension on Weather {
+  /// This method added to [Weather] allows us to have a color
+  /// for each [WeatherCondition] to use as background color.
+  Color get toColor {
+    switch (condition) {
+      case WeatherCondition.clear:
+        return Colors.yellow;
+      case WeatherCondition.snowy:
+        return Colors.lightBlueAccent;
+      case WeatherCondition.cloudy:
+        return Colors.blueGrey;
+      case WeatherCondition.rainy:
+        return Colors.indigoAccent;
+      case WeatherCondition.unknown:
+        return Colors.cyan;
+    }
+  }
+}
