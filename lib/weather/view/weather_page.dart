@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:bloc_weather/settings/settings.dart';
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
+import 'package:bloc_weather/weather/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
