@@ -92,3 +92,11 @@ extension on Color {
     );
   }
 }
+
+extension on Weather {
+  /// This method added to [Weather] allows you to
+  /// format the temperature.
+  String formattedTemperature(TemperatureUnits units) {
+    return '''${temperature.value.toStringAsPrecision(2)}°${units.isCelsius ? 'C' : 'F'}''';
+  }
+}
