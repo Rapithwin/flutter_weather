@@ -28,6 +28,24 @@ class WeatherPopulated extends StatelessWidget {
   }
 }
 
+class _WeatherIcon extends StatelessWidget {
+  const _WeatherIcon({required this.condition});
+
+  final WeatherCondition condition;
+
+  static const _iconSize = 75.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      condition.toEmoji,
+      style: const TextStyle(
+        fontSize: _iconSize,
+      ),
+    );
+  }
+}
+
 class _WeatherBackground extends StatelessWidget {
   @override
   Widget build(context) {
