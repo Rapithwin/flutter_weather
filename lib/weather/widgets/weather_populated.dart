@@ -1,6 +1,7 @@
 import 'package:bloc_weather/weather/weather.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_repository/weather_repository.dart' hide Weather;
 
 /// This screen will display after the user has selected a city
 /// and we have recieved the data.
@@ -48,6 +49,25 @@ class _WeatherBackground extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+extension on WeatherCondition {
+  /// This method added to [WeatherCondition] allows you to
+  /// show an emoji for each weather condition.
+  String get toEmoji {
+    switch (this) {
+      case WeatherCondition.clear:
+        return '☀️';
+      case WeatherCondition.rainy:
+        return '🌧️';
+      case WeatherCondition.cloudy:
+        return '☁️';
+      case WeatherCondition.snowy:
+        return '🌨️';
+      case WeatherCondition.unknown:
+        return '❓';
+    }
   }
 }
 
