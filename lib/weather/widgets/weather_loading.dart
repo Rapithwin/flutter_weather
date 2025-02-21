@@ -5,6 +5,23 @@ class WeatherLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final theme = Theme.of(context);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        const Text(
+          "⛅",
+          style: TextStyle(fontSize: 64),
+        ),
+        Text(
+          "Loading...",
+          style: theme.textTheme.headlineSmall,
+        ),
+        const Padding(
+          padding: EdgeInsets.all(16),
+          child: CircularProgressIndicator(),
+        )
+      ],
+    );
   }
 }
