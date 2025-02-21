@@ -16,7 +16,7 @@ class WeatherEmpty extends StatelessWidget {
           style: TextStyle(fontSize: 64),
         ),
         Text(
-          "Please Select a City!",
+          "Please select a city!",
           style: theme.textTheme.headlineSmall,
         )
       ],
