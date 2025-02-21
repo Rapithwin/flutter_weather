@@ -23,6 +23,38 @@ class WeatherPopulated extends StatelessWidget {
     return Stack(
       children: <Widget>[
         _WeatherBackground(),
+        RefreshIndicator(
+          onRefresh: onRefresh,
+          child: Align(
+            alignment: const Alignment(0, -1 / 3),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              clipBehavior: Clip.none,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  SizedBox(height: 48),
+                  _WeatherIcon(condition: weather.condition),
+                  Text(
+                    weather.location,
+                    style: theme.textTheme.displayMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    weather.formattedTemperature(units),
+                    style: theme.textTheme.displaySmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '''Last Updated at ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}''',
+                  )
+                ],
+              ),
+            ),
+          ),
+        )
       ],
     );
   }
