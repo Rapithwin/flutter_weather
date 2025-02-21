@@ -50,3 +50,25 @@ class _WeatherBackground extends StatelessWidget {
     );
   }
 }
+
+extension on Color {
+  /// This method added to [Color] allows you to increase the
+  /// brightness of a color by a given percentage.
+  Color brighten([int percent = 10]) {
+    assert(
+      1 <= percent && percent <= 100,
+      "percentage must be between 1 and 100",
+    );
+    final p = percent / 100;
+    final alpha = a.round();
+    final red = r.round();
+    final green = g.round();
+    final blue = b.round();
+    return Color.fromARGB(
+      alpha,
+      red + ((255 - red) * p).round(),
+      green + ((255 - green) * p).round(),
+      blue + ((255 - blue) * p).round(),
+    );
+  }
+}
