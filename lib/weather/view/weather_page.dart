@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:bloc_weather/settings/settings.dart';
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:bloc_weather/weather/widgets/widgets.dart';
