@@ -1,7 +1,10 @@
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
+import 'package:bloc_weather/weather/view/weather_page.dart';
+import 'package:bloc_weather/weather/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_repository/weather_repository.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:weather_repository/weather_repository.dart' hide Weather;
 
 class WeatherApp extends StatelessWidget {
   const WeatherApp({super.key, required WeatherRepository weatherRepository})
@@ -23,7 +26,20 @@ class WeatherAppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final seedColor = context.select(
+      (WeatherCubit cubit) => cubit.state.weather.toColor,
+    );
+    return MaterialApp(
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
+        textTheme: GoogleFonts.rajdhaniTextTheme(),
+      ),
+      home: WeatherPage(),
+    );
   }
 }
 
