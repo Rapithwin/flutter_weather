@@ -51,13 +51,13 @@ extension on Weather {
   Color get toColor {
     switch (condition) {
       case WeatherCondition.clear:
-        return Colors.yellow;
+        return Colors.lightBlue;
       case WeatherCondition.snowy:
-        return Colors.lightBlueAccent;
+        return const Color.fromARGB(255, 156, 221, 252);
       case WeatherCondition.cloudy:
         return Colors.blueGrey;
       case WeatherCondition.rainy:
-        return Colors.indigoAccent;
+        return const Color.fromARGB(255, 60, 75, 158);
       case WeatherCondition.unknown:
         return Colors.cyan;
     }
