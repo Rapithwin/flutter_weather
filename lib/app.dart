@@ -27,7 +27,8 @@ class WeatherAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final seedColor = context.select(
-      (WeatherCubit cubit) => cubit.state.weather.toColor,
+      (WeatherCubit cubit) =>
+          cubit.state.weather.toColor(cubit.state.weather.isDay),
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -48,12 +49,14 @@ class WeatherAppView extends StatelessWidget {
 extension on Weather {
   /// This method added to [Weather] allows us to have a color
   /// for each [WeatherCondition] to use as background color.
-  Color get toColor {
+  Color toColor(bool isDay) {
     switch (condition) {
       case WeatherCondition.clear:
-        return Colors.lightBlue;
+        return isDay ? Colors.lightBlue : const Color.fromARGB(255, 7, 13, 105);
       case WeatherCondition.snowy:
-        return const Color.fromARGB(255, 156, 221, 252);
+        return isDay
+            ? const Color.fromARGB(255, 156, 221, 252)
+            : const Color.fromARGB(255, 0, 60, 83);
       case WeatherCondition.cloudy:
         return Colors.blueGrey;
       case WeatherCondition.rainy:
