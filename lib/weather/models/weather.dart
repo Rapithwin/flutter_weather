@@ -6,11 +6,11 @@ import 'package:weather_repository/weather_repository.dart'
 
 part 'weather.g.dart';
 
-enum TemperatureUnits { fahrenheit, celsius }
+enum Units { metric, imperial }
 
-extension TemperatureUnitsX on TemperatureUnits {
-  bool get isFahrenheit => this == TemperatureUnits.fahrenheit;
-  bool get isCelsius => this == TemperatureUnits.celsius;
+extension TemperatureUnitsX on Units {
+  bool get isMetric => this == Units.metric;
+  bool get isImperial => this == Units.imperial;
 }
 
 @JsonSerializable()
