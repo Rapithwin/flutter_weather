@@ -12,6 +12,8 @@ import '../../helpers/hydrated_bloc.dart';
 const weatherLocation = "london";
 const weatherCondition = weather_repository.WeatherCondition.rainy;
 const weatherTemperature = 9.8;
+const isDay = true;
+const windSpeed = 4.5;
 
 class MockWeatherRepository extends Mock
     implements weather_repository.WeatherRepository {}
@@ -33,6 +35,8 @@ void main() {
       when(() => weather.condition).thenReturn(weatherCondition);
       when(() => weather.location).thenReturn(weatherLocation);
       when(() => weather.temperature).thenReturn(weatherTemperature);
+      when(() => weather.isDay).thenReturn(isDay);
+      when(() => weather.windSpeed).thenReturn(windSpeed);
       when(
         () => weatherRepository.getWeather(any()),
       ).thenAnswer((_) async => weather);
@@ -194,6 +198,8 @@ void main() {
               temperature: Temperature(
                 value: weatherTemperature,
               ),
+              isDay: isDay,
+              windSpeed: windSpeed,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(),
@@ -219,6 +225,8 @@ void main() {
               temperature: Temperature(
                 value: weatherTemperature,
               ),
+              isDay: isDay,
+              windSpeed: windSpeed,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(),
@@ -236,6 +244,8 @@ void main() {
               temperature: Temperature(
                 value: weatherTemperature,
               ),
+              isDay: isDay,
+              windSpeed: windSpeed,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(),
@@ -273,6 +283,8 @@ void main() {
               temperature: Temperature(
                 value: weatherTemperature,
               ),
+              isDay: isDay,
+              windSpeed: windSpeed,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(),
@@ -322,6 +334,8 @@ void main() {
             temperature: Temperature(
               value: weatherTemperature,
             ),
+            isDay: isDay,
+            windSpeed: windSpeed,
           ),
         ),
         act: (cubit) => cubit.toggleUnits(),
@@ -336,6 +350,8 @@ void main() {
               temperature: Temperature(
                 value: weatherTemperature.toCelsius(),
               ),
+              isDay: isDay,
+              windSpeed: windSpeed,
             ),
           ),
         ],
@@ -355,6 +371,8 @@ void main() {
             temperature: Temperature(
               value: weatherTemperature,
             ),
+            isDay: isDay,
+            windSpeed: windSpeed,
           ),
         ),
         act: (cubit) => cubit.toggleUnits(),
@@ -369,6 +387,8 @@ void main() {
               temperature: Temperature(
                 value: weatherTemperature.toFahrenheit(),
               ),
+              isDay: isDay,
+              windSpeed: windSpeed,
             ),
           ),
         ],
