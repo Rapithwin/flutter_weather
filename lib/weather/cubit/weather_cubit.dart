@@ -23,17 +23,17 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
       final weather = Weather.fromRepository(
         await _weatherRepository.getWeather(city),
       );
-      final units = state.temperatureUnits;
-      final value = units.isFahrenheit
+      final units = state.units;
+      final temperatureValue = units.isImperial
           ? weather.temperature.value.toFahrenheit()
           : weather.temperature.value;
 
       emit(
         state.copyWith(
           status: WeatherStatus.success,
-          temperatureUnits: units,
+          units: units,
           weather: weather.copyWith(
-            temperature: Temperature(value: value),
+            temperature: Temperature(value: temperatureValue),
           ),
         ),
       );
@@ -53,17 +53,17 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
       final weather = Weather.fromRepository(
         await _weatherRepository.getWeather(state.weather.location),
       );
-      final units = state.temperatureUnits;
-      final value = units.isFahrenheit
+      final units = state.units;
+      final temperatureValue = units.isImperial
           ? weather.temperature.value.toFahrenheit()
           : weather.temperature.value;
 
       emit(
         state.copyWith(
           status: WeatherStatus.success,
-          temperatureUnits: units,
+          units: units,
           weather: weather.copyWith(
-            temperature: Temperature(value: value),
+            temperature: Temperature(value: temperatureValue),
           ),
         ),
       );
@@ -76,26 +76,24 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
 
   /// Toggles the state between Celsius and Fahrenheit
   void toggleUnits() {
-    final units = state.temperatureUnits.isFahrenheit
-        ? TemperatureUnits.celsius
-        : TemperatureUnits.fahrenheit;
+    final units = state.units.isImperial ? Units.metric : Units.imperial;
 
     if (!state.status.isSuccess) {
-      emit(state.copyWith(temperatureUnits: units));
+      emit(state.copyWith(units: units));
       return;
     }
 
     final weather = state.weather;
     if (weather != Weather.empty) {
       final temperature = weather.temperature;
-      final value = units.isCelsius
+      final temperatureValue = units.isMetric
           ? temperature.value.toCelsius()
           : temperature.value.toFahrenheit();
       emit(
         state.copyWith(
-          temperatureUnits: units,
+          units: units,
           weather: weather.copyWith(
-            temperature: Temperature(value: value),
+            temperature: Temperature(value: temperatureValue),
           ),
         ),
       );
@@ -113,4 +111,10 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
 extension TemperatureConversion on double {
   double toFahrenheit() => (this * 9 / 5) + 32;
   double toCelsius() => (this - 32) * 5 / 9;
+
+  /// Convert kilometers per hour to miles per hour
+  double toKmph() => this * 1.609;
+
+  /// Convert milers per hour to kilometers per hour
+  double toMph() => this * 0.621;
 }

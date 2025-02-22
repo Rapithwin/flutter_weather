@@ -26,8 +26,7 @@ class SettingsPage extends StatelessWidget {
             //Without buildWhen, the widget would rebuild every time
             // any part of the state changes (even if temperatureUnits didn't change).
             // This improves performance by avoiding unnecessary UI updates.
-            buildWhen: (previous, current) =>
-                previous.temperatureUnits != current.temperatureUnits,
+            buildWhen: (previous, current) => previous.units != current.units,
             builder: (context, state) {
               return ListTile(
                 title: const Text("Temperature Units"),
@@ -36,7 +35,7 @@ class SettingsPage extends StatelessWidget {
                   "User metric measurements for temperature units",
                 ),
                 trailing: Switch(
-                  value: state.temperatureUnits.isCelsius,
+                  value: state.units.isMetric,
                   onChanged: (_) => context.read<WeatherCubit>().toggleUnits(),
                 ),
               );

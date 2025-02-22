@@ -14,7 +14,7 @@ class WeatherPopulated extends StatelessWidget {
   });
 
   final Weather weather;
-  final TemperatureUnits units;
+  final Units units;
   final AsyncValueGetter<void> onRefresh;
 
   @override
@@ -134,7 +134,7 @@ extension on WeatherCondition {
 extension on Weather {
   /// This method added to [Weather] allows you to
   /// format the temperature.
-  String formattedTemperature(TemperatureUnits units) {
-    return '''${temperature.value.toStringAsPrecision(2)}°${units.isCelsius ? 'C' : 'F'}''';
+  String formattedTemperature(Units units) {
+    return '''${temperature.value.toStringAsPrecision(2)}°${units.isMetric ? 'C' : 'F'}''';
   }
 }
