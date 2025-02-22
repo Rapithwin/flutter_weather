@@ -94,7 +94,7 @@ class _WeatherBackground extends StatelessWidget {
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            stops: const [0.25, 0.75, 0.90, 1.0],
+            stops: const [0.30, 0.95, 0.90, 1.0],
           ),
         ),
       ),
