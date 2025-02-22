@@ -51,6 +51,12 @@ class WeatherPopulated extends StatelessWidget {
                     ),
                   ),
                   Text(
+                    "Wind Speed: ${weather.windSpeed}",
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
                     '''Last Updated at ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}''',
                   )
                 ],
