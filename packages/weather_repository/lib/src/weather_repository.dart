@@ -16,10 +16,11 @@ class WeatherRepository {
       longitude: location.longitude,
     );
     return Weather(
-      location: location.name,
-      temperature: weather.temperature,
-      condition: weather.weatherCode.toInt().toCondition,
-    );
+        location: location.name,
+        temperature: weather.temperature,
+        condition: weather.weatherCode.toInt().toCondition,
+        isDay: weather.isDay.toBool,
+        windSpeed: weather.windSpeed);
   }
 }
 
@@ -62,5 +63,9 @@ extension on int {
       default:
         return WeatherCondition.unknown;
     }
+  }
+
+  bool get toBool {
+    return this == 1;
   }
 }
