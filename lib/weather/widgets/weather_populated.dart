@@ -51,7 +51,7 @@ class WeatherPopulated extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Wind Speed: ${weather.windSpeed}",
+                    "Wind Speed: ${weather.formattedSpeed(units)}",
                     style: theme.textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
@@ -136,5 +136,9 @@ extension on Weather {
   /// format the temperature.
   String formattedTemperature(Units units) {
     return '''${temperature.value.toStringAsPrecision(2)}°${units.isMetric ? 'C' : 'F'}''';
+  }
+
+  String formattedSpeed(Units units) {
+    return '''$windSpeed${units.isMetric ? 'km/h' : 'm/h'}''';
   }
 }
