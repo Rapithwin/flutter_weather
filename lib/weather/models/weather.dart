@@ -34,12 +34,16 @@ class Weather extends Equatable {
   final DateTime lastUpdated;
   final String location;
   final Temperature temperature;
+  final bool isDay;
+  final double windSpeed;
 
   const Weather({
     required this.condition,
     required this.lastUpdated,
     required this.location,
     required this.temperature,
+    required this.isDay,
+    required this.windSpeed,
   });
 
   factory Weather.fromJson(Map<String, dynamic> json) =>
@@ -51,6 +55,8 @@ class Weather extends Equatable {
       lastUpdated: DateTime.now(),
       location: weather.location,
       temperature: Temperature(value: weather.temperature),
+      isDay: weather.isDay,
+      windSpeed: weather.windSpeed,
     );
   }
 
@@ -59,6 +65,8 @@ class Weather extends Equatable {
     lastUpdated: DateTime(0),
     location: "--",
     temperature: const Temperature(value: 0),
+    isDay: false,
+    windSpeed: 0.0,
   );
 
   @override
@@ -76,12 +84,16 @@ class Weather extends Equatable {
     DateTime? lastUpdated,
     String? location,
     Temperature? temperature,
+    bool? isDay,
+    double? windSpeed,
   }) {
     return Weather(
       condition: condition ?? this.condition,
       lastUpdated: lastUpdated ?? this.lastUpdated,
       location: location ?? this.location,
       temperature: temperature ?? this.temperature,
+      isDay: isDay ?? this.isDay,
+      windSpeed: windSpeed ?? this.windSpeed,
     );
   }
 }
