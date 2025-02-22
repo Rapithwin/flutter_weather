@@ -81,20 +81,20 @@ class _WeatherIcon extends StatelessWidget {
 class _WeatherBackground extends StatelessWidget {
   @override
   Widget build(context) {
-    final color = Theme.of(context).colorScheme.primaryContainer;
+    final color = Theme.of(context).colorScheme.primary;
     return SizedBox.expand(
       child: DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              color,
-              color.brighten(),
-              color.brighten(33),
-              color.brighten(50),
+              color.withValues(alpha: 60),
+              color.withValues(alpha: 90),
+              color.withValues(alpha: 120),
+              color.withValues(alpha: 150),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            stops: const [0.30, 0.95, 0.90, 1.0],
+            stops: const [0.21, 0.40, 0.65, 1],
           ),
         ),
       ),
@@ -118,28 +118,6 @@ extension on WeatherCondition {
       case WeatherCondition.unknown:
         return '❓';
     }
-  }
-}
-
-extension on Color {
-  /// This method added to [Color] allows you to increase the
-  /// brightness of a color by a given percentage.
-  Color brighten([int percent = 10]) {
-    assert(
-      1 <= percent && percent <= 100,
-      "percentage must be between 1 and 100",
-    );
-    final p = percent / 100;
-    final alpha = a.round();
-    final red = r.round();
-    final green = g.round();
-    final blue = b.round();
-    return Color.fromARGB(
-      alpha,
-      red + ((255 - red) * p).round(),
-      green + ((255 - green) * p).round(),
-      blue + ((255 - blue) * p).round(),
-    );
   }
 }
 
