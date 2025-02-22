@@ -12,11 +12,19 @@ class Weather {
   @JsonKey(name: "weathercode")
   final double weatherCode;
 
+  @JsonKey(name: "is_day")
+  final int isDay;
+
+  @JsonKey(name: "windspeed")
+  final double windSpeed;
+
   factory Weather.fromJson(Map<String, dynamic> json) =>
       _$WeatherFromJson(json);
 
   Weather({
     required this.temperature,
     required this.weatherCode,
+    required this.isDay,
+    required this.windSpeed,
   });
 }
