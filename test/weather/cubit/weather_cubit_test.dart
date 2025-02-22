@@ -121,7 +121,10 @@ void main() {
                       "temperature (metric)",
                       Temperature(value: weatherTemperature),
                     )
-                    .having((w) => w.location, "location", weatherLocation),
+                    .having((w) => w.location, "location", weatherLocation)
+                    .having((w) => w.isDay, "isDay", isDay)
+                    .having(
+                        (w) => w.windSpeed, "windSpeed (metric)", windSpeed),
               )
         ],
       );
@@ -157,7 +160,10 @@ void main() {
                       "temperature (imperial)",
                       Temperature(value: weatherTemperature.toFahrenheit()),
                     )
-                    .having((w) => w.location, "location", weatherLocation),
+                    .having((w) => w.location, "location", weatherLocation)
+                    .having((w) => w.isDay, "isDay", isDay)
+                    .having((w) => w.windSpeed, "windSpeed (imperial)",
+                        windSpeed.toMph()),
               )
         ],
       );
@@ -265,7 +271,10 @@ void main() {
                         Temperature(
                           value: weatherTemperature,
                         ),
-                      ),
+                      )
+                      .having((w) => w.isDay, "isDay", isDay)
+                      .having(
+                          (w) => w.windSpeed, "windSpeed (metric)", windSpeed),
                 )
           ],
         );
@@ -304,7 +313,10 @@ void main() {
                         Temperature(
                           value: weatherTemperature.toFahrenheit(),
                         ),
-                      ),
+                      )
+                      .having((w) => w.isDay, "isDay", isDay)
+                      .having((w) => w.windSpeed, "windSpeed (imperial)",
+                          windSpeed.toMph()),
                 )
           ],
         );
@@ -351,7 +363,7 @@ void main() {
                 value: weatherTemperature.toCelsius(),
               ),
               isDay: isDay,
-              windSpeed: windSpeed,
+              windSpeed: windSpeed.toKmph(),
             ),
           ),
         ],
@@ -388,7 +400,7 @@ void main() {
                 value: weatherTemperature.toFahrenheit(),
               ),
               isDay: isDay,
-              windSpeed: windSpeed,
+              windSpeed: windSpeed.toMph(),
             ),
           ),
         ],
