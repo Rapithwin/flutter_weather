@@ -90,6 +90,8 @@ void main() {
         when(() => location.longitude).thenReturn(longitude);
         when(() => weather.temperature).thenReturn(42.42);
         when(() => weather.weatherCode).thenReturn(0);
+        when(() => weather.isDay).thenReturn(0);
+        when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => location);
         when(() => weatherApiClient.getWeather(
@@ -103,6 +105,8 @@ void main() {
               location: city,
               temperature: 42.42,
               condition: WeatherCondition.clear,
+              isDay: false,
+              windSpeed: 4.5,
             ));
       });
       test("returns correct response on success (cloudy)", () async {
@@ -113,6 +117,8 @@ void main() {
         when(() => location.longitude).thenReturn(longitude);
         when(() => weather.temperature).thenReturn(42.42);
         when(() => weather.weatherCode).thenReturn(48);
+        when(() => weather.isDay).thenReturn(1);
+        when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => location);
         when(() => weatherApiClient.getWeather(
@@ -123,10 +129,11 @@ void main() {
         expect(
             actual,
             Weather(
-              location: city,
-              temperature: 42.42,
-              condition: WeatherCondition.cloudy,
-            ));
+                location: city,
+                temperature: 42.42,
+                condition: WeatherCondition.cloudy,
+                isDay: true,
+                windSpeed: 4.5));
       });
       test("returns correct response on success rainy)", () async {
         final location = MockLocation();
@@ -136,6 +143,8 @@ void main() {
         when(() => location.longitude).thenReturn(longitude);
         when(() => weather.temperature).thenReturn(42.42);
         when(() => weather.weatherCode).thenReturn(99);
+        when(() => weather.isDay).thenReturn(1);
+        when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => location);
         when(() => weatherApiClient.getWeather(
@@ -149,6 +158,8 @@ void main() {
               location: city,
               temperature: 42.42,
               condition: WeatherCondition.rainy,
+              isDay: true,
+              windSpeed: 4.5,
             ));
       });
       test("returns correct response on success (snowy)", () async {
@@ -159,6 +170,8 @@ void main() {
         when(() => location.longitude).thenReturn(longitude);
         when(() => weather.temperature).thenReturn(42.42);
         when(() => weather.weatherCode).thenReturn(86);
+        when(() => weather.isDay).thenReturn(1);
+        when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => location);
         when(() => weatherApiClient.getWeather(
@@ -172,6 +185,8 @@ void main() {
               location: city,
               temperature: 42.42,
               condition: WeatherCondition.snowy,
+              isDay: true,
+              windSpeed: 4.5,
             ));
       });
       test("returns correct response on success (unknown)", () async {
@@ -182,6 +197,8 @@ void main() {
         when(() => location.longitude).thenReturn(longitude);
         when(() => weather.temperature).thenReturn(42.42);
         when(() => weather.weatherCode).thenReturn(-1);
+        when(() => weather.isDay).thenReturn(1);
+        when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => location);
         when(() => weatherApiClient.getWeather(
@@ -195,6 +212,8 @@ void main() {
               location: city,
               temperature: 42.42,
               condition: WeatherCondition.unknown,
+              isDay: true,
+              windSpeed: 4.5,
             ));
       });
     });
