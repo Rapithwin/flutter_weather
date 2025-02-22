@@ -139,6 +139,6 @@ extension on Weather {
   }
 
   String formattedSpeed(Units units) {
-    return '''$windSpeed${units.isMetric ? 'km/h' : 'm/h'}''';
+    return '''${windSpeed.toStringAsPrecision(3)}${units.isMetric ? 'km/h' : 'm/h'}''';
   }
 }

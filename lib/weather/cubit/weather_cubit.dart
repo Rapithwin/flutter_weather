@@ -27,14 +27,16 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
       final temperatureValue = units.isImperial
           ? weather.temperature.value.toFahrenheit()
           : weather.temperature.value;
+      final windSpeed =
+          units.isImperial ? weather.windSpeed.toMph() : weather.windSpeed;
 
       emit(
         state.copyWith(
           status: WeatherStatus.success,
           units: units,
           weather: weather.copyWith(
-            temperature: Temperature(value: temperatureValue),
-          ),
+              temperature: Temperature(value: temperatureValue),
+              windSpeed: windSpeed),
         ),
       );
     } on Exception {
@@ -57,6 +59,8 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
       final temperatureValue = units.isImperial
           ? weather.temperature.value.toFahrenheit()
           : weather.temperature.value;
+      final windSpeed =
+          units.isImperial ? weather.windSpeed.toMph() : weather.windSpeed;
 
       emit(
         state.copyWith(
@@ -64,6 +68,7 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
           units: units,
           weather: weather.copyWith(
             temperature: Temperature(value: temperatureValue),
+            windSpeed: windSpeed,
           ),
         ),
       );
@@ -89,12 +94,16 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
       final temperatureValue = units.isMetric
           ? temperature.value.toCelsius()
           : temperature.value.toFahrenheit();
+
+      final windSpeed = units.isMetric
+          ? weather.windSpeed.toKmph()
+          : weather.windSpeed.toMph();
       emit(
         state.copyWith(
           units: units,
           weather: weather.copyWith(
-            temperature: Temperature(value: temperatureValue),
-          ),
+              temperature: Temperature(value: temperatureValue),
+              windSpeed: windSpeed),
         ),
       );
     }
