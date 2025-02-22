@@ -36,7 +36,8 @@ class WeatherAppView extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: seedColor),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: seedColor, primary: seedColor),
         textTheme: GoogleFonts.rajdhaniTextTheme(),
       ),
       home: WeatherPage(),
