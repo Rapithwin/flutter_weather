@@ -99,7 +99,7 @@ void main() {
       );
 
       blocTest<WeatherCubit, WeatherState>(
-        'emits [loading, success] when getWeather returns (culsius).',
+        'emits [loading, success] when getWeather returns (metric).',
         build: () => weatherCubit,
         act: (cubit) => cubit.fetchWeather(weatherLocation),
         expect: () => <dynamic>[
@@ -118,7 +118,7 @@ void main() {
                     .having((w) => w.condition, "condition", weatherCondition)
                     .having(
                       (w) => w.temperature,
-                      "temperature (celsius)",
+                      "temperature (metric)",
                       Temperature(value: weatherTemperature),
                     )
                     .having((w) => w.location, "location", weatherLocation),
@@ -126,19 +126,19 @@ void main() {
         ],
       );
       blocTest(
-        "emits [loading, success] when getWeather returns (fahrenheit)",
+        "emits [loading, success] when getWeather returns (imperial)",
         build: () => weatherCubit,
         // seed is used to set an initial state for the bloc
         // before act. In this case we're changing the temperature in the
-        // initial state from celsius to fahrenheit for the test.
+        // initial state from metric to imperial for the test.
         seed: () => WeatherState(
-          temperatureUnits: TemperatureUnits.fahrenheit,
+          units: Units.imperial,
         ),
         act: (cubit) => cubit.fetchWeather(weatherLocation),
         expect: () => <dynamic>[
           WeatherState(
             status: WeatherStatus.loading,
-            temperatureUnits: TemperatureUnits.fahrenheit,
+            units: Units.imperial,
           ),
           isA<WeatherState>()
               .having(
@@ -154,7 +154,7 @@ void main() {
                     .having((w) => w.condition, "condition", weatherCondition)
                     .having(
                       (w) => w.temperature,
-                      "temperature (fahrenheit)",
+                      "temperature (imperial)",
                       Temperature(value: weatherTemperature.toFahrenheit()),
                     )
                     .having((w) => w.location, "location", weatherLocation),
@@ -233,7 +233,7 @@ void main() {
           expect: () => <WeatherState>[],
         );
         blocTest<WeatherCubit, WeatherState>(
-          'emits updated weather (celsius)',
+          'emits updated weather (metric)',
           build: () => weatherCubit,
           seed: () => WeatherState(
             status: WeatherStatus.success,
@@ -261,7 +261,7 @@ void main() {
                       .having((w) => w.location, "location", weatherLocation)
                       .having(
                         (w) => w.temperature,
-                        "temperature (celsius)",
+                        "temperature (metric)",
                         Temperature(
                           value: weatherTemperature,
                         ),
@@ -271,11 +271,11 @@ void main() {
         );
 
         blocTest<WeatherCubit, WeatherState>(
-          'emits updated weather (fahrenheit)',
+          'emits updated weather (imperial)',
           build: () => weatherCubit,
           seed: () => WeatherState(
             status: WeatherStatus.success,
-            temperatureUnits: TemperatureUnits.fahrenheit,
+            units: Units.imperial,
             weahter: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
@@ -300,7 +300,7 @@ void main() {
                       .having((w) => w.location, "location", weatherLocation)
                       .having(
                         (w) => w.temperature,
-                        "temperature (fahrenheit)",
+                        "temperature (imperial)",
                         Temperature(
                           value: weatherTemperature.toFahrenheit(),
                         ),
@@ -317,16 +317,16 @@ void main() {
         build: () => weatherCubit,
         act: (cubit) => cubit.toggleUnits(),
         expect: () => <WeatherState>[
-          WeatherState(temperatureUnits: TemperatureUnits.fahrenheit),
+          WeatherState(units: Units.imperial),
         ],
       );
       blocTest<WeatherCubit, WeatherState>(
         'emits updated units and temperature'
-        'when status is success (celsius)',
+        'when status is success (metric)',
         build: () => weatherCubit,
         seed: () => WeatherState(
           status: WeatherStatus.success,
-          temperatureUnits: TemperatureUnits.fahrenheit,
+          units: Units.imperial,
           weahter: Weather(
             condition: weatherCondition,
             lastUpdated: DateTime(2020),
@@ -342,7 +342,7 @@ void main() {
         expect: () => <WeatherState>[
           WeatherState(
             status: WeatherStatus.success,
-            temperatureUnits: TemperatureUnits.celsius,
+            units: Units.metric,
             weahter: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
@@ -359,11 +359,11 @@ void main() {
 
       blocTest<WeatherCubit, WeatherState>(
         'emits updated units and temperature'
-        'when status is success (fahrenheit)',
+        'when status is success (imperial)',
         build: () => weatherCubit,
         seed: () => WeatherState(
           status: WeatherStatus.success,
-          temperatureUnits: TemperatureUnits.celsius,
+          units: Units.metric,
           weahter: Weather(
             condition: weatherCondition,
             lastUpdated: DateTime(2020),
@@ -379,7 +379,7 @@ void main() {
         expect: () => <WeatherState>[
           WeatherState(
             status: WeatherStatus.success,
-            temperatureUnits: TemperatureUnits.fahrenheit,
+            units: Units.imperial,
             weahter: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
