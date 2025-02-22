@@ -34,7 +34,10 @@ class WeatherPopulated extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   SizedBox(height: 48),
-                  _WeatherIcon(condition: weather.condition),
+                  _WeatherIcon(
+                    condition: weather.condition,
+                    isDay: weather.isDay,
+                  ),
                   Text(
                     weather.location,
                     style: theme.textTheme.displayMedium?.copyWith(
@@ -61,16 +64,17 @@ class WeatherPopulated extends StatelessWidget {
 }
 
 class _WeatherIcon extends StatelessWidget {
-  const _WeatherIcon({required this.condition});
+  const _WeatherIcon({required this.condition, required this.isDay});
 
   final WeatherCondition condition;
+  final bool isDay;
 
   static const _iconSize = 75.0;
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      condition.toEmoji,
+      condition.toEmoji(isDay),
       style: const TextStyle(
         fontSize: _iconSize,
       ),
@@ -105,10 +109,10 @@ class _WeatherBackground extends StatelessWidget {
 extension on WeatherCondition {
   /// This method added to [WeatherCondition] allows you to
   /// show an emoji for each weather condition.
-  String get toEmoji {
+  String toEmoji(bool isDay) {
     switch (this) {
       case WeatherCondition.clear:
-        return '☀️';
+        return isDay ? '☀️' : '🌙';
       case WeatherCondition.rainy:
         return '🌧️';
       case WeatherCondition.cloudy:
