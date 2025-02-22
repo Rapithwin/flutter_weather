@@ -29,10 +29,10 @@ class SettingsPage extends StatelessWidget {
             buildWhen: (previous, current) => previous.units != current.units,
             builder: (context, state) {
               return ListTile(
-                title: const Text("Temperature Units"),
+                title: const Text("Units"),
                 isThreeLine: true,
                 subtitle: const Text(
-                  "User metric measurements for temperature units",
+                  "Use metric measurements for units",
                 ),
                 trailing: Switch(
                   value: state.units.isMetric,
