@@ -13,6 +13,7 @@ class WeatherPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -21,7 +22,10 @@ class WeatherPage extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(SettingsPage.route());
             },
-            icon: Icon(Icons.settings),
+            icon: Icon(
+              Icons.settings,
+              color: theme.colorScheme.onPrimary,
+            ),
           )
         ],
       ),
