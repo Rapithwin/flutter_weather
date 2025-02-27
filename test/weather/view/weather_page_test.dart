@@ -144,5 +144,29 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(SearchPage), findsOneWidget);
     });
+
+    testWidgets(
+      "triggers refreshWeather on pull to refresh",
+      (tester) async {
+        when(() => weatherCubit.state).thenReturn(WeatherState(
+          status: WeatherStatus.success,
+          weather: weather,
+        ));
+        when(() => weatherCubit.refreshWeather()).thenAnswer((_) async {});
+        await tester.pumpWidget(BlocProvider.value(
+          value: weatherCubit,
+          child: MaterialApp(
+            home: WeatherPage(),
+          ),
+        ));
+        await tester.fling(
+          find.text("London"),
+          const Offset(0, 500),
+          1000,
+        );
+        await tester.pumpAndSettle();
+        verify(() => weatherCubit.refreshWeather()).called(1);
+      },
+    );
   });
 }
