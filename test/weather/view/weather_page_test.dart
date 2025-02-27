@@ -97,5 +97,22 @@ void main() {
         expect(find.byType(WeatherError), findsOneWidget);
       },
     );
+
+    testWidgets("state is cached", (tester) async {
+      when<dynamic>(() => hydratedStorage.read("$WeatherCubit")).thenReturn(
+        WeatherState(
+          status: WeatherStatus.success,
+          weather: weather,
+          units: Units.imperial,
+        ).toJson(),
+      );
+      await tester.pumpWidget(
+        BlocProvider.value(
+          value: WeatherCubit(MockWeatherRepository()),
+          child: MaterialApp(home: WeatherPage()),
+        ),
+      );
+      expect(find.byType(WeatherPopulated), findsOneWidget);
+    });
   });
 }

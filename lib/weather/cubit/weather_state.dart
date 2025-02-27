@@ -14,8 +14,8 @@ final class WeatherState extends Equatable {
   WeatherState({
     this.status = WeatherStatus.initial,
     this.units = Units.metric,
-    Weather? weahter,
-  }) : weather = weahter ?? Weather.empty;
+    Weather? weather,
+  }) : weather = weather ?? Weather.empty;
 
   final WeatherStatus status;
   final Weather weather;
@@ -33,7 +33,7 @@ final class WeatherState extends Equatable {
   }) {
     return WeatherState(
       status: status ?? this.status,
-      weahter: weather ?? this.weather,
+      weather: weather ?? this.weather,
       units: units ?? this.units,
     );
   }

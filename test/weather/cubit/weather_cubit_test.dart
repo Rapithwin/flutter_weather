@@ -197,7 +197,7 @@ void main() {
           build: () => weatherCubit,
           seed: () => WeatherState(
             status: WeatherStatus.success,
-            weahter: Weather(
+            weather: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
               location: weatherLocation,
@@ -224,7 +224,7 @@ void main() {
           build: () => weatherCubit,
           seed: () => WeatherState(
             status: WeatherStatus.success,
-            weahter: Weather(
+            weather: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
               location: weatherLocation,
@@ -243,7 +243,7 @@ void main() {
           build: () => weatherCubit,
           seed: () => WeatherState(
             status: WeatherStatus.success,
-            weahter: Weather(
+            weather: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
               location: weatherLocation,
@@ -285,7 +285,7 @@ void main() {
           seed: () => WeatherState(
             status: WeatherStatus.success,
             units: Units.imperial,
-            weahter: Weather(
+            weather: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
               location: weatherLocation,
@@ -339,7 +339,7 @@ void main() {
         seed: () => WeatherState(
           status: WeatherStatus.success,
           units: Units.imperial,
-          weahter: Weather(
+          weather: Weather(
             condition: weatherCondition,
             lastUpdated: DateTime(2020),
             location: weatherLocation,
@@ -355,7 +355,7 @@ void main() {
           WeatherState(
             status: WeatherStatus.success,
             units: Units.metric,
-            weahter: Weather(
+            weather: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
               location: weatherLocation,
@@ -376,7 +376,7 @@ void main() {
         seed: () => WeatherState(
           status: WeatherStatus.success,
           units: Units.metric,
-          weahter: Weather(
+          weather: Weather(
             condition: weatherCondition,
             lastUpdated: DateTime(2020),
             location: weatherLocation,
@@ -392,7 +392,7 @@ void main() {
           WeatherState(
             status: WeatherStatus.success,
             units: Units.imperial,
-            weahter: Weather(
+            weather: Weather(
               condition: weatherCondition,
               lastUpdated: DateTime(2020),
               location: weatherLocation,
