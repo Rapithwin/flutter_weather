@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:bloc_weather/settings/settings.dart';
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:bloc_weather/weather/models/models.dart';
 import 'package:bloc_weather/weather/view/weather_page.dart';
@@ -113,6 +114,20 @@ void main() {
         ),
       );
       expect(find.byType(WeatherPopulated), findsOneWidget);
+    });
+
+    testWidgets("navigates to SettingsPage when settings icon is tapped",
+        (tester) async {
+      when(() => weatherCubit.state).thenReturn(WeatherState());
+      await tester.pumpWidget(BlocProvider.value(
+        value: weatherCubit,
+        child: MaterialApp(
+          home: WeatherPage(),
+        ),
+      ));
+      await tester.tap(find.byType(IconButton));
+      await tester.pumpAndSettle();
+      expect(find.byType(SettingsPage), findsOneWidget);
     });
   });
 }
