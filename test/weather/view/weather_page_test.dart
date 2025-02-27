@@ -61,5 +61,23 @@ void main() {
         expect(find.byType(WeatherLoading), findsOneWidget);
       },
     );
+
+    testWidgets(
+      "renders WeatherPopulated for WeatherStatus.success",
+      (tester) async {
+        when(() => weatherCubit.state).thenReturn(
+          WeatherState(status: WeatherStatus.success),
+        );
+        await tester.pumpWidget(
+          BlocProvider.value(
+            value: weatherCubit,
+            child: MaterialApp(
+              home: WeatherPage(),
+            ),
+          ),
+        );
+        expect(find.byType(WeatherPopulated), findsOneWidget);
+      },
+    );
   });
 }
