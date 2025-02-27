@@ -79,5 +79,23 @@ void main() {
         expect(find.byType(WeatherPopulated), findsOneWidget);
       },
     );
+
+    testWidgets(
+      "renders WeatherError for WeatherStatus.failure",
+      (tester) async {
+        when(() => weatherCubit.state).thenReturn(
+          WeatherState(status: WeatherStatus.failure),
+        );
+        await tester.pumpWidget(
+          BlocProvider.value(
+            value: weatherCubit,
+            child: MaterialApp(
+              home: WeatherPage(),
+            ),
+          ),
+        );
+        expect(find.byType(WeatherError), findsOneWidget);
+      },
+    );
   });
 }
