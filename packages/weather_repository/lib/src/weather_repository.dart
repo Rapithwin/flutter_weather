@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:open_meteo_api/open_meteo_api.dart' hide Weather;
+import 'package:open_meteo_api/open_meteo_api.dart' show OpenMeteoApiClient;
 import 'package:weather_repository/weather_repository.dart';
 
 class WeatherRepository {
@@ -13,10 +13,7 @@ class WeatherRepository {
     final location = await _weatherApiClient.locationSearch(city);
     return location
         .map((e) => Location(
-              id: e.id,
-              name: e.name,
-              latitude: e.latitude,
-              longitude: e.longitude,
+              city: e.name,
               country: e.country,
             ))
         .toList();
