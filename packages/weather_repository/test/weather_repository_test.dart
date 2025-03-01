@@ -27,10 +27,9 @@ void main() {
         expect(WeatherRepository(), isNotNull);
       });
     });
-    group("getWeather", () {
+
+    group("getLocation", () {
       const city = 'chicago';
-      const latitude = 41.85003;
-      const longitude = -87.65005;
       test("calls locatoinSearch with correct city", () async {
         try {
           await weatherRepository.getLocation(city);
@@ -48,8 +47,13 @@ void main() {
           throwsA(exception),
         );
       });
+    });
+    group("getWeather", () {
+      const city = 'chicago';
+      const latitude = 41.85003;
+      const longitude = -87.65005;
 
-      test("calls getLocation with correct latitude/longitude", () async {
+      test("calls getWeather with correct latitude/longitude", () async {
         final location = MockLocation();
         when(() => location.latitude).thenReturn(latitude);
         when(() => location.longitude).thenReturn(longitude);
