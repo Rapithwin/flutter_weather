@@ -30,6 +30,8 @@ void main() {
 
     group("getLocation", () {
       const city = 'chicago';
+      const country = "United States";
+
       test("calls locatoinSearch with correct city", () async {
         try {
           await weatherRepository.getLocation(city);
@@ -46,6 +48,23 @@ void main() {
           () => weatherRepository.getLocation(city),
           throwsA(exception),
         );
+      });
+
+      test("returns correct response on success", () async {
+        final location = MockLocation();
+
+        when(() => location.name).thenReturn(city);
+        when(() => location.country).thenReturn(country);
+        when(() => weatherApiClient.locationSearch(any()))
+            .thenAnswer((_) async => [location]);
+
+        final actual = await weatherRepository.getLocation(city);
+        expect(actual, [
+          Location(
+            city: city,
+            country: country,
+          )
+        ]);
       });
     });
     group("getWeather", () {
