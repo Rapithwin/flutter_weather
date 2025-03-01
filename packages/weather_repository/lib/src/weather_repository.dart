@@ -19,17 +19,14 @@ class WeatherRepository {
         .toList();
   }
 
-  Future<Weather> getWeather(
-    String name,
-    double latitude,
-    double longitude,
-  ) async {
+  Future<Weather> getWeather(String city, int index) async {
+    final location = await _weatherApiClient.locationSearch(city);
     final weather = await _weatherApiClient.getWeather(
-      latitude: latitude,
-      longitude: longitude,
+      latitude: location[index].latitude,
+      longitude: location[index].longitude,
     );
     return Weather(
-        location: name,
+        location: location[index].name,
         temperature: weather.temperature,
         condition: weather.weatherCode.toInt().toCondition,
         isDay: weather.isDay.toBool,
