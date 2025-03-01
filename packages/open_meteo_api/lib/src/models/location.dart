@@ -7,14 +7,15 @@ class Location {
   final String name;
   final double latitude;
   final double longitude;
+  final String country;
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
 
-  Location({
-    required this.id,
-    required this.name,
-    required this.latitude,
-    required this.longitude,
-  });
+  Location(
+      {required this.id,
+      required this.name,
+      required this.latitude,
+      required this.longitude,
+      required this.country});
 }
