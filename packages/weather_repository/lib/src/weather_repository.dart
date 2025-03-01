@@ -9,9 +9,17 @@ class WeatherRepository {
   WeatherRepository({OpenMeteoApiClient? weatherApiClient})
       : _weatherApiClient = weatherApiClient ?? OpenMeteoApiClient();
 
-  Future<List<String>> getLocation(String city) async {
+  Future<List<Location>> getLocation(String city) async {
     final location = await _weatherApiClient.locationSearch(city);
-    return location.map((e) => "${e.name}, ${e.country}").toList();
+    return location
+        .map((e) => Location(
+              id: e.id,
+              name: e.name,
+              latitude: e.latitude,
+              longitude: e.longitude,
+              country: e.country,
+            ))
+        .toList();
   }
 
   Future<Weather> getWeather(
