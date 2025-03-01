@@ -33,7 +33,7 @@ void main() {
       const longitude = -87.65005;
       test("calls locatoinSearch with correct city", () async {
         try {
-          await weatherRepository.getWeather(city);
+          await weatherRepository.getLocation(city);
         } catch (_) {}
         verify(
           () => weatherApiClient.locationSearch(city),
@@ -44,20 +44,20 @@ void main() {
         final exception = Exception("oops");
         when(() => weatherApiClient.locationSearch(any())).thenThrow(exception);
         expectLater(
-          () => weatherRepository.getWeather(city),
+          () => weatherRepository.getLocation(city),
           throwsA(exception),
         );
       });
 
-      test("calls getWeather with correct latitude/longitude", () async {
+      test("calls getLocation with correct latitude/longitude", () async {
         final location = MockLocation();
         when(() => location.latitude).thenReturn(latitude);
         when(() => location.longitude).thenReturn(longitude);
         when(() => weatherApiClient.locationSearch(any()))
-            .thenAnswer((_) async => location);
+            .thenAnswer((_) async => [location]);
 
         try {
-          await weatherRepository.getWeather(city);
+          await weatherRepository.getWeather(city, latitude, longitude);
         } catch (_) {}
         verify(() => weatherApiClient.getWeather(
               latitude: latitude,
@@ -72,13 +72,13 @@ void main() {
         when(() => location.longitude).thenReturn(longitude);
         when(
           () => weatherApiClient.locationSearch(any()),
-        ).thenAnswer((_) async => location);
+        ).thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenThrow(exception);
         expect(
-          weatherRepository.getWeather(city),
+          weatherRepository.getWeather(city, latitude, longitude),
           throwsA(exception),
         );
       });
@@ -93,12 +93,13 @@ void main() {
         when(() => weather.isDay).thenReturn(0);
         when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
-            .thenAnswer((_) async => location);
+            .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
@@ -120,12 +121,13 @@ void main() {
         when(() => weather.isDay).thenReturn(1);
         when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
-            .thenAnswer((_) async => location);
+            .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
@@ -146,12 +148,13 @@ void main() {
         when(() => weather.isDay).thenReturn(1);
         when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
-            .thenAnswer((_) async => location);
+            .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
@@ -173,12 +176,13 @@ void main() {
         when(() => weather.isDay).thenReturn(1);
         when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
-            .thenAnswer((_) async => location);
+            .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
@@ -200,12 +204,13 @@ void main() {
         when(() => weather.isDay).thenReturn(1);
         when(() => weather.windSpeed).thenReturn(4.5);
         when(() => weatherApiClient.locationSearch(any()))
-            .thenAnswer((_) async => location);
+            .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
