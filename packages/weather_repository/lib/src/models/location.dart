@@ -10,8 +10,15 @@ part 'location.g.dart';
 class Location extends Equatable {
   final String city;
   final String country;
+  final double latitude;
+  final double longitude;
 
-  const Location({required this.city, required this.country});
+  const Location({
+    required this.city,
+    required this.country,
+    required this.latitude,
+    required this.longitude,
+  });
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
@@ -19,5 +26,10 @@ class Location extends Equatable {
   Map<String, dynamic> toJson() => _$LocationToJson(this);
 
   @override
-  List<Object?> get props => [city, country];
+  List<Object?> get props => [
+        city,
+        country,
+        latitude,
+        longitude,
+      ];
 }

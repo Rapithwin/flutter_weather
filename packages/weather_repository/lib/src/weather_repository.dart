@@ -15,18 +15,23 @@ class WeatherRepository {
         .map((e) => Location(
               city: e.name,
               country: e.country,
+              latitude: e.latitude,
+              longitude: e.longitude,
             ))
         .toList();
   }
 
-  Future<Weather> getWeather(String city, int index) async {
-    final location = await _weatherApiClient.locationSearch(city);
+  Future<Weather> getWeather(
+    String city,
+    double latitude,
+    double longitude,
+  ) async {
     final weather = await _weatherApiClient.getWeather(
-      latitude: location[index].latitude,
-      longitude: location[index].longitude,
+      latitude: latitude,
+      longitude: longitude,
     );
     return Weather(
-        location: location[index].name,
+        location: city,
         temperature: weather.temperature,
         condition: weather.weatherCode.toInt().toCondition,
         isDay: weather.isDay.toBool,
