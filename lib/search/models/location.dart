@@ -22,21 +22,17 @@ class Location extends Equatable {
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
 
-  factory Location.fromRepository(weather_repository.Location location) {
-    return Location(
-      city: location.city,
-      country: location.country,
-      latitude: location.latitude,
-      longitude: location.longitude,
-    );
+  static List<Location> fromRepository(
+      List<weather_repository.Location> location) {
+    return location
+        .map((e) => Location(
+              city: e.city,
+              country: e.country,
+              latitude: e.latitude,
+              longitude: e.longitude,
+            ))
+        .toList();
   }
-
-  static final empty = Location(
-    city: "",
-    country: "",
-    latitude: 0.0,
-    longitude: 0.0,
-  );
 
   @override
   List<Object?> get props => [
