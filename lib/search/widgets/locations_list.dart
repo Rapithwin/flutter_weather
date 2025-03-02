@@ -1,4 +1,5 @@
 import 'package:bloc_weather/search/cubit/location_cubit.dart';
+import 'package:bloc_weather/search/models/location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +11,12 @@ class LocationsList extends StatelessWidget {
     return BlocBuilder<LocationCubit, LocationState>(
       builder: (context, state) {
         return switch (state.status) {
-          LocationStatus.initial => const LocationsInitial()
+          LocationStatus.initial => const LocationsInitial(),
+          LocationStatus.loading => const LocationsLoading(),
+          LocationStatus.failure => const LocationsError(),
+          LocationStatus.success => LocationsListBuilder(
+              locations: state.location,
+            )
         };
       },
     );
@@ -55,14 +61,14 @@ class LocationsLoading extends StatelessWidget {
 }
 
 class LocationsListBuilder extends StatelessWidget {
-  const LocationsListBuilder({super.key, required this.itemCount});
+  const LocationsListBuilder({super.key, required this.locations});
 
-  final int itemCount;
+  final List<Location> locations;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: itemCount,
+      itemCount: locations.length,
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
