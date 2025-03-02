@@ -19,9 +19,9 @@ LocationState _$LocationStateFromJson(Map<String, dynamic> json) =>
                   LocationStatus.initial),
           location: $checkedConvert(
               'location',
-              (v) => v == null
-                  ? null
-                  : Location.fromJson(v as Map<String, dynamic>)),
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => Location.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -30,7 +30,7 @@ LocationState _$LocationStateFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$LocationStateToJson(LocationState instance) =>
     <String, dynamic>{
       'status': _$LocationStatusEnumMap[instance.status]!,
-      'location': instance.location.toJson(),
+      'location': instance.location.map((e) => e.toJson()).toList(),
     };
 
 const _$LocationStatusEnumMap = {
