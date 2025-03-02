@@ -13,11 +13,11 @@ extension LocationStatusX on LocationStatus {
 final class LocationState extends Equatable {
   LocationState({
     this.status = LocationStatus.initial,
-    Location? location,
-  }) : location = location ?? Location.empty;
+    List<Location>? location,
+  }) : location = location ?? [];
 
   final LocationStatus status;
-  final Location location;
+  final List<Location> location;
 
   factory LocationState.fromJson(Map<String, dynamic> json) =>
       _$LocationStateFromJson(json);
@@ -26,7 +26,7 @@ final class LocationState extends Equatable {
 
   LocationState copyWith({
     LocationStatus? status,
-    Location? location,
+    List<Location>? location,
   }) {
     return LocationState(
       status: status ?? this.status,
