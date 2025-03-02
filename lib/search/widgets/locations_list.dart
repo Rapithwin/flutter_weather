@@ -36,3 +36,23 @@ class LocationsLoading extends StatelessWidget {
     );
   }
 }
+
+class LocationsListBuilder extends StatelessWidget {
+  const LocationsListBuilder({super.key, required this.itemCount});
+
+  final int itemCount;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: itemCount,
+      itemBuilder: (context, index) {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black),
+          ),
+        );
+      },
+    );
+  }
+}
