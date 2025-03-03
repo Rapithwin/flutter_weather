@@ -31,6 +31,8 @@ void main() {
     group("getLocation", () {
       const city = 'chicago';
       const country = "United States";
+      const latitude = 41.85003;
+      const longitude = -87.65005;
 
       test("calls locatoinSearch with correct city", () async {
         try {
@@ -55,6 +57,8 @@ void main() {
 
         when(() => location.name).thenReturn(city);
         when(() => location.country).thenReturn(country);
+        when(() => location.latitude).thenReturn(latitude);
+        when(() => location.longitude).thenReturn(longitude);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => [location]);
 
@@ -63,6 +67,8 @@ void main() {
           Location(
             city: city,
             country: country,
+            latitude: latitude,
+            longitude: longitude,
           )
         ]);
       });
@@ -80,7 +86,7 @@ void main() {
             .thenAnswer((_) async => [location]);
 
         try {
-          await weatherRepository.getWeather(city, 0);
+          await weatherRepository.getWeather(city, latitude, longitude);
         } catch (_) {}
         verify(() => weatherApiClient.getWeather(
               latitude: latitude,
@@ -101,7 +107,7 @@ void main() {
               longitude: any(named: "longitude"),
             )).thenThrow(exception);
         expect(
-          weatherRepository.getWeather(city, 0),
+          weatherRepository.getWeather(city, latitude, longitude),
           throwsA(exception),
         );
       });
@@ -121,7 +127,8 @@ void main() {
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city, 0);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
@@ -148,7 +155,8 @@ void main() {
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city, 0);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
@@ -174,7 +182,8 @@ void main() {
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city, 0);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
@@ -201,7 +210,8 @@ void main() {
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city, 0);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
@@ -228,7 +238,8 @@ void main() {
               latitude: any(named: "latitude"),
               longitude: any(named: "longitude"),
             )).thenAnswer((_) async => weather);
-        final actual = await weatherRepository.getWeather(city, 0);
+        final actual =
+            await weatherRepository.getWeather(city, latitude, longitude);
         expect(
             actual,
             Weather(
