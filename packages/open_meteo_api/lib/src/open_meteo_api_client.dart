@@ -28,11 +28,11 @@ class OpenMeteoApiClient {
   static const _baseUrlGeocoding = 'geocoding-api.open-meteo.com';
 
   /// Finds a [Location] `/v1/search/?name=(query)`.
-  Future<Location> locationSearch(String query) async {
+  Future<List<Location>> locationSearch(String query) async {
     final locationRequest = Uri.https(
       _baseUrlGeocoding,
       "/v1/search",
-      {"name": query, "count": "1"},
+      {"name": query, "count": "15"},
     );
 
     final locationResponse = await _httpClient.get(locationRequest);
@@ -43,11 +43,13 @@ class OpenMeteoApiClient {
 
     if (!locationJson.containsKey("results")) throw LocationNotFoundFailure();
 
-    final result = locationJson["results"] as List;
+    final result = (locationJson["results"] as List)
+        .map((e) => Location.fromJson(e))
+        .toList();
 
     if (result.isEmpty) throw LocationNotFoundFailure();
 
-    return Location.fromJson(result.first as Map<String, dynamic>);
+    return result;
   }
 
   /// Fetches [Weather] for a given [Latitude] and  [Longitude].

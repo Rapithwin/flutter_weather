@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: implicit_dynamic_parameter
-
 part of 'location.dart';
 
 // **************************************************************************
@@ -13,12 +11,18 @@ Location _$LocationFromJson(Map<String, dynamic> json) => $checkedCreate(
       json,
       ($checkedConvert) {
         final val = Location(
-          id: $checkedConvert('id', (v) => (v as num).toInt()),
-          name: $checkedConvert('name', (v) => v as String),
+          city: $checkedConvert('city', (v) => v as String),
+          country: $checkedConvert('country', (v) => v as String),
           latitude: $checkedConvert('latitude', (v) => (v as num).toDouble()),
           longitude: $checkedConvert('longitude', (v) => (v as num).toDouble()),
-          country: $checkedConvert('country', (v) => v as String),
         );
         return val;
       },
     );
+
+Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
+      'city': instance.city,
+      'country': instance.country,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
+    };

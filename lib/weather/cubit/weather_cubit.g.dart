@@ -19,6 +19,11 @@ WeatherState _$WeatherStateFromJson(Map<String, dynamic> json) =>
                   WeatherStatus.initial),
           units: $checkedConvert('units',
               (v) => $enumDecodeNullable(_$UnitsEnumMap, v) ?? Units.metric),
+          weather: $checkedConvert(
+              'weather',
+              (v) => v == null
+                  ? null
+                  : Weather.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -27,6 +32,7 @@ WeatherState _$WeatherStateFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$WeatherStateToJson(WeatherState instance) =>
     <String, dynamic>{
       'status': _$WeatherStatusEnumMap[instance.status]!,
+      'weather': instance.weather.toJson(),
       'units': _$UnitsEnumMap[instance.units]!,
     };
 

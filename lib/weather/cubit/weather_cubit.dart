@@ -14,14 +14,20 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
 
   /// Uses the weather repository to try and retrieve a weather
   /// object for the given city
-  Future<void> fetchWeather(String? city) async {
-    if (city == null || city.isEmpty) return;
+  Future<void> fetchWeather(
+    String? city,
+    double? latitude,
+    double? longitude,
+  ) async {
+    if (city == null || city.isEmpty || latitude == null || longitude == null) {
+      return;
+    }
 
     emit(state.copyWith(status: WeatherStatus.loading));
 
     try {
       final weather = Weather.fromRepository(
-        await _weatherRepository.getWeather(city),
+        await _weatherRepository.getWeather(city, latitude, longitude),
       );
       final units = state.units;
       final temperatureValue = units.isImperial
@@ -51,9 +57,11 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
   Future<void> refreshWeather() async {
     if (!state.status.isSuccess) return;
     if (state.weather == Weather.empty) return;
+
     try {
       final weather = Weather.fromRepository(
-        await _weatherRepository.getWeather(state.weather.location),
+        await _weatherRepository.getWeather(state.weather.location,
+            state.weather.latitude!, state.weather.longitude!),
       );
       final units = state.units;
       final temperatureValue = units.isImperial

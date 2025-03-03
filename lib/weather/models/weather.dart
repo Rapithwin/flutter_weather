@@ -36,6 +36,8 @@ class Weather extends Equatable {
   final Temperature temperature;
   final bool isDay;
   final double windSpeed;
+  final double? latitude;
+  final double? longitude;
 
   const Weather({
     required this.condition,
@@ -44,6 +46,8 @@ class Weather extends Equatable {
     required this.temperature,
     required this.isDay,
     required this.windSpeed,
+    this.latitude,
+    this.longitude,
   });
 
   factory Weather.fromJson(Map<String, dynamic> json) =>

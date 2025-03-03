@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:open_meteo_api/open_meteo_api.dart' hide Weather;
+import 'package:open_meteo_api/open_meteo_api.dart' show OpenMeteoApiClient;
 import 'package:weather_repository/weather_repository.dart';
 
 class WeatherRepository {
@@ -9,14 +9,29 @@ class WeatherRepository {
   WeatherRepository({OpenMeteoApiClient? weatherApiClient})
       : _weatherApiClient = weatherApiClient ?? OpenMeteoApiClient();
 
-  Future<Weather> getWeather(String city) async {
+  Future<List<Location>> getLocation(String city) async {
     final location = await _weatherApiClient.locationSearch(city);
+    return location
+        .map((e) => Location(
+              city: e.name,
+              country: e.country,
+              latitude: e.latitude,
+              longitude: e.longitude,
+            ))
+        .toList();
+  }
+
+  Future<Weather> getWeather(
+    String city,
+    double latitude,
+    double longitude,
+  ) async {
     final weather = await _weatherApiClient.getWeather(
-      latitude: location.latitude,
-      longitude: location.longitude,
+      latitude: latitude,
+      longitude: longitude,
     );
     return Weather(
-        location: location.name,
+        location: city,
         temperature: weather.temperature,
         condition: weather.weatherCode.toInt().toCondition,
         isDay: weather.isDay.toBool,

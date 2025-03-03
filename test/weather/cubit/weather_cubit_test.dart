@@ -14,6 +14,8 @@ const weatherCondition = weather_repository.WeatherCondition.rainy;
 const weatherTemperature = 9.8;
 const isDay = true;
 const windSpeed = 4.5;
+const latitude = 41.85003;
+const longitude = -87.65005;
 
 class MockWeatherRepository extends Mock
     implements weather_repository.WeatherRepository {}
@@ -38,7 +40,7 @@ void main() {
       when(() => weather.isDay).thenReturn(isDay);
       when(() => weather.windSpeed).thenReturn(windSpeed);
       when(
-        () => weatherRepository.getWeather(any()),
+        () => weatherRepository.getWeather(any(), any(), any()),
       ).thenAnswer((_) async => weather);
     });
 
@@ -59,26 +61,28 @@ void main() {
     });
     group("fetchWeather", () {
       blocTest<WeatherCubit, WeatherState>(
-        "emits nothing when city is null",
+        "emits nothing on null input",
         build: () => weatherCubit,
-        act: (cubit) => cubit.fetchWeather(null),
+        act: (cubit) => cubit.fetchWeather(null, null, null),
         expect: () => <WeatherState>[],
       );
 
       blocTest<WeatherCubit, WeatherState>(
         "emits nothing when city is empty",
         build: () => weatherCubit,
-        act: (cubit) => cubit.fetchWeather(""),
+        act: (cubit) => cubit.fetchWeather("", latitude, longitude),
         expect: () => <WeatherState>[],
       );
 
       blocTest<WeatherCubit, WeatherState>(
         'calls getWeather with correct city.',
         build: () => weatherCubit,
-        act: (cubit) => cubit.fetchWeather(weatherLocation),
+        act: (cubit) =>
+            cubit.fetchWeather(weatherLocation, latitude, longitude),
         verify: (_) {
           verify(
-            () => weatherRepository.getWeather(weatherLocation),
+            () => weatherRepository.getWeather(
+                weatherLocation, latitude, longitude),
           ).called(1);
         },
       );
@@ -86,12 +90,14 @@ void main() {
       blocTest<WeatherCubit, WeatherState>(
         'emits [loading, failure] when getWeather throws.',
         setUp: () {
-          when(() => weatherRepository.getWeather(any())).thenThrow(
+          when(() => weatherRepository.getWeather(any(), any(), any()))
+              .thenThrow(
             Exception("oops"),
           );
         },
         build: () => weatherCubit,
-        act: (cubit) => cubit.fetchWeather(weatherLocation),
+        act: (cubit) =>
+            cubit.fetchWeather(weatherLocation, latitude, longitude),
         expect: () => <WeatherState>[
           WeatherState(status: WeatherStatus.loading),
           WeatherState(status: WeatherStatus.failure),
@@ -101,7 +107,8 @@ void main() {
       blocTest<WeatherCubit, WeatherState>(
         'emits [loading, success] when getWeather returns (metric).',
         build: () => weatherCubit,
-        act: (cubit) => cubit.fetchWeather(weatherLocation),
+        act: (cubit) =>
+            cubit.fetchWeather(weatherLocation, latitude, longitude),
         expect: () => <dynamic>[
           WeatherState(status: WeatherStatus.loading),
           isA<WeatherState>()
@@ -137,7 +144,8 @@ void main() {
         seed: () => WeatherState(
           units: Units.imperial,
         ),
-        act: (cubit) => cubit.fetchWeather(weatherLocation),
+        act: (cubit) =>
+            cubit.fetchWeather(weatherLocation, latitude, longitude),
         expect: () => <dynamic>[
           WeatherState(
             status: WeatherStatus.loading,
@@ -177,7 +185,8 @@ void main() {
           act: (cubit) => cubit.refreshWeather(),
           expect: () => const <WeatherState>[],
           verify: (_) {
-            verifyNever(() => weatherRepository.getWeather(any()));
+            verifyNever(
+                () => weatherRepository.getWeather(any(), any(), any()));
           },
         );
 
@@ -188,7 +197,8 @@ void main() {
           act: (cubit) => cubit.refreshWeather(),
           expect: () => const <WeatherState>[],
           verify: (_) {
-            verifyNever(() => weatherRepository.getWeather(any()));
+            verifyNever(
+                () => weatherRepository.getWeather(any(), any(), any()));
           },
         );
 
@@ -206,19 +216,21 @@ void main() {
               ),
               isDay: isDay,
               windSpeed: windSpeed,
+              latitude: latitude,
+              longitude: longitude,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(),
           verify: (_) {
-            verify(() => weatherRepository.getWeather(weatherLocation))
-                .called(1);
+            verify(() => weatherRepository.getWeather(
+                weatherLocation, latitude, longitude)).called(1);
           },
         );
 
         blocTest(
           "emits nothing when exception is thrown",
           setUp: () {
-            when(() => weatherRepository.getWeather(any()))
+            when(() => weatherRepository.getWeather(any(), any(), any()))
                 .thenThrow(Exception("oops"));
           },
           build: () => weatherCubit,
@@ -233,6 +245,8 @@ void main() {
               ),
               isDay: isDay,
               windSpeed: windSpeed,
+              latitude: latitude,
+              longitude: longitude,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(),
@@ -252,6 +266,8 @@ void main() {
               ),
               isDay: isDay,
               windSpeed: windSpeed,
+              latitude: latitude,
+              longitude: longitude,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(),
@@ -294,6 +310,8 @@ void main() {
               ),
               isDay: isDay,
               windSpeed: windSpeed,
+              latitude: latitude,
+              longitude: longitude,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(),
