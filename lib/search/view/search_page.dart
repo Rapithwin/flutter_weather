@@ -1,4 +1,5 @@
 import 'package:bloc_weather/search/cubit/location_cubit.dart';
+import 'package:bloc_weather/search/models/location.dart';
 import 'package:bloc_weather/search/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SearchPage extends StatefulWidget {
   const SearchPage._();
 
-  static Route<String> route() {
+  static Route<Location> route() {
     return MaterialPageRoute(
       builder: (_) => const SearchPage._(),
     );
@@ -51,7 +52,9 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               ),
               IconButton(
-                onPressed: () => Navigator.of(context).pop(_text),
+                onPressed: () {
+                  context.read<LocationCubit>().fetchLocation(_text);
+                },
                 icon: const Icon(
                   Icons.search,
                   semanticLabel: "Submit",
