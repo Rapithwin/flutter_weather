@@ -16,10 +16,12 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
   /// object for the given city
   Future<void> fetchWeather(
     String? city,
-    double latitude,
-    double longitude,
+    double? latitude,
+    double? longitude,
   ) async {
-    if (city == null || city.isEmpty) return;
+    if (city == null || city.isEmpty || latitude == null || longitude == null) {
+      return;
+    }
 
     emit(state.copyWith(status: WeatherStatus.loading));
 
