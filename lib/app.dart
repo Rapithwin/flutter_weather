@@ -1,3 +1,4 @@
+import 'package:bloc_weather/search/cubit/location_cubit.dart';
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:bloc_weather/weather/view/weather_page.dart';
 import 'package:bloc_weather/weather/weather.dart';
@@ -14,8 +15,15 @@ class WeatherApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => WeatherCubit(_weatherRepository),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => WeatherCubit(_weatherRepository),
+        ),
+        BlocProvider(
+          create: (_) => LocationCubit(_weatherRepository),
+        )
+      ],
       child: const WeatherAppView(),
     );
   }
