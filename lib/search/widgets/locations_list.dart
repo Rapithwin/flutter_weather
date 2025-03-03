@@ -8,15 +8,23 @@ class LocationsListBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: locations.length,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black),
-          ),
-        );
-      },
+    return Flexible(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: locations.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () => Navigator.of(context).pop(locations[index]),
+            child: Container(
+              height: 100,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
