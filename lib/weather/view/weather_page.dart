@@ -40,7 +40,8 @@ class WeatherPage extends StatelessWidget {
                   weather: state.weather,
                   units: state.units,
                   onRefresh: () {
-                    return context.read<WeatherCubit>().refreshWeather();
+                    return context.read<WeatherCubit>().refreshWeather(
+                        state.weather.latitude, state.weather.longitude);
                   },
                 ),
             };
