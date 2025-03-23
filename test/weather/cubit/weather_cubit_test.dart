@@ -182,7 +182,10 @@ void main() {
         blocTest<WeatherCubit, WeatherState>(
           'emits nothing when status is not success.',
           build: () => weatherCubit,
-          act: (cubit) => cubit.refreshWeather(),
+          act: (cubit) => cubit.refreshWeather(
+            latitude,
+            longitude,
+          ),
           expect: () => const <WeatherState>[],
           verify: (_) {
             verifyNever(
@@ -194,7 +197,7 @@ void main() {
           'emits nothing when location is null.',
           build: () => weatherCubit,
           seed: () => WeatherState(status: WeatherStatus.success),
-          act: (cubit) => cubit.refreshWeather(),
+          act: (cubit) => cubit.refreshWeather(latitude, longitude),
           expect: () => const <WeatherState>[],
           verify: (_) {
             verifyNever(
@@ -220,7 +223,7 @@ void main() {
               longitude: longitude,
             ),
           ),
-          act: (cubit) => cubit.refreshWeather(),
+          act: (cubit) => cubit.refreshWeather(latitude, longitude),
           verify: (_) {
             verify(() => weatherRepository.getWeather(
                 weatherLocation, latitude, longitude)).called(1);
@@ -249,7 +252,7 @@ void main() {
               longitude: longitude,
             ),
           ),
-          act: (cubit) => cubit.refreshWeather(),
+          act: (cubit) => cubit.refreshWeather(latitude, longitude),
           expect: () => <WeatherState>[],
         );
         blocTest<WeatherCubit, WeatherState>(
@@ -270,7 +273,7 @@ void main() {
               longitude: longitude,
             ),
           ),
-          act: (cubit) => cubit.refreshWeather(),
+          act: (cubit) => cubit.refreshWeather(latitude, longitude),
           expect: () => <Matcher>[
             isA<WeatherState>()
                 .having((w) => w.status, "status", WeatherStatus.success)
@@ -314,7 +317,10 @@ void main() {
               longitude: longitude,
             ),
           ),
-          act: (cubit) => cubit.refreshWeather(),
+          act: (cubit) => cubit.refreshWeather(
+            latitude,
+            longitude,
+          ),
           expect: () => <Matcher>[
             isA<WeatherState>()
                 .having((w) => w.status, "status", WeatherStatus.success)
