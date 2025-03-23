@@ -90,6 +90,8 @@ class Weather extends Equatable {
     Temperature? temperature,
     bool? isDay,
     double? windSpeed,
+    double? latitude,
+    double? longitude,
   }) {
     return Weather(
       condition: condition ?? this.condition,
@@ -98,6 +100,8 @@ class Weather extends Equatable {
       temperature: temperature ?? this.temperature,
       isDay: isDay ?? this.isDay,
       windSpeed: windSpeed ?? this.windSpeed,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 }
