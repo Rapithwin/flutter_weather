@@ -41,8 +41,11 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
           status: WeatherStatus.success,
           units: units,
           weather: weather.copyWith(
-              temperature: Temperature(value: temperatureValue),
-              windSpeed: windSpeed),
+            temperature: Temperature(value: temperatureValue),
+            windSpeed: windSpeed,
+            latitude: latitude,
+            longitude: longitude,
+          ),
         ),
       );
     } on Exception {
@@ -54,14 +57,20 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
 
   /// Retrieves a new weather object using the weather repository
   /// given the current weather state
-  Future<void> refreshWeather() async {
+  Future<void> refreshWeather(
+    double? latitude,
+    double? longitude,
+  ) async {
     if (!state.status.isSuccess) return;
     if (state.weather == Weather.empty) return;
 
     try {
       final weather = Weather.fromRepository(
-        await _weatherRepository.getWeather(state.weather.location,
-            state.weather.latitude!, state.weather.longitude!),
+        await _weatherRepository.getWeather(
+          state.weather.location,
+          latitude!,
+          longitude!,
+        ),
       );
       final units = state.units;
       final temperatureValue = units.isImperial
@@ -77,6 +86,8 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
           weather: weather.copyWith(
             temperature: Temperature(value: temperatureValue),
             windSpeed: windSpeed,
+            latitude: latitude,
+            longitude: longitude,
           ),
         ),
       );
@@ -110,8 +121,9 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
         state.copyWith(
           units: units,
           weather: weather.copyWith(
-              temperature: Temperature(value: temperatureValue),
-              windSpeed: windSpeed),
+            temperature: Temperature(value: temperatureValue),
+            windSpeed: windSpeed,
+          ),
         ),
       );
     }
