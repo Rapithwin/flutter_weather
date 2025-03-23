@@ -35,12 +35,11 @@ class OpenMeteoApiClient {
       {"name": query, "count": "15"},
     );
 
-    final locationResponse = await _httpClient.get(
+    final locationResponse = await _httpClient
+        .get(
       locationRequest,
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-    ).timeout(
+    )
+        .timeout(
       Duration(seconds: 7),
       onTimeout: () {
         throw Exception("Request timed out");
@@ -77,10 +76,11 @@ class OpenMeteoApiClient {
       },
     );
 
-    final weatherResponse = await _httpClient.get(
+    final weatherResponse = await _httpClient
+        .get(
       weatherRequest,
-      headers: {"Cache-Control": "no-cache"},
-    ).timeout(
+    )
+        .timeout(
       Duration(seconds: 7),
       onTimeout: () {
         throw Exception("Request timed out");
