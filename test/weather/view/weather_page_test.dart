@@ -13,6 +13,7 @@ import 'package:weather_repository/weather_repository.dart' hide Weather;
 import 'package:bloc_weather/weather/weather.dart';
 
 import '../../helpers/hydrated_bloc.dart';
+import '../cubit/weather_cubit_test.dart';
 
 class MockWeatherRepository extends Mock implements WeatherRepository {}
 
@@ -152,7 +153,8 @@ void main() {
           status: WeatherStatus.success,
           weather: weather,
         ));
-        when(() => weatherCubit.refreshWeather()).thenAnswer((_) async {});
+        when(() => weatherCubit.refreshWeather(latitude, longitude))
+            .thenAnswer((_) async {});
         await tester.pumpWidget(BlocProvider.value(
           value: weatherCubit,
           child: MaterialApp(
@@ -165,7 +167,8 @@ void main() {
           1000,
         );
         await tester.pumpAndSettle();
-        verify(() => weatherCubit.refreshWeather()).called(1);
+        verify(() => weatherCubit.refreshWeather(latitude, longitude))
+            .called(1);
       },
     );
   });
