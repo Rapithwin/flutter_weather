@@ -137,7 +137,8 @@ void main() {
               {
                 "latitude": "$latitude",
                 "longitude": "$longitude",
-                "current_weather": "true",
+                "current":
+                    "temperature,windspeed,winddirection,is_day,weathercode",
               },
             ),
           ),
@@ -194,11 +195,12 @@ void main() {
 "timezone": "GMT",
 "timezone_abbreviation": "GMT",
 "elevation": 189,
-"current_weather": {
+"current": {
 "temperature": 15.3,
 "windspeed": 25.8,
 "winddirection": 310,
 "weathercode": 63,
+"is_day": 1,
 "time": "2022-09-12T01:00"
 }
 }

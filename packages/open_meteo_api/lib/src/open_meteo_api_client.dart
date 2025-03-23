@@ -35,12 +35,11 @@ class OpenMeteoApiClient {
       {"name": query, "count": "15"},
     );
 
-    final locationResponse = await _httpClient.get(
+    final locationResponse = await _httpClient
+        .get(
       locationRequest,
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-    ).timeout(
+    )
+        .timeout(
       Duration(seconds: 7),
       onTimeout: () {
         throw Exception("Request timed out");
@@ -73,14 +72,15 @@ class OpenMeteoApiClient {
       {
         "latitude": "$latitude",
         "longitude": "$longitude",
-        "current_weather": "true",
+        "current": "temperature,windspeed,winddirection,is_day,weathercode",
       },
     );
 
-    final weatherResponse = await _httpClient.get(
+    final weatherResponse = await _httpClient
+        .get(
       weatherRequest,
-      headers: {"Cache-Control": "no-cache"},
-    ).timeout(
+    )
+        .timeout(
       Duration(seconds: 7),
       onTimeout: () {
         throw Exception("Request timed out");
@@ -91,11 +91,11 @@ class OpenMeteoApiClient {
 
     final bodyJson = jsonDecode(weatherResponse.body) as Map<String, dynamic>;
 
-    if (!bodyJson.containsKey("current_weather")) {
+    if (!bodyJson.containsKey("current")) {
       throw WeatherNotFoundFailure();
     }
 
-    final weatherJson = bodyJson["current_weather"] as Map<String, dynamic>;
+    final weatherJson = bodyJson["current"] as Map<String, dynamic>;
 
     return Weather.fromJson(weatherJson);
   }
