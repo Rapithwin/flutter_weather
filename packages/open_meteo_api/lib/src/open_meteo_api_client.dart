@@ -73,7 +73,7 @@ class OpenMeteoApiClient {
       {
         "latitude": "$latitude",
         "longitude": "$longitude",
-        "current_weather": "true",
+        "current": "temperature,windspeed,winddirection,is_day,weathercode",
       },
     );
 
@@ -91,11 +91,11 @@ class OpenMeteoApiClient {
 
     final bodyJson = jsonDecode(weatherResponse.body) as Map<String, dynamic>;
 
-    if (!bodyJson.containsKey("current_weather")) {
+    if (!bodyJson.containsKey("current")) {
       throw WeatherNotFoundFailure();
     }
 
-    final weatherJson = bodyJson["current_weather"] as Map<String, dynamic>;
+    final weatherJson = bodyJson["current"] as Map<String, dynamic>;
 
     return Weather.fromJson(weatherJson);
   }
