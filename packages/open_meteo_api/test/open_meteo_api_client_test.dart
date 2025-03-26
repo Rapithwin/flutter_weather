@@ -48,7 +48,7 @@ void main() {
             Uri.https(
               "geocoding-api.open-meteo.com",
               "/v1/search",
-              {"name": query, "count": "1"},
+              {"name": query, "count": "15"},
             ),
           ),
         ).called(1);
@@ -97,7 +97,8 @@ void main() {
       "id": 4887398,
       "name": "Chicago",
       "latitude": 41.85003,
-      "longitude": -87.65005
+      "longitude": -87.65005,
+      "country": "United States"
     }
   ]
 }''',
@@ -106,11 +107,12 @@ void main() {
         final actual = await apiClient.locationSearch(query);
         expect(
           actual,
-          isA<Location>()
-              .having((l) => l.id, "id", 4887398)
-              .having((l) => l.name, "name", "Chicago")
-              .having((l) => l.latitude, "latitude", 41.85003)
-              .having((l) => l.longitude, "longitude", -87.65005),
+          isA<List<Location>>()
+              .having((l) => l[0].id, "id", 4887398)
+              .having((l) => l[0].name, "name", "Chicago")
+              .having((l) => l[0].latitude, "latitude", 41.85003)
+              .having((l) => l[0].longitude, "longitude", -87.65005)
+              .having((l) => l[0].country, "country", "United States"),
         );
       });
     });
@@ -138,7 +140,7 @@ void main() {
                 "latitude": "$latitude",
                 "longitude": "$longitude",
                 "current":
-                    "temperature,windspeed,winddirection,is_day,weathercode",
+                    "temperature,windspeed,is_day,weathercode,wind_direction_10m,apparent_temperature,relative_humidity_2m,visibility",
               },
             ),
           ),
@@ -196,12 +198,17 @@ void main() {
 "timezone_abbreviation": "GMT",
 "elevation": 189,
 "current": {
-"temperature": 15.3,
-"windspeed": 25.8,
-"winddirection": 310,
-"weathercode": 63,
-"is_day": 1,
-"time": "2022-09-12T01:00"
+    "time": "2025-03-26T15:00",
+    "interval": 900,
+    "temperature": 15.3,
+    "windspeed": 4.5,
+    "winddirection": 196,
+    "is_day": 0,
+    "weathercode": 63,
+    "wind_direction_10m": 196,
+    "apparent_temperature": 12.9,
+    "relative_humidity_2m": 89,
+    "visibility": 13000.00
 }
 }
         ''',
@@ -214,8 +221,14 @@ void main() {
         expect(
           actual,
           isA<WeatherCurrent>()
-              .having((w) => w.temperature, 'temperature', 15.3)
-              .having((w) => w.weatherCode, 'weatherCode', 63.0),
+              .having((w) => w.temperature, "temperature", 15.3)
+              .having((w) => w.weatherCode, "weatherCode", 63)
+              .having((w) => w.isDay, "isDay", 0)
+              .having((w) => w.windSpeed, "windSpeed", 4.5)
+              .having((w) => w.feelsLike, "apparent temperature", 12.9)
+              .having((w) => w.humidity, "relative humidity", 89)
+              .having((w) => w.windDirection, "wind direction", 196)
+              .having((w) => w.visibility, "visibility", 13000),
         );
       });
     });
