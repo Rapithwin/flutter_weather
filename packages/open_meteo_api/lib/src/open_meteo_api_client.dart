@@ -67,7 +67,7 @@ class OpenMeteoApiClient {
     required double longitude,
   }) async {
     final String currentQuery =
-        "temperature,windspeed,is_day,weathercode,wind_direction_10m,apparent_temperature,relative_humidity_2m";
+        "temperature,windspeed,is_day,weathercode,wind_direction_10m,apparent_temperature,relative_humidity_2m,visibility";
     final weatherRequest = Uri.https(
       _baseUrlWeather,
       "/v1/forecast",
