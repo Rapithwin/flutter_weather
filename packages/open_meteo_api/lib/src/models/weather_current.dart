@@ -18,6 +18,17 @@ class WeatherCurrent {
   @JsonKey(name: "windspeed")
   final double windSpeed;
 
+  @JsonKey(name: "apparent_temperature")
+  final double feelsLike;
+
+  @JsonKey(name: "wind_direction_10m")
+  final double windDirection;
+
+  @JsonKey(name: "relative_humidity_2m")
+  final int humidity;
+
+  final int visibility;
+
   factory WeatherCurrent.fromJson(Map<String, dynamic> json) =>
       _$WeatherCurrentFromJson(json);
 
@@ -26,5 +37,9 @@ class WeatherCurrent {
     required this.weatherCode,
     required this.isDay,
     required this.windSpeed,
+    required this.feelsLike,
+    required this.humidity,
+    required this.visibility,
+    required this.windDirection,
   });
 }
