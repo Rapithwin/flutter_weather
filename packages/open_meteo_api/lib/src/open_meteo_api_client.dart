@@ -61,18 +61,20 @@ class OpenMeteoApiClient {
     return result;
   }
 
-  /// Fetches [Weather] for a given [Latitude] and  [Longitude].
+  /// Fetches [WeatherCurrent] for a given [Latitude] and  [Longitude].
   Future<WeatherCurrent> getWeather({
     required double latitude,
     required double longitude,
   }) async {
+    final String currentQuery =
+        "temperature,windspeed,is_day,weathercode,wind_direction_10m,apparent_temperature,relative_humidity_2m";
     final weatherRequest = Uri.https(
       _baseUrlWeather,
       "/v1/forecast",
       {
         "latitude": "$latitude",
         "longitude": "$longitude",
-        "current": "temperature,windspeed,winddirection,is_day,weathercode",
+        "current": currentQuery,
       },
     );
 
