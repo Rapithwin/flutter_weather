@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-part 'weather.g.dart';
+part 'weather_current.g.dart';
 
 @JsonSerializable()
 
@@ -19,7 +19,7 @@ class WeatherCurrent {
   final double windSpeed;
 
   factory WeatherCurrent.fromJson(Map<String, dynamic> json) =>
-      _$WeatherFromJson(json);
+      _$WeatherCurrentFromJson(json);
 
   WeatherCurrent({
     required this.temperature,
