@@ -3,9 +3,9 @@ part 'weather.g.dart';
 
 @JsonSerializable()
 
-/// [Weather] model containing all the info returnted by
+/// [WeatherCurrent] model containing all the current weather info returnted by
 /// the API.
-class Weather {
+class WeatherCurrent {
   final double temperature;
   // specifies that the JSON key corresponding to the weatherCode
   // property in the Dart model is "weathercode".
@@ -18,10 +18,10 @@ class Weather {
   @JsonKey(name: "windspeed")
   final double windSpeed;
 
-  factory Weather.fromJson(Map<String, dynamic> json) =>
+  factory WeatherCurrent.fromJson(Map<String, dynamic> json) =>
       _$WeatherFromJson(json);
 
-  Weather({
+  WeatherCurrent({
     required this.temperature,
     required this.weatherCode,
     required this.isDay,

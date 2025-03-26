@@ -213,7 +213,7 @@ void main() {
         );
         expect(
           actual,
-          isA<Weather>()
+          isA<WeatherCurrent>()
               .having((w) => w.temperature, 'temperature', 15.3)
               .having((w) => w.weatherCode, 'weatherCode', 63.0),
         );
