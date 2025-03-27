@@ -38,7 +38,7 @@ class Weather extends Equatable {
   final double windSpeed;
   final double feelsLike;
   final int humidity;
-  final int visibility;
+  final double visibility;
   final String windDirection;
 
   final double? latitude;
@@ -112,7 +112,7 @@ class Weather extends Equatable {
     double? feelsLike,
     String? windDirection,
     int? humidity,
-    int? visibility,
+    double? visibility,
   }) {
     return Weather(
       condition: condition ?? this.condition,
