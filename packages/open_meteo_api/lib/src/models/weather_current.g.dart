@@ -24,7 +24,8 @@ WeatherCurrent _$WeatherCurrentFromJson(Map<String, dynamic> json) =>
               'apparent_temperature', (v) => (v as num).toDouble()),
           humidity: $checkedConvert(
               'relative_humidity_2m', (v) => (v as num).toInt()),
-          visibility: $checkedConvert('visibility', (v) => (v as num).toInt()),
+          visibility:
+              $checkedConvert('visibility', (v) => (v as num).toDouble()),
           windDirection: $checkedConvert(
               'wind_direction_10m', (v) => (v as num).toDouble()),
         );

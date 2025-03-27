@@ -27,7 +27,7 @@ class WeatherCurrent {
   @JsonKey(name: "relative_humidity_2m")
   final int humidity;
 
-  final int visibility;
+  final double visibility;
 
   factory WeatherCurrent.fromJson(Map<String, dynamic> json) =>
       _$WeatherCurrentFromJson(json);

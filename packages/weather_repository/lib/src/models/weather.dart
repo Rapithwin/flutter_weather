@@ -23,7 +23,7 @@ class Weather extends Equatable {
   final double windSpeed;
   final double feelsLike;
   final int humidity;
-  final int visibility;
+  final double visibility;
   final String windDirection;
 
   const Weather({
