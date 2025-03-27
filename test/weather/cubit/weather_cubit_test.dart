@@ -16,6 +16,10 @@ const isDay = true;
 const windSpeed = 4.5;
 const latitude = 41.85003;
 const longitude = -87.65005;
+const feelsLike = 10.0;
+const humidity = 40;
+const windDirection = "SE";
+const visibility = 13000;
 
 class MockWeatherRepository extends Mock
     implements weather_repository.WeatherRepository {}
@@ -39,6 +43,10 @@ void main() {
       when(() => weather.temperature).thenReturn(weatherTemperature);
       when(() => weather.isDay).thenReturn(isDay);
       when(() => weather.windSpeed).thenReturn(windSpeed);
+      when(() => weather.feelsLike).thenReturn(feelsLike);
+      when(() => weather.humidity).thenReturn(humidity);
+      when(() => weather.windDirection).thenReturn(windDirection);
+      when(() => weather.visibility).thenReturn(visibility);
       when(
         () => weatherRepository.getWeather(any(), any(), any()),
       ).thenAnswer((_) async => weather);
@@ -221,6 +229,10 @@ void main() {
               windSpeed: windSpeed,
               latitude: latitude,
               longitude: longitude,
+              windDirection: windDirection,
+              feelsLike: feelsLike,
+              humidity: humidity,
+              visibility: visibility,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(latitude, longitude),
@@ -250,6 +262,10 @@ void main() {
               windSpeed: windSpeed,
               latitude: latitude,
               longitude: longitude,
+              windDirection: windDirection,
+              feelsLike: feelsLike,
+              humidity: humidity,
+              visibility: visibility,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(latitude, longitude),
@@ -271,6 +287,10 @@ void main() {
               windSpeed: windSpeed,
               latitude: latitude,
               longitude: longitude,
+              windDirection: windDirection,
+              feelsLike: feelsLike,
+              humidity: humidity,
+              visibility: visibility,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(latitude, longitude),
@@ -315,6 +335,10 @@ void main() {
               windSpeed: windSpeed,
               latitude: latitude,
               longitude: longitude,
+              windDirection: windDirection,
+              feelsLike: feelsLike,
+              humidity: humidity,
+              visibility: visibility,
             ),
           ),
           act: (cubit) => cubit.refreshWeather(
@@ -372,6 +396,10 @@ void main() {
             ),
             isDay: isDay,
             windSpeed: windSpeed,
+            windDirection: windDirection,
+            feelsLike: feelsLike,
+            humidity: humidity,
+            visibility: visibility,
           ),
         ),
         act: (cubit) => cubit.toggleUnits(),
@@ -388,6 +416,10 @@ void main() {
               ),
               isDay: isDay,
               windSpeed: windSpeed.toKmph(),
+              windDirection: windDirection,
+              feelsLike: feelsLike,
+              humidity: humidity,
+              visibility: visibility,
             ),
           ),
         ],
@@ -409,6 +441,10 @@ void main() {
             ),
             isDay: isDay,
             windSpeed: windSpeed,
+            windDirection: windDirection,
+            feelsLike: feelsLike,
+            humidity: humidity,
+            visibility: visibility,
           ),
         ),
         act: (cubit) => cubit.toggleUnits(),
@@ -425,6 +461,10 @@ void main() {
               ),
               isDay: isDay,
               windSpeed: windSpeed.toMph(),
+              windDirection: windDirection,
+              feelsLike: feelsLike,
+              humidity: humidity,
+              visibility: visibility,
             ),
           ),
         ],

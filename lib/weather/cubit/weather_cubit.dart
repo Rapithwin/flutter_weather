@@ -35,6 +35,11 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
           : weather.temperature.value;
       final windSpeed =
           units.isImperial ? weather.windSpeed.toMph() : weather.windSpeed;
+      final visibility =
+          units.isImperial ? weather.visibility.toMph() : weather.visibility;
+      final feelsLike = units.isImperial
+          ? weather.feelsLike.toFahrenheit()
+          : weather.feelsLike;
 
       emit(
         state.copyWith(
@@ -45,6 +50,10 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
             windSpeed: windSpeed,
             latitude: latitude,
             longitude: longitude,
+            visibility: visibility,
+            feelsLike: feelsLike,
+            humidity: weather.humidity,
+            windDirection: weather.windDirection,
           ),
         ),
       );
@@ -78,6 +87,11 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
           : weather.temperature.value;
       final windSpeed =
           units.isImperial ? weather.windSpeed.toMph() : weather.windSpeed;
+      final visibility =
+          units.isImperial ? weather.visibility.toMph() : weather.visibility;
+      final feelsLike = units.isImperial
+          ? weather.feelsLike.toFahrenheit()
+          : weather.feelsLike;
 
       emit(
         state.copyWith(
@@ -88,6 +102,10 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
             windSpeed: windSpeed,
             latitude: latitude,
             longitude: longitude,
+            visibility: visibility,
+            feelsLike: feelsLike,
+            humidity: weather.humidity,
+            windDirection: weather.windDirection,
           ),
         ),
       );
@@ -117,12 +135,22 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
       final windSpeed = units.isMetric
           ? weather.windSpeed.toKmph()
           : weather.windSpeed.toMph();
+
+      final visibility = units.isMetric
+          ? weather.visibility.toKmph()
+          : weather.visibility.toMph();
+
+      final feelsLike = units.isMetric
+          ? weather.feelsLike.toCelsius()
+          : weather.feelsLike.toFahrenheit();
       emit(
         state.copyWith(
           units: units,
           weather: weather.copyWith(
             temperature: Temperature(value: temperatureValue),
             windSpeed: windSpeed,
+            visibility: visibility,
+            feelsLike: feelsLike,
           ),
         ),
       );
