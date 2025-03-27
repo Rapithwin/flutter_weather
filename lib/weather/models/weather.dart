@@ -39,7 +39,7 @@ class Weather extends Equatable {
   final double feelsLike;
   final int humidity;
   final int visibility;
-  final double windDirection;
+  final String windDirection;
 
   final double? latitude;
   final double? longitude;
@@ -87,7 +87,7 @@ class Weather extends Equatable {
     feelsLike: 0.0,
     humidity: 0,
     visibility: 0,
-    windDirection: 0.0,
+    windDirection: "-",
   );
 
   @override
@@ -110,7 +110,7 @@ class Weather extends Equatable {
     double? latitude,
     double? longitude,
     double? feelsLike,
-    double? windDirection,
+    String? windDirection,
     int? humidity,
     int? visibility,
   }) {
