@@ -144,7 +144,7 @@ void main() {
               feelsLike: 43.4,
               humidity: 50,
               visibility: 13000,
-              windDirection: 202.5,
+              windDirection: "SW",
             ));
       });
       test("returns correct response on success (cloudy)", () async {
@@ -180,7 +180,7 @@ void main() {
               feelsLike: 43.4,
               humidity: 50,
               visibility: 13000,
-              windDirection: 202.5,
+              windDirection: "SW",
             ));
       });
       test("returns correct response on success rainy)", () async {
@@ -216,7 +216,7 @@ void main() {
               feelsLike: 43.4,
               humidity: 50,
               visibility: 13000,
-              windDirection: 202.5,
+              windDirection: "SW",
             ));
       });
       test("returns correct response on success (snowy)", () async {
@@ -252,7 +252,7 @@ void main() {
               feelsLike: 43.4,
               humidity: 50,
               visibility: 13000,
-              windDirection: 202.5,
+              windDirection: "SW",
             ));
       });
       test("returns correct response on success (unknown)", () async {
@@ -288,7 +288,7 @@ void main() {
               feelsLike: 43.4,
               humidity: 50,
               visibility: 13000,
-              windDirection: 202.5,
+              windDirection: "SW",
             ));
       });
     });
