@@ -31,11 +31,16 @@ class WeatherRepository {
       longitude: longitude,
     );
     return Weather(
-        location: city,
-        temperature: weather.temperature,
-        condition: weather.weatherCode.toInt().toCondition,
-        isDay: weather.isDay.toBool,
-        windSpeed: weather.windSpeed);
+      location: city,
+      temperature: weather.temperature,
+      condition: weather.weatherCode.toInt().toCondition,
+      isDay: weather.isDay.toBool,
+      windSpeed: weather.windSpeed,
+      feelsLike: weather.feelsLike,
+      humidity: weather.humidity,
+      windDirection: weather.windDirection,
+      visibility: weather.visibility,
+    );
   }
 }
 
