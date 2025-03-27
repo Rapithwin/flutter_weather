@@ -38,7 +38,7 @@ class WeatherRepository {
       windSpeed: weather.windSpeed,
       feelsLike: weather.feelsLike,
       humidity: weather.humidity,
-      windDirection: weather.windDirection,
+      windDirection: weather.windDirection.toDirectionStr,
       visibility: weather.visibility,
     );
   }
@@ -87,5 +87,19 @@ extension on int {
 
   bool get toBool {
     return this == 1;
+  }
+}
+
+extension on double {
+  String get toDirectionStr {
+    if (this >= -22.5 && this < 22.5) return "N";
+    if (this >= 22.5 && this < 67.5) return "NE";
+    if (this >= 67.5 && this < 112.5) return "E";
+    if (this >= 112.5 && this < 157.5) return "SE";
+    if (this >= 157.5 && this < 202.5) return "S";
+    if (this >= 202.5 && this < 247.5) return "SW";
+    if (this >= 247.5 && this < 292.5) return "W";
+    if (this >= 292.5 && this < 337.5) return "NW";
+    throw Exception("Invalid Direction");
   }
 }

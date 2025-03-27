@@ -24,7 +24,7 @@ class Weather extends Equatable {
   final double feelsLike;
   final int humidity;
   final int visibility;
-  final double windDirection;
+  final String windDirection;
 
   const Weather({
     required this.location,
