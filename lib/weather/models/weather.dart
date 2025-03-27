@@ -36,6 +36,11 @@ class Weather extends Equatable {
   final Temperature temperature;
   final bool isDay;
   final double windSpeed;
+  final double feelsLike;
+  final int humidity;
+  final int visibility;
+  final double windDirection;
+
   final double? latitude;
   final double? longitude;
 
@@ -46,6 +51,10 @@ class Weather extends Equatable {
     required this.temperature,
     required this.isDay,
     required this.windSpeed,
+    required this.feelsLike,
+    required this.humidity,
+    required this.visibility,
+    required this.windDirection,
     this.latitude,
     this.longitude,
   });
@@ -61,6 +70,10 @@ class Weather extends Equatable {
       temperature: Temperature(value: weather.temperature),
       isDay: weather.isDay,
       windSpeed: weather.windSpeed,
+      feelsLike: weather.feelsLike,
+      humidity: weather.humidity,
+      visibility: weather.visibility,
+      windDirection: weather.windDirection,
     );
   }
 
@@ -71,6 +84,10 @@ class Weather extends Equatable {
     temperature: const Temperature(value: 0),
     isDay: false,
     windSpeed: 0.0,
+    feelsLike: 0.0,
+    humidity: 0,
+    visibility: 0,
+    windDirection: 0.0,
   );
 
   @override
@@ -92,6 +109,10 @@ class Weather extends Equatable {
     double? windSpeed,
     double? latitude,
     double? longitude,
+    double? feelsLike,
+    double? windDirection,
+    int? humidity,
+    int? visibility,
   }) {
     return Weather(
       condition: condition ?? this.condition,
@@ -102,6 +123,10 @@ class Weather extends Equatable {
       windSpeed: windSpeed ?? this.windSpeed,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
+      feelsLike: feelsLike ?? this.feelsLike,
+      humidity: humidity ?? this.humidity,
+      visibility: visibility ?? this.visibility,
+      windDirection: windDirection ?? this.windDirection,
     );
   }
 }
