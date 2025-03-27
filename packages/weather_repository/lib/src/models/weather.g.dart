@@ -23,8 +23,7 @@ Weather _$WeatherFromJson(Map<String, dynamic> json) => $checkedCreate(
               $checkedConvert('feels_like', (v) => (v as num).toDouble()),
           humidity: $checkedConvert('humidity', (v) => (v as num).toInt()),
           visibility: $checkedConvert('visibility', (v) => (v as num).toInt()),
-          windDirection:
-              $checkedConvert('wind_direction', (v) => (v as num).toDouble()),
+          windDirection: $checkedConvert('wind_direction', (v) => v as String),
         );
         return val;
       },
