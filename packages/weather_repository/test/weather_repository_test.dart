@@ -9,7 +9,7 @@ class MockOpenMeteoApiClient extends Mock
 
 class MockLocation extends Mock implements open_meteo_api.Location {}
 
-class MockWeather extends Mock implements open_meteo_api.Weather {}
+class MockWeather extends Mock implements open_meteo_api.WeatherCurrent {}
 
 void main() {
   group("WeatherRepository", () {
@@ -121,6 +121,10 @@ void main() {
         when(() => weather.weatherCode).thenReturn(0);
         when(() => weather.isDay).thenReturn(0);
         when(() => weather.windSpeed).thenReturn(4.5);
+        when(() => weather.feelsLike).thenReturn(43.4);
+        when(() => weather.humidity).thenReturn(50);
+        when(() => weather.visibility).thenReturn(13000);
+        when(() => weather.windDirection).thenReturn(202.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
@@ -137,6 +141,10 @@ void main() {
               condition: WeatherCondition.clear,
               isDay: false,
               windSpeed: 4.5,
+              feelsLike: 43.4,
+              humidity: 50,
+              visibility: 13000,
+              windDirection: 202.5,
             ));
       });
       test("returns correct response on success (cloudy)", () async {
@@ -149,6 +157,10 @@ void main() {
         when(() => weather.weatherCode).thenReturn(48);
         when(() => weather.isDay).thenReturn(1);
         when(() => weather.windSpeed).thenReturn(4.5);
+        when(() => weather.feelsLike).thenReturn(43.4);
+        when(() => weather.humidity).thenReturn(50);
+        when(() => weather.visibility).thenReturn(13000);
+        when(() => weather.windDirection).thenReturn(202.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
@@ -160,11 +172,16 @@ void main() {
         expect(
             actual,
             Weather(
-                location: city,
-                temperature: 42.42,
-                condition: WeatherCondition.cloudy,
-                isDay: true,
-                windSpeed: 4.5));
+              location: city,
+              temperature: 42.42,
+              condition: WeatherCondition.cloudy,
+              isDay: true,
+              windSpeed: 4.5,
+              feelsLike: 43.4,
+              humidity: 50,
+              visibility: 13000,
+              windDirection: 202.5,
+            ));
       });
       test("returns correct response on success rainy)", () async {
         final location = MockLocation();
@@ -176,6 +193,10 @@ void main() {
         when(() => weather.weatherCode).thenReturn(99);
         when(() => weather.isDay).thenReturn(1);
         when(() => weather.windSpeed).thenReturn(4.5);
+        when(() => weather.feelsLike).thenReturn(43.4);
+        when(() => weather.humidity).thenReturn(50);
+        when(() => weather.visibility).thenReturn(13000);
+        when(() => weather.windDirection).thenReturn(202.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
@@ -192,6 +213,10 @@ void main() {
               condition: WeatherCondition.rainy,
               isDay: true,
               windSpeed: 4.5,
+              feelsLike: 43.4,
+              humidity: 50,
+              visibility: 13000,
+              windDirection: 202.5,
             ));
       });
       test("returns correct response on success (snowy)", () async {
@@ -204,6 +229,10 @@ void main() {
         when(() => weather.weatherCode).thenReturn(86);
         when(() => weather.isDay).thenReturn(1);
         when(() => weather.windSpeed).thenReturn(4.5);
+        when(() => weather.feelsLike).thenReturn(43.4);
+        when(() => weather.humidity).thenReturn(50);
+        when(() => weather.visibility).thenReturn(13000);
+        when(() => weather.windDirection).thenReturn(202.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
@@ -220,6 +249,10 @@ void main() {
               condition: WeatherCondition.snowy,
               isDay: true,
               windSpeed: 4.5,
+              feelsLike: 43.4,
+              humidity: 50,
+              visibility: 13000,
+              windDirection: 202.5,
             ));
       });
       test("returns correct response on success (unknown)", () async {
@@ -232,6 +265,10 @@ void main() {
         when(() => weather.weatherCode).thenReturn(-1);
         when(() => weather.isDay).thenReturn(1);
         when(() => weather.windSpeed).thenReturn(4.5);
+        when(() => weather.feelsLike).thenReturn(43.4);
+        when(() => weather.humidity).thenReturn(50);
+        when(() => weather.visibility).thenReturn(13000);
+        when(() => weather.windDirection).thenReturn(202.5);
         when(() => weatherApiClient.locationSearch(any()))
             .thenAnswer((_) async => [location]);
         when(() => weatherApiClient.getWeather(
@@ -248,6 +285,10 @@ void main() {
               condition: WeatherCondition.unknown,
               isDay: true,
               windSpeed: 4.5,
+              feelsLike: 43.4,
+              humidity: 50,
+              visibility: 13000,
+              windDirection: 202.5,
             ));
       });
     });
