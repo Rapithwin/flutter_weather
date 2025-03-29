@@ -19,7 +19,7 @@ const longitude = -87.65005;
 const feelsLike = 10.0;
 const humidity = 40;
 const windDirection = "SE";
-const visibility = 13000;
+const visibility = 13000.0;
 
 class MockWeatherRepository extends Mock
     implements weather_repository.WeatherRepository {}
