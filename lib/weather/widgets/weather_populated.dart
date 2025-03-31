@@ -1,3 +1,4 @@
+import 'package:bloc_weather/settings/settings.dart';
 import 'package:bloc_weather/weather/weather.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,51 +21,86 @@ class WeatherPopulated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Stack(
-      children: <Widget>[
-        _WeatherBackground(),
-        RefreshIndicator(
-          onRefresh: onRefresh,
-          child: Align(
-            alignment: const Alignment(0, -1 / 3),
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              clipBehavior: Clip.none,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(height: 48),
-                  _WeatherIcon(
-                    condition: weather.condition,
-                    isDay: weather.isDay,
-                  ),
-                  Text(
-                    weather.location,
-                    style: theme.textTheme.displayMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      // appBar: AppBar(
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         Navigator.of(context).push(SettingsPage.route());
+      //       },
+      //       icon: Icon(
+      //         Icons.settings,
+      //         color: theme.colorScheme.onPrimary,
+      //       ),
+      //     )
+      //   ],
+      // ),
+      body: RefreshIndicator(
+        onRefresh: onRefresh,
+        child: Stack(
+          children: [
+            _WeatherBackground(),
+            CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  // toolbarHeight: 200,
+                  expandedHeight: 700,
+                  pinned: true,
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(SettingsPage.route());
+                      },
+                      icon: Icon(
+                        Icons.settings,
+                        color: theme.colorScheme.onPrimary,
+                      ),
+                    )
+                  ],
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Column(
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            SizedBox(height: 100),
+                            _WeatherIcon(
+                              condition: weather.condition,
+                              isDay: weather.isDay,
+                            ),
+                            Text(
+                              weather.location,
+                              style: theme.textTheme.displayMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              weather.formattedTemperature(units),
+                              style: theme.textTheme.displaySmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Wind Speed: ${weather.formattedSpeed(units)}",
+                              style: theme.textTheme.bodyLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '''Last Updated at ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}''',
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    weather.formattedTemperature(units),
-                    style: theme.textTheme.displaySmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "Wind Speed: ${weather.formattedSpeed(units)}",
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '''Last Updated at ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}''',
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        )
-      ],
+          ],
+        ),
+      ),
     );
   }
 }

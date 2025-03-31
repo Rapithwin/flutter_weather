@@ -14,21 +14,24 @@ class WeatherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final status = context.read<WeatherCubit>().state.status;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(SettingsPage.route());
-            },
-            icon: Icon(
-              Icons.settings,
-              color: theme.colorScheme.onPrimary,
-            ),
-          )
-        ],
-      ),
+      appBar: status != WeatherStatus.success
+          ? AppBar(
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(SettingsPage.route());
+                  },
+                  icon: Icon(
+                    Icons.settings,
+                    color: theme.colorScheme.onPrimary,
+                  ),
+                )
+              ],
+            )
+          : null,
       body: Center(
         child: BlocBuilder<WeatherCubit, WeatherState>(
           builder: (context, state) {
