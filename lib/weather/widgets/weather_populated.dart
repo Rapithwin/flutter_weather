@@ -86,10 +86,26 @@ class WeatherPopulated extends StatelessWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: 20,
                   children: [
-                    GridContainer(theme: theme),
-                    GridContainer(theme: theme),
-                    GridContainer(theme: theme),
-                    GridContainer(theme: theme),
+                    GridContainer(
+                      theme: theme,
+                      title: "Wind speed",
+                      value: weather.formattedSpeed(units),
+                    ),
+                    GridContainer(
+                      theme: theme,
+                      title: "Feels like",
+                      value: weather.formattedFeelsLike(units),
+                    ),
+                    GridContainer(
+                      theme: theme,
+                      title: "Humidity",
+                      value: "${weather.humidity}%",
+                    ),
+                    GridContainer(
+                      theme: theme,
+                      title: "Visibility",
+                      value: weather.formattedVisibility(units),
+                    ),
                   ],
                 ),
                 SliverList.list(children: [
@@ -118,10 +134,14 @@ class GridContainer extends StatelessWidget {
     super.key,
     required this.theme,
     this.height,
+    this.title,
+    this.value,
   });
 
   final ThemeData theme;
   final double? height;
+  final String? title;
+  final String? value;
 
   @override
   Widget build(BuildContext context) {
@@ -130,8 +150,23 @@ class GridContainer extends StatelessWidget {
       child: Container(
         height: height ?? 100,
         decoration: BoxDecoration(
-          color: theme.colorScheme.onPrimary.withAlpha(90),
+          color: theme.colorScheme.onPrimary.withAlpha(60),
           borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          spacing: 30,
+          children: [
+            Text(
+              title ?? "",
+              style: theme.textTheme.titleMedium,
+            ),
+            Text(
+              value ?? "",
+              style: theme.textTheme.displayMedium,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+            )
+          ],
         ),
       ),
     );
@@ -207,7 +242,17 @@ extension on Weather {
     return '''${temperature.value.toStringAsPrecision(2)}°${units.isMetric ? 'C' : 'F'}''';
   }
 
+  String formattedFeelsLike(Units units) {
+    return '''${feelsLike.toStringAsPrecision(2)}°${units.isMetric ? 'C' : 'F'}''';
+  }
+
   String formattedSpeed(Units units) {
-    return '''${windSpeed.toStringAsPrecision(3)}${units.isMetric ? 'km/h' : 'm/h'}''';
+    return '''${windSpeed.toStringAsPrecision(3)}
+${units.isMetric ? 'kmph' : 'mph'}''';
+  }
+
+  String formattedVisibility(Units units) {
+    return '''${(visibility / 1000).toStringAsFixed(1)}
+${units.isMetric ? 'km' : 'miles'}''';
   }
 }
