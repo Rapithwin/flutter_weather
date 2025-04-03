@@ -22,20 +22,8 @@ class WeatherPopulated extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      // appBar: AppBar(
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () {
-      //         Navigator.of(context).push(SettingsPage.route());
-      //       },
-      //       icon: Icon(
-      //         Icons.settings,
-      //         color: theme.colorScheme.onPrimary,
-      //       ),
-      //     )
-      //   ],
-      // ),
+      extendBodyBehindAppBar: false,
+      backgroundColor: theme.colorScheme.primary,
       body: RefreshIndicator(
         onRefresh: onRefresh,
         child: Stack(
@@ -45,8 +33,10 @@ class WeatherPopulated extends StatelessWidget {
               slivers: [
                 SliverAppBar(
                   // toolbarHeight: 200,
-                  expandedHeight: 700,
+                  expandedHeight: 400,
                   pinned: true,
+                  backgroundColor: theme.colorScheme.primary,
+
                   actions: [
                     IconButton(
                       onPressed: () {
@@ -59,6 +49,13 @@ class WeatherPopulated extends StatelessWidget {
                     )
                   ],
                   flexibleSpace: FlexibleSpaceBar(
+                    title: Text(
+                      weather.location,
+                      style: theme.textTheme.displayMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    centerTitle: true,
                     background: Column(
                       children: [
                         Column(
@@ -70,14 +67,8 @@ class WeatherPopulated extends StatelessWidget {
                               isDay: weather.isDay,
                             ),
                             Text(
-                              weather.location,
-                              style: theme.textTheme.displayMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
                               weather.formattedTemperature(units),
-                              style: theme.textTheme.displaySmall?.copyWith(
+                              style: theme.textTheme.displayMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -96,9 +87,56 @@ class WeatherPopulated extends StatelessWidget {
                     ),
                   ),
                 ),
+                SliverGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20,
+                  children: [
+                    GridContainer(theme: theme),
+                    GridContainer(theme: theme),
+                    GridContainer(theme: theme),
+                    GridContainer(theme: theme),
+                  ],
+                ),
+                SliverList.list(children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  GridContainer(
+                    theme: theme,
+                    height: 230,
+                  ),
+                  SizedBox(
+                    height: 130,
+                  )
+                ])
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class GridContainer extends StatelessWidget {
+  const GridContainer({
+    super.key,
+    required this.theme,
+    this.height,
+  });
+
+  final ThemeData theme;
+  final double? height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Container(
+        height: height ?? 100,
+        decoration: BoxDecoration(
+          color: theme.colorScheme.onPrimary.withAlpha(90),
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );
@@ -111,7 +149,7 @@ class _WeatherIcon extends StatelessWidget {
   final WeatherCondition condition;
   final bool isDay;
 
-  static const _iconSize = 75.0;
+  static const _iconSize = 105.0;
 
   @override
   Widget build(BuildContext context) {
