@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bloc_weather/settings/settings.dart';
 import 'package:bloc_weather/weather/weather.dart';
 import 'package:flutter/foundation.dart';
@@ -50,10 +51,16 @@ class WeatherPopulated extends StatelessWidget {
                   ],
                   flexibleSpace: FlexibleSpaceBar(
                     collapseMode: CollapseMode.pin,
-                    title: Text(
-                      weather.location,
-                      style: theme.textTheme.displayMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                    title: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: AutoSizeText(
+                        weather.location,
+                        style: theme.textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                        minFontSize: 10,
+                        maxFontSize: 50,
+                        maxLines: 1,
                       ),
                     ),
                     centerTitle: true,
