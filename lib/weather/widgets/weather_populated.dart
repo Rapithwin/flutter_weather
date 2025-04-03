@@ -21,6 +21,8 @@ class WeatherPopulated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final size = MediaQuery.sizeOf(context);
+
     return Scaffold(
       extendBodyBehindAppBar: false,
       backgroundColor: theme.colorScheme.primary,
@@ -32,11 +34,9 @@ class WeatherPopulated extends StatelessWidget {
             CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  // toolbarHeight: 200,
-                  expandedHeight: 400,
+                  expandedHeight: size.height / 2.2,
                   pinned: true,
                   backgroundColor: theme.colorScheme.primary,
-
                   actions: [
                     IconButton(
                       onPressed: () {
@@ -49,6 +49,7 @@ class WeatherPopulated extends StatelessWidget {
                     )
                   ],
                   flexibleSpace: FlexibleSpaceBar(
+                    collapseMode: CollapseMode.pin,
                     title: Text(
                       weather.location,
                       style: theme.textTheme.displayMedium?.copyWith(
@@ -61,7 +62,7 @@ class WeatherPopulated extends StatelessWidget {
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            SizedBox(height: 100),
+                            SizedBox(height: 130),
                             _WeatherIcon(
                               condition: weather.condition,
                               isDay: weather.isDay,
@@ -69,12 +70,6 @@ class WeatherPopulated extends StatelessWidget {
                             Text(
                               weather.formattedTemperature(units),
                               style: theme.textTheme.displayMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              "Wind Speed: ${weather.formattedSpeed(units)}",
-                              style: theme.textTheme.bodyLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
