@@ -3,6 +3,7 @@ import 'package:bloc_weather/settings/settings.dart';
 import 'package:bloc_weather/weather/weather.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:weather_repository/weather_repository.dart' hide Weather;
 
 /// This screen will display after the user has selected a city
@@ -23,6 +24,8 @@ class WeatherPopulated extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.sizeOf(context);
+    double top = 0.0;
+    double paddingTop = MediaQuery.paddingOf(context).top;
 
     return Scaffold(
       extendBodyBehindAppBar: false,
@@ -49,45 +52,66 @@ class WeatherPopulated extends StatelessWidget {
                       ),
                     )
                   ],
-                  flexibleSpace: FlexibleSpaceBar(
-                    collapseMode: CollapseMode.pin,
-                    title: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: AutoSizeText(
-                        weather.location,
-                        style: theme.textTheme.displayMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        minFontSize: 10,
-                        maxFontSize: 50,
-                        maxLines: 1,
-                      ),
-                    ),
-                    centerTitle: true,
-                    background: Column(
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            SizedBox(height: 130),
-                            _WeatherIcon(
-                              condition: weather.condition,
-                              isDay: weather.isDay,
-                            ),
-                            Text(
-                              weather.formattedTemperature(units),
-                              style: theme.textTheme.displayMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
+                  flexibleSpace: LayoutBuilder(builder: (context, constraints) {
+                    top = constraints.biggest.height;
+                    return FlexibleSpaceBar(
+                      collapseMode: CollapseMode.pin,
+                      // top == paddingTop + kToolbarHeight is telling me when app bar
+                      // is collapsed so I can show different sizes based on it.
+                      title: top == paddingTop + kToolbarHeight
+                          ? Container(
+                              width: size.width / 1.5,
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.only(top: paddingTop),
+                              child: AutoSizeText(
+                                weather.location,
+                                style: theme.textTheme.displayMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                minFontSize: 10,
+                                maxFontSize: 50,
+                                maxLines: 1,
+                              ),
+                            )
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: AutoSizeText(
+                                weather.location,
+                                style: theme.textTheme.displayMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                minFontSize: 10,
+                                maxFontSize: 32,
+                                maxLines: 2,
                               ),
                             ),
-                            Text(
-                              '''Last Updated at ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}''',
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                      centerTitle: true,
+                      background: Column(
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(height: 100),
+                              _WeatherIcon(
+                                condition: weather.condition,
+                                isDay: weather.isDay,
+                              ),
+                              Text(
+                                weather.formattedTemperature(units),
+                                style: theme.textTheme.displayMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '''Last Updated at ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}''',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                 ),
                 SliverGrid.count(
                   crossAxisCount: 2,
