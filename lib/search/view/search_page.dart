@@ -31,6 +31,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("City Search"),
@@ -44,6 +45,9 @@ class _SearchPageState extends State<SearchPage> {
                   padding: const EdgeInsets.all(8),
                   child: TextField(
                     controller: _textEditingController,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: Colors.black,
+                    ),
                     decoration: const InputDecoration(
                       labelText: "city",
                       hintText: "Chicago",

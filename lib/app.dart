@@ -38,6 +38,7 @@ class WeatherAppView extends StatelessWidget {
       (WeatherCubit cubit) =>
           cubit.state.weather.toColor(cubit.state.weather.isDay),
     );
+    final theme = Theme.of(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -47,7 +48,10 @@ class WeatherAppView extends StatelessWidget {
         ),
         colorScheme:
             ColorScheme.fromSeed(seedColor: seedColor, primary: seedColor),
-        textTheme: GoogleFonts.rajdhaniTextTheme(),
+        textTheme: GoogleFonts.rajdhaniTextTheme().apply(
+          bodyColor: theme.colorScheme.onPrimary,
+          displayColor: theme.colorScheme.onPrimary,
+        ),
       ),
       home: WeatherPage(),
     );
@@ -60,11 +64,13 @@ extension on Weather {
   Color toColor(bool isDay) {
     switch (condition) {
       case WeatherCondition.clear:
-        return isDay ? Colors.lightBlue : const Color.fromARGB(255, 7, 13, 105);
+        return isDay
+            ? Colors.lightBlue
+            : const Color.fromARGB(255, 12, 24, 192);
       case WeatherCondition.snowy:
         return isDay
             ? const Color.fromARGB(255, 156, 221, 252)
-            : const Color.fromARGB(255, 0, 60, 83);
+            : const Color.fromARGB(255, 0, 117, 163);
       case WeatherCondition.cloudy:
         return Colors.blueGrey;
       case WeatherCondition.rainy:

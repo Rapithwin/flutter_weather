@@ -29,6 +29,7 @@ class LocationsListBuilder extends StatelessWidget {
                   "${locations[index].city}, ${locations[index].country}",
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
               ),
