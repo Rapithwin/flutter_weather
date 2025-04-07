@@ -185,18 +185,22 @@ class GridContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
-          spacing: 30,
           children: [
             Text(
               title ?? "",
               style: theme.textTheme.titleMedium,
             ),
-            Text(
-              value ?? "",
-              style: theme.textTheme.displayMedium,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-            )
+            Flexible(
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  value ?? "",
+                  style: theme.textTheme.displayMedium,
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           ],
         ),
       ),
