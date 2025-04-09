@@ -1,9 +1,7 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bloc_weather/settings/settings.dart';
 import 'package:bloc_weather/weather/weather.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:weather_repository/weather_repository.dart' hide Weather;
 
 /// This screen will display after the user has selected a city
@@ -63,26 +61,24 @@ class WeatherPopulated extends StatelessWidget {
                               width: size.width / 1.5,
                               alignment: Alignment.center,
                               padding: EdgeInsets.only(top: paddingTop),
-                              child: AutoSizeText(
+                              child: Text(
                                 weather.location,
                                 style: theme.textTheme.displayMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: size.width * 0.08,
                                 ),
-                                minFontSize: 10,
-                                maxFontSize: 50,
                                 maxLines: 1,
                               ),
                             )
                           : Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: AutoSizeText(
+                              child: Text(
                                 weather.location,
                                 style: theme.textTheme.displayMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: size.width * 0.08,
                                 ),
-                                minFontSize: 10,
-                                maxFontSize: 32,
                                 maxLines: 2,
                               ),
                             ),
