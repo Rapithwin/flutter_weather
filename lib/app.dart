@@ -1,7 +1,7 @@
 import 'package:bloc_weather/root/cubit/tab_cubit.dart';
+import 'package:bloc_weather/root/view/root.dart';
 import 'package:bloc_weather/search/cubit/location_cubit.dart';
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
-import 'package:bloc_weather/weather/view/weather_page.dart';
 import 'package:bloc_weather/weather/weather.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,7 +57,7 @@ class WeatherAppView extends StatelessWidget {
           displayColor: theme.colorScheme.onPrimary,
         ),
       ),
-      home: WeatherPage(),
+      home: RootPage(),
     );
   }
 }
