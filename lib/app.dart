@@ -1,4 +1,4 @@
-import 'package:bloc_weather/app/cubit/tab_cubit.dart';
+import 'package:bloc_weather/root/cubit/tab_cubit.dart';
 import 'package:bloc_weather/search/cubit/location_cubit.dart';
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:bloc_weather/weather/view/weather_page.dart';
