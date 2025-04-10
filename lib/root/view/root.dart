@@ -22,6 +22,7 @@ class RootPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
+        color: theme.colorScheme.primary.withAlpha(170),
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -29,17 +30,20 @@ class RootPage extends StatelessWidget {
             _RootTabButton(
               groupValue: selectedTab,
               value: Tabs.current,
-              icon: Icon(Icons.sunny),
+              icon: Icon(Icons.wb_sunny_outlined),
+              selectedIcon: Icon(Icons.wb_sunny),
             ),
             _RootTabButton(
               groupValue: selectedTab,
               value: Tabs.forecast,
-              icon: Icon(Icons.calendar_month),
+              icon: Icon(Icons.calendar_month_outlined),
+              selectedIcon: Icon(Icons.calendar_month),
             ),
             _RootTabButton(
               groupValue: selectedTab,
               value: Tabs.saved,
-              icon: Icon(Icons.favorite),
+              icon: Icon(Icons.favorite_outline),
+              selectedIcon: Icon(Icons.favorite),
             ),
           ],
         ),
@@ -53,21 +57,23 @@ class _RootTabButton extends StatelessWidget {
     required this.groupValue,
     required this.value,
     required this.icon,
+    required this.selectedIcon,
   });
 
   final Tabs groupValue;
   final Tabs value;
   final Widget icon;
+  final Widget selectedIcon;
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () => context.read<TabCubit>().setTab(value),
       iconSize: 32,
-      color:
-          groupValue != value ? null : Theme.of(context).colorScheme.secondary,
+      color: Theme.of(context).colorScheme.onSecondary,
       icon: icon,
       isSelected: value == groupValue,
+      selectedIcon: selectedIcon,
     );
   }
 }
