@@ -6,7 +6,7 @@ import 'package:weather_repository/weather_repository.dart' hide Weather;
 
 /// This screen will display after the user has selected a city
 /// and we have recieved the data.
-class WeatherPopulated extends StatelessWidget {
+class WeatherPopulated extends StatefulWidget {
   const WeatherPopulated({
     super.key,
     required this.weather,
@@ -19,6 +19,17 @@ class WeatherPopulated extends StatelessWidget {
   final AsyncValueGetter<void> onRefresh;
 
   @override
+  State<WeatherPopulated> createState() => _WeatherPopulatedState();
+}
+
+class _WeatherPopulatedState extends State<WeatherPopulated> {
+  @override
+  void initState() {
+    widget.onRefresh();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.sizeOf(context);
@@ -29,7 +40,7 @@ class WeatherPopulated extends StatelessWidget {
       extendBodyBehindAppBar: false,
       backgroundColor: theme.colorScheme.primary,
       body: RefreshIndicator(
-        onRefresh: onRefresh,
+        onRefresh: widget.onRefresh,
         child: Stack(
           children: [
             _WeatherBackground(),
@@ -62,7 +73,7 @@ class WeatherPopulated extends StatelessWidget {
                               alignment: Alignment.center,
                               padding: EdgeInsets.only(top: paddingTop),
                               child: Text(
-                                weather.location,
+                                widget.weather.location,
                                 style: theme.textTheme.displayMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   fontSize: size.width * 0.08,
@@ -74,7 +85,7 @@ class WeatherPopulated extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
-                                weather.location,
+                                widget.weather.location,
                                 style: theme.textTheme.displayMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                   fontSize: size.width * 0.08,
@@ -90,17 +101,18 @@ class WeatherPopulated extends StatelessWidget {
                             children: <Widget>[
                               SizedBox(height: 100),
                               _WeatherIcon(
-                                condition: weather.condition,
-                                isDay: weather.isDay,
+                                condition: widget.weather.condition,
+                                isDay: widget.weather.isDay,
                               ),
                               Text(
-                                weather.formattedTemperature(units),
+                                widget.weather
+                                    .formattedTemperature(widget.units),
                                 style: theme.textTheme.displayMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '''Last Updated at ${TimeOfDay.fromDateTime(weather.lastUpdated).format(context)}''',
+                                '''Last Updated at ${TimeOfDay.fromDateTime(widget.weather.lastUpdated).format(context)}''',
                               ),
                             ],
                           ),
@@ -116,22 +128,22 @@ class WeatherPopulated extends StatelessWidget {
                     GridContainer(
                       theme: theme,
                       title: "Wind speed",
-                      value: weather.formattedSpeed(units),
+                      value: widget.weather.formattedSpeed(widget.units),
                     ),
                     GridContainer(
                       theme: theme,
                       title: "Feels like",
-                      value: weather.formattedFeelsLike(units),
+                      value: widget.weather.formattedFeelsLike(widget.units),
                     ),
                     GridContainer(
                       theme: theme,
                       title: "Humidity",
-                      value: "${weather.humidity}%",
+                      value: "${widget.weather.humidity}%",
                     ),
                     GridContainer(
                       theme: theme,
                       title: "Visibility",
-                      value: weather.formattedVisibility(units),
+                      value: widget.weather.formattedVisibility(widget.units),
                     ),
                   ],
                 ),
