@@ -54,6 +54,7 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
             feelsLike: feelsLike,
             humidity: weather.humidity,
             windDirection: weather.windDirection,
+            condition: weather.condition,
           ),
         ),
       );
@@ -106,6 +107,7 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
             feelsLike: feelsLike,
             humidity: weather.humidity,
             windDirection: weather.windDirection,
+            condition: weather.condition,
           ),
         ),
       );

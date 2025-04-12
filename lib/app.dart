@@ -75,9 +75,17 @@ extension on Weather {
         return isDay
             ? const Color.fromARGB(255, 156, 221, 252)
             : const Color.fromARGB(255, 0, 117, 163);
+      case WeatherCondition.partlyCloudy:
+        return isDay
+            ? const Color.fromARGB(255, 84, 150, 180)
+            : const Color.fromARGB(255, 49, 53, 109);
       case WeatherCondition.cloudy:
         return Colors.blueGrey;
+      case WeatherCondition.foggy:
+        return Colors.blueGrey;
       case WeatherCondition.rainy:
+        return const Color.fromARGB(255, 60, 75, 158);
+      case WeatherCondition.thunderstorm:
         return const Color.fromARGB(255, 60, 75, 158);
       case WeatherCondition.unknown:
         return Colors.cyan;

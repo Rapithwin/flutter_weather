@@ -266,12 +266,19 @@ extension on WeatherCondition {
     switch (this) {
       case WeatherCondition.clear:
         return isDay ? '☀️' : '🌙';
+      case WeatherCondition.partlyCloudy:
+        return isDay ? '⛅' : Icons.nights_stay.toString();
       case WeatherCondition.rainy:
         return '🌧️';
       case WeatherCondition.cloudy:
         return '☁️';
       case WeatherCondition.snowy:
         return '🌨️';
+      case WeatherCondition.foggy:
+        return '🌫';
+      case WeatherCondition.thunderstorm:
+        return '⛈';
+
       case WeatherCondition.unknown:
         return '❓';
     }

@@ -9,6 +9,9 @@ enum WeatherCondition {
   cloudy,
   snowy,
   unknown,
+  partlyCloudy,
+  foggy,
+  thunderstorm,
 }
 
 /// expose a domain-specific weather model.

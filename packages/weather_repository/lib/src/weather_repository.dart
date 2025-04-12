@@ -52,32 +52,38 @@ extension on int {
         return WeatherCondition.clear;
       case 1:
       case 2:
+        return WeatherCondition.partlyCloudy;
       case 3:
-      case 45:
-      case 48:
         return WeatherCondition.cloudy;
+      case 45:
+        return WeatherCondition.foggy;
+      case 48:
       case 51:
       case 53:
       case 55:
       case 56:
       case 57:
       case 61:
+        return WeatherCondition.rainy;
       case 63:
+        return WeatherCondition.rainy;
       case 65:
+        return WeatherCondition.rainy;
       case 66:
       case 67:
       case 80:
       case 81:
       case 82:
       case 95:
+        return WeatherCondition.thunderstorm;
       case 96:
       case 99:
-        return WeatherCondition.rainy;
       case 71:
       case 73:
       case 75:
       case 77:
       case 85:
+        return WeatherCondition.snowy;
       case 86:
         return WeatherCondition.snowy;
       default:
