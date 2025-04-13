@@ -5,6 +5,7 @@ part 'weather.g.dart';
 
 enum WeatherCondition {
   clear,
+  mainlyClear,
   rainy,
   cloudy,
   snowy,

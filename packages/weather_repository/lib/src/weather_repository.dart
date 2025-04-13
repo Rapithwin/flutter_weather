@@ -51,6 +51,7 @@ extension on int {
       case 0:
         return WeatherCondition.clear;
       case 1:
+        return WeatherCondition.mainlyClear;
       case 2:
         return WeatherCondition.partlyCloudy;
       case 3:

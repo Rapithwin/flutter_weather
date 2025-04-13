@@ -267,7 +267,7 @@ extension on WeatherCondition {
       case WeatherCondition.clear:
         return isDay ? '☀️' : '🌙';
       case WeatherCondition.partlyCloudy:
-        return isDay ? '⛅' : Icons.nights_stay.toString();
+        return '⛅';
       case WeatherCondition.rainy:
         return '🌧️';
       case WeatherCondition.cloudy:
@@ -278,7 +278,8 @@ extension on WeatherCondition {
         return '🌫';
       case WeatherCondition.thunderstorm:
         return '⛈';
-
+      case WeatherCondition.mainlyClear:
+        return "🌤";
       case WeatherCondition.unknown:
         return '❓';
     }

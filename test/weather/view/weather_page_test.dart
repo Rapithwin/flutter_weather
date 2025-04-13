@@ -31,6 +31,10 @@ void main() {
       isDay: true,
       windSpeed: 12.2,
       lastUpdated: DateTime(2020),
+      feelsLike: 5.0,
+      humidity: 60,
+      visibility: 13000,
+      windDirection: "NW",
     );
 
     late WeatherCubit weatherCubit;
