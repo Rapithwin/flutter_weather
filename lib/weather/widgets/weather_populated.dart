@@ -104,6 +104,9 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                                 condition: widget.weather.condition,
                                 isDay: widget.weather.isDay,
                               ),
+                              SizedBox(
+                                height: size.height / 30,
+                              ),
                               Text(
                                 widget.weather
                                     .formattedTemperature(widget.units),
@@ -226,11 +229,13 @@ class _WeatherIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      condition.toEmoji(isDay),
-      style: const TextStyle(
-        fontSize: _iconSize,
+    return Icon(
+      IconData(
+        condition.toEmoji(isDay),
+        fontFamily: "CustomIcons",
       ),
+      size: _iconSize,
+      color: Theme.of(context).colorScheme.onPrimary,
     );
   }
 }
@@ -262,26 +267,27 @@ class _WeatherBackground extends StatelessWidget {
 extension on WeatherCondition {
   /// This method added to [WeatherCondition] allows you to
   /// show an emoji for each weather condition.
-  String toEmoji(bool isDay) {
+  toEmoji(bool isDay) {
     switch (this) {
       case WeatherCondition.clear:
-        return isDay ? '☀️' : '🌙';
-      case WeatherCondition.partlyCloudy:
-        return '⛅';
-      case WeatherCondition.rainy:
-        return '🌧️';
-      case WeatherCondition.cloudy:
-        return '☁️';
-      case WeatherCondition.snowy:
-        return '🌨️';
-      case WeatherCondition.foggy:
-        return '🌫';
-      case WeatherCondition.thunderstorm:
-        return '⛈';
+        return isDay ? 0xf00d : 0xf02e;
       case WeatherCondition.mainlyClear:
-        return "🌤";
+        return isDay ? 0xf00c : 0xf081;
+      case WeatherCondition.partlyCloudy:
+        return isDay ? 0xf002 : 0xf086;
+      case WeatherCondition.rainy:
+        return 0xf019;
+      case WeatherCondition.cloudy:
+        return 0xf041;
+      case WeatherCondition.snowy:
+        return 0xf01b;
+      case WeatherCondition.foggy:
+        return 0xf014;
+      case WeatherCondition.thunderstorm:
+        return 0xf01e;
+
       case WeatherCondition.unknown:
-        return '❓';
+        return 0xf07b;
     }
   }
 }
