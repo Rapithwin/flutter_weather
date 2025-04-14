@@ -56,9 +56,9 @@ class WeatherPage extends StatelessWidget {
           final location = await Navigator.of(context).push(SearchPage.route());
           if (!context.mounted) return;
           await context.read<WeatherCubit>().fetchWeather(
-                location!.city,
-                location.latitude,
-                location.longitude,
+                location?.city,
+                location?.latitude,
+                location?.longitude,
               );
         },
         child: const Icon(
