@@ -16,7 +16,9 @@ class WeatherError extends StatelessWidget {
         ),
         Text(
           "Something went wrong!",
-          style: theme.textTheme.headlineSmall,
+          style: theme.textTheme.headlineSmall?.copyWith(
+            color: Colors.black,
+          ),
         )
       ],
     );
