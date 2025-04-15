@@ -35,6 +35,9 @@ class SettingsPage extends StatelessWidget {
                   "Use metric measurements for units",
                 ),
                 trailing: Switch(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeTrackColor:
+                      Theme.of(context).colorScheme.secondaryContainer,
                   value: state.units.isMetric,
                   onChanged: (_) => context.read<WeatherCubit>().toggleUnits(),
                 ),
