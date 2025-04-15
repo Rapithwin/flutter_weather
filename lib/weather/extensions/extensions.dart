@@ -51,7 +51,7 @@ ${units.isMetric ? 'km' : 'miles'}''';
   }
 
   /// This method added to [Weather] allows you to
-  /// show an emoji for each weather condition.
+  /// show an icon for each wind direction.
   int windDirectionToIcon() {
     switch (windDirection) {
       case "N":
