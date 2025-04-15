@@ -232,5 +232,127 @@ void main() {
         );
       });
     });
+    group("getForecastHourly", () {
+      const latitude = 41.85003;
+      const longitude = -87.6500;
+      test("makes correct http request", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        try {
+          await apiClient.getForecastHourly(
+            latitude: latitude,
+            longitude: longitude,
+          );
+        } catch (_) {}
+        verify(
+          () => httpClient.get(
+            Uri.https(
+              "api.open-meteo.com",
+              "/v1/forecast",
+              {
+                "latitude": "$latitude",
+                "longitude": "$longitude",
+                "hourly": "temperature,is_day,weathercode",
+              },
+            ),
+          ),
+        ).called(1);
+      });
+      test("throws WeatherRequestFailure on non-200 response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(400);
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getForecastHourly(
+            latitude: latitude,
+            longitude: longitude,
+          ),
+          throwsA(isA<WeatherRequestFailure>()),
+        );
+      });
+      test("throws WeatherNotFoundFailure on error response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getForecastHourly(
+            latitude: latitude,
+            longitude: longitude,
+          ),
+          throwsA(isA<WeatherNotFoundFailure>()),
+        );
+      });
+      test("throws WeatherNotFoundFailure on empty response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn('{"results": []}');
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getForecastHourly(
+            latitude: latitude,
+            longitude: longitude,
+          ),
+          throwsA(isA<WeatherNotFoundFailure>()),
+        );
+      });
+      test('returns WeatherHourly on valid response', () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn(
+          '''
+{
+"latitude": 43,
+"longitude": -87.875,
+"generationtime_ms": 0.2510547637939453,
+"utc_offset_seconds": 0,
+"timezone": "GMT",
+"timezone_abbreviation": "GMT",
+"elevation": 189,
+"hourly": {
+    "time": ["2025-04-15T15:00"],
+    "temperature": [15.3],
+    "is_day": [0],
+    "weathercode": [63]
+}
+}
+        ''',
+        );
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        final actual = await apiClient.getForecastHourly(
+          latitude: latitude,
+          longitude: longitude,
+        );
+        expect(
+          actual,
+          isA<WeatherHourly>()
+              .having(
+                (w) => w.isDay,
+                "isDay",
+                isA<List<int>>().having((w) => w.first, "isDay index", 0),
+              )
+              .having(
+                (w) => w.weatherCode,
+                "weatherCode",
+                isA<List<int>>()
+                    .having((w) => w.first, "weatherCode index", 63),
+              )
+              .having(
+                (w) => w.time,
+                "isDay",
+                isA<List<String>>()
+                    .having((w) => w.first, "time index", "2025-04-15T15:00"),
+              )
+              .having(
+                (w) => w.temperature,
+                "temperature",
+                isA<List<double>>()
+                    .having((w) => w.first, "temperature index", 15.3),
+              ),
+        );
+      });
+    });
   });
 }
