@@ -132,22 +132,55 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                     GridContainer(
                       theme: theme,
                       title: "Wind speed",
-                      value: widget.weather.formattedSpeed(widget.units),
+                      value: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.weather.formattedSpeed(widget.units),
+                            style: theme.textTheme.displayMedium,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                          ),
+                          Icon(
+                            IconData(
+                              widget.weather.windDirectionToIcon(),
+                              fontFamily: "CustomIcons",
+                            ),
+                            size: 60,
+                            color: theme.colorScheme.onPrimary,
+                          )
+                        ],
+                      ),
                     ),
                     GridContainer(
                       theme: theme,
                       title: "Feels like",
-                      value: widget.weather.formattedFeelsLike(widget.units),
+                      value: Text(
+                        widget.weather.formattedFeelsLike(widget.units),
+                        style: theme.textTheme.displayMedium,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     GridContainer(
                       theme: theme,
                       title: "Humidity",
-                      value: "${widget.weather.humidity}%",
+                      value: Text(
+                        "${widget.weather.humidity}%",
+                        style: theme.textTheme.displayMedium,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     GridContainer(
                       theme: theme,
                       title: "Visibility",
-                      value: widget.weather.formattedVisibility(widget.units),
+                      value: Text(
+                        widget.weather.formattedVisibility(widget.units),
+                        style: theme.textTheme.displayMedium,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ],
                 ),
@@ -184,7 +217,7 @@ class GridContainer extends StatelessWidget {
   final ThemeData theme;
   final double? height;
   final String? title;
-  final String? value;
+  final Widget? value;
 
   @override
   Widget build(BuildContext context) {
@@ -205,12 +238,7 @@ class GridContainer extends StatelessWidget {
             Flexible(
               child: Align(
                 alignment: Alignment.center,
-                child: Text(
-                  value ?? "",
-                  style: theme.textTheme.displayMedium,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
-                ),
+                child: value,
               ),
             ),
           ],
