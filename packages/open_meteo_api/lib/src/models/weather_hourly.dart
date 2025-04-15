@@ -5,14 +5,14 @@ part 'weather_hourly.g.dart';
 
 /// [WeatherHourly] model containing a 24-hour weather forecast information
 class WeatherHourly {
-  final DateTime time;
-  final double temperature;
+  final List<DateTime> time;
+  final List<double> temperature;
 
   @JsonKey(name: "is_day")
-  final int isDay;
+  final List<int> isDay;
 
   @JsonKey(name: "weathercode")
-  final int weatherCode;
+  final List<int> weatherCode;
 
   factory WeatherHourly.fromJson(Map<String, dynamic> json) =>
       _$WeatherHourlyFromJson(json);
