@@ -8,7 +8,9 @@ class LocationsInitial extends StatelessWidget {
     final theme = Theme.of(context);
     return Text(
       "Search for a city.",
-      style: theme.textTheme.headlineSmall,
+      style: theme.textTheme.headlineSmall?.copyWith(
+        color: Colors.black,
+      ),
     );
   }
 }

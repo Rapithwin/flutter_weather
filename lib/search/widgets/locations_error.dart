@@ -8,7 +8,9 @@ class LocationsError extends StatelessWidget {
     final theme = Theme.of(context);
     return Text(
       "Something went wrong",
-      style: theme.textTheme.headlineSmall,
+      style: theme.textTheme.headlineSmall?.copyWith(
+        color: Colors.black,
+      ),
     );
   }
 }
