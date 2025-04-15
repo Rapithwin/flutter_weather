@@ -101,4 +101,38 @@ class OpenMeteoApiClient {
 
     return WeatherCurrent.fromJson(weatherJson);
   }
+
+  Future<WeatherHourly> getForecastHourly({
+    required double latitude,
+    required double longitude,
+  }) async {
+    final String hourlyQuery = "temperature,is_day,weathercode";
+    final hourlyRequest = Uri.https(
+      _baseUrlWeather,
+      "/v1/forecast",
+      {
+        "latitude": "$latitude",
+        "longitude": "$longitude",
+        "hourly": hourlyQuery,
+      },
+    );
+
+    final hourlyResponse = await _httpClient.get(hourlyRequest).timeout(
+      Duration(seconds: 7),
+      onTimeout: () {
+        throw Exception("Request timed out");
+      },
+    );
+    if (hourlyResponse.statusCode != 200) throw WeatherRequestFailure();
+
+    final bodyJson = jsonDecode(hourlyResponse.body) as Map<String, dynamic>;
+
+    if (!bodyJson.containsKey("hourly")) {
+      throw WeatherNotFoundFailure();
+    }
+
+    final weatherJson = bodyJson["hourly"] as Map<String, dynamic>;
+
+    return WeatherHourly.fromJson(weatherJson);
+  }
 }
