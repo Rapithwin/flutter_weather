@@ -50,6 +50,8 @@ ${units.isMetric ? 'kmph' : 'mph'}''';
 ${units.isMetric ? 'km' : 'miles'}''';
   }
 
+  /// This method added to [Weather] allows you to
+  /// show an emoji for each weather condition.
   int windDirectionToIcon() {
     switch (windDirection) {
       case "N":
