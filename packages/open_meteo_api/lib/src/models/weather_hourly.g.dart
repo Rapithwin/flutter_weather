@@ -14,11 +14,8 @@ WeatherHourly _$WeatherHourlyFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = WeatherHourly(
-          time: $checkedConvert(
-              'time',
-              (v) => (v as List<dynamic>)
-                  .map((e) => DateTime.parse(e as String))
-                  .toList()),
+          time: $checkedConvert('time',
+              (v) => (v as List<dynamic>).map((e) => e as String).toList()),
           temperature: $checkedConvert(
               'temperature',
               (v) => (v as List<dynamic>)
