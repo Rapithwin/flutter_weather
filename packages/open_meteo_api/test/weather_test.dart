@@ -2,9 +2,9 @@ import 'package:open_meteo_api/open_meteo_api.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group("Weather", () {
+  group("WeatherCurrent", () {
     group("fromJson", () {
-      test("returns the correct Weather object", () {
+      test("returns the correct WeatherCurrent object", () {
         expect(
           WeatherCurrent.fromJson(<String, dynamic>{
             "temperature": 15.3,
@@ -25,6 +25,45 @@ void main() {
               .having((w) => w.humidity, "relative humidity", 89)
               .having((w) => w.windDirection, "wind direction", 196)
               .having((w) => w.visibility, "visibility", 13000),
+        );
+      });
+    });
+  });
+
+  group("WeatherHourly", () {
+    group("fromJson", () {
+      test("returns the correct WeatherHourly object", () {
+        expect(
+          WeatherHourly.fromJson(<String, dynamic>{
+            "weathercode": [63],
+            "is_day": [0],
+            "time": ["2025-04-15T15:00"],
+            "temperature": [15.3],
+          }),
+          isA<WeatherHourly>()
+              .having(
+                (w) => w.isDay,
+                "isDay",
+                isA<List<int>>().having((w) => w.first, "isDay index", 0),
+              )
+              .having(
+                (w) => w.weatherCode,
+                "weatherCode",
+                isA<List<int>>()
+                    .having((w) => w.first, "weatherCode index", 63),
+              )
+              .having(
+                (w) => w.time,
+                "isDay",
+                isA<List<String>>()
+                    .having((w) => w.first, "time index", "2025-04-15T15:00"),
+              )
+              .having(
+                (w) => w.temperature,
+                "temperature",
+                isA<List<double>>()
+                    .having((w) => w.first, "temperature index", 15.3),
+              ),
         );
       });
     });
