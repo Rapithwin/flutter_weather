@@ -49,4 +49,27 @@ ${units.isMetric ? 'kmph' : 'mph'}''';
     return '''${(visibility / 1000).toStringAsFixed(1)}
 ${units.isMetric ? 'km' : 'miles'}''';
   }
+
+  int windDirectionToIcon() {
+    switch (windDirection) {
+      case "N":
+        return 0xf058;
+      case "NE":
+        return 0xf057;
+      case "E":
+        return 0xf04d;
+      case "SE":
+        return 0xf088;
+      case "S":
+        return 0xf044;
+      case "SW":
+        return 0xf043;
+      case "W":
+        return 0xf048;
+      case "NW":
+        return 0xf087;
+      default:
+        return 0xf07b;
+    }
+  }
 }
