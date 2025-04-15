@@ -5,7 +5,7 @@ part 'weather_hourly.g.dart';
 
 /// [WeatherHourly] model containing a 24-hour weather forecast information
 class WeatherHourly {
-  final List<DateTime> time;
+  final List<String> time;
   final List<double> temperature;
 
   @JsonKey(name: "is_day")
