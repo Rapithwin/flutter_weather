@@ -14,12 +14,24 @@ WeatherHourly _$WeatherHourlyFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = WeatherHourly(
-          time: $checkedConvert('time', (v) => DateTime.parse(v as String)),
-          temperature:
-              $checkedConvert('temperature', (v) => (v as num).toDouble()),
-          isDay: $checkedConvert('is_day', (v) => (v as num).toInt()),
-          weatherCode:
-              $checkedConvert('weathercode', (v) => (v as num).toInt()),
+          time: $checkedConvert(
+              'time',
+              (v) => (v as List<dynamic>)
+                  .map((e) => DateTime.parse(e as String))
+                  .toList()),
+          temperature: $checkedConvert(
+              'temperature',
+              (v) => (v as List<dynamic>)
+                  .map((e) => (e as num).toDouble())
+                  .toList()),
+          isDay: $checkedConvert(
+              'is_day',
+              (v) =>
+                  (v as List<dynamic>).map((e) => (e as num).toInt()).toList()),
+          weatherCode: $checkedConvert(
+              'weathercode',
+              (v) =>
+                  (v as List<dynamic>).map((e) => (e as num).toInt()).toList()),
         );
         return val;
       },
