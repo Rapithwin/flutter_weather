@@ -1,2 +1,2 @@
-export 'weather.dart';
+export 'weather_current.dart';
 export 'location.dart';
