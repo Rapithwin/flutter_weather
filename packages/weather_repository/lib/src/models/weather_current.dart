@@ -1,19 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:weather_repository/src/enums/enums.dart';
 
 part 'weather_current.g.dart';
-
-enum WeatherCondition {
-  clear,
-  mainlyClear,
-  rainy,
-  cloudy,
-  snowy,
-  unknown,
-  partlyCloudy,
-  foggy,
-  thunderstorm,
-}
 
 /// expose a domain-specific weather model.
 /// This model will contain only data relevant to our business cases
