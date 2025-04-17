@@ -156,6 +156,17 @@ void main() {
                     .having(
                         (w) => w.windSpeed, "windSpeed (metric)", windSpeed),
               )
+              .having(
+                (w) => w.hourly,
+                "hourly",
+                isA<WeatherHourly>().having(
+                    (w) => w.condition, "weather conditions", [
+                  weatherCondition
+                ]).having((w) => w.temperature, "temperatures", [
+                  weatherTemperature
+                ]).having((w) => w.time, "times", ["10:00"]).having(
+                    (w) => w.isDay, "isDay", [false]),
+              )
         ],
       );
       blocTest(
