@@ -26,18 +26,24 @@ class MockWeatherRepository extends Mock
 
 class MockWeather extends Mock implements weather_repository.Weather {}
 
+class MockWeahterHourly extends Mock
+    implements weather_repository.WeatherHourly {}
+
 void main() {
   initHydratedStorage();
 
   group("weatherCubit", () {
     late weather_repository.Weather weather;
+    late weather_repository.WeatherHourly weatherhourly;
     late weather_repository.WeatherRepository weatherRepository;
     late WeatherCubit weatherCubit;
 
     setUp(() async {
       weather = MockWeather();
+      weatherhourly = MockWeahterHourly();
       weatherRepository = MockWeatherRepository();
       weatherCubit = WeatherCubit(weatherRepository);
+
       when(() => weather.condition).thenReturn(weatherCondition);
       when(() => weather.location).thenReturn(weatherLocation);
       when(() => weather.temperature).thenReturn(weatherTemperature);
@@ -47,9 +53,18 @@ void main() {
       when(() => weather.humidity).thenReturn(humidity);
       when(() => weather.windDirection).thenReturn(windDirection);
       when(() => weather.visibility).thenReturn(visibility);
+
+      when(() => weatherhourly.condition).thenReturn([weatherCondition]);
+      when(() => weatherhourly.temperature).thenReturn([weatherTemperature]);
+      when(() => weatherhourly.time).thenReturn(["10:00"]);
+      when(() => weatherhourly.isDay).thenReturn([false]);
+
       when(
         () => weatherRepository.getWeather(any(), any(), any()),
       ).thenAnswer((_) async => weather);
+      when(
+        () => weatherRepository.getForecastHourly(any(), any()),
+      ).thenAnswer((_) async => weatherhourly);
     });
 
     test("Initial state is correct", () {
