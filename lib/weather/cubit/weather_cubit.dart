@@ -28,17 +28,17 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
     try {
       final units = state.units;
 
-      final weather = Weather.fromRepository(
-        await _weatherRepository.getWeather(city, latitude, longitude),
-      );
+      // For hourly forecast
       final weatherHourly = WeatherHourly.fromRepository(
         await _weatherRepository.getForecastHourly(latitude, longitude),
       );
-      // For hourly forecast
       final temperatureHourly = units.isImperial
           ? weatherHourly.temperature.map((e) => e.toFahrenheit()).toList()
           : weatherHourly.temperature;
 
+      final weather = Weather.fromRepository(
+        await _weatherRepository.getWeather(city, latitude, longitude),
+      );
       final temperatureValue = units.isImperial
           ? weather.temperature.value.toFahrenheit()
           : weather.temperature.value;
@@ -98,6 +98,15 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
         ),
       );
       final units = state.units;
+
+      // For hourly forecast
+      final weatherHourly = WeatherHourly.fromRepository(
+        await _weatherRepository.getForecastHourly(latitude, longitude),
+      );
+      final temperatureHourly = units.isImperial
+          ? weatherHourly.temperature.map((e) => e.toFahrenheit()).toList()
+          : weatherHourly.temperature;
+
       final temperatureValue = units.isImperial
           ? weather.temperature.value.toFahrenheit()
           : weather.temperature.value;
@@ -123,6 +132,12 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
             humidity: weather.humidity,
             windDirection: weather.windDirection,
             condition: weather.condition,
+          ),
+          hourly: weatherHourly.copyWith(
+            temperature: temperatureHourly,
+            isDay: weatherHourly.isDay,
+            time: weatherHourly.time,
+            condition: weatherHourly.condition,
           ),
         ),
       );
