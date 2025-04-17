@@ -24,6 +24,11 @@ WeatherState _$WeatherStateFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : Weather.fromJson(v as Map<String, dynamic>)),
+          hourly: $checkedConvert(
+              'hourly',
+              (v) => v == null
+                  ? null
+                  : WeatherHourly.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -33,6 +38,7 @@ Map<String, dynamic> _$WeatherStateToJson(WeatherState instance) =>
     <String, dynamic>{
       'status': _$WeatherStatusEnumMap[instance.status]!,
       'weather': instance.weather.toJson(),
+      'hourly': instance.hourly.toJson(),
       'units': _$UnitsEnumMap[instance.units]!,
     };
 

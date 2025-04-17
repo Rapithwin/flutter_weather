@@ -15,10 +15,13 @@ final class WeatherState extends Equatable {
     this.status = WeatherStatus.initial,
     this.units = Units.metric,
     Weather? weather,
-  }) : weather = weather ?? Weather.empty;
+    WeatherHourly? hourly,
+  })  : weather = weather ?? Weather.empty,
+        hourly = hourly ?? WeatherHourly.empty;
 
   final WeatherStatus status;
   final Weather weather;
+  final WeatherHourly hourly;
   final Units units;
 
   factory WeatherState.fromJson(Map<String, dynamic> json) =>
@@ -30,14 +33,16 @@ final class WeatherState extends Equatable {
     WeatherStatus? status,
     Weather? weather,
     Units? units,
+    WeatherHourly? hourly,
   }) {
     return WeatherState(
       status: status ?? this.status,
       weather: weather ?? this.weather,
       units: units ?? this.units,
+      hourly: hourly ?? this.hourly,
     );
   }
 
   @override
-  List<Object> get props => [status, weather, units];
+  List<Object> get props => [status, weather, units, hourly];
 }
