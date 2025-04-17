@@ -11,6 +11,8 @@ class MockLocation extends Mock implements open_meteo_api.Location {}
 
 class MockWeather extends Mock implements open_meteo_api.WeatherCurrent {}
 
+class MockWeatherHourly extends Mock implements open_meteo_api.WeatherHourly {}
+
 void main() {
   group("WeatherRepository", () {
     late open_meteo_api.OpenMeteoApiClient weatherApiClient;
@@ -289,6 +291,60 @@ void main() {
               humidity: 50,
               visibility: 13000,
               windDirection: "SW",
+            ));
+      });
+    });
+
+    group("getForecastHourly", () {
+      const latitude = 41.85003;
+      const longitude = -87.65005;
+
+      test("calls getForecastHourly with correct latitude/longitude", () async {
+        try {
+          await weatherRepository.getForecastHourly(latitude, longitude);
+        } catch (_) {}
+        verify(() => weatherApiClient.getForecastHourly(
+              latitude: latitude,
+              longitude: longitude,
+            )).called(1);
+      });
+      test("throws when getForecastHourly fails", () async {
+        final location = MockLocation();
+        final exception = Exception("oops");
+        when(() => location.latitude).thenReturn(latitude);
+        when(() => location.longitude).thenReturn(longitude);
+        when(() => weatherApiClient.getForecastHourly(
+              latitude: any(named: "latitude"),
+              longitude: any(named: "longitude"),
+            )).thenThrow(exception);
+        expect(
+          weatherRepository.getForecastHourly(latitude, longitude),
+          throwsA(exception),
+        );
+      });
+
+      test("Returns correct response on success", () async {
+        final weather = MockWeatherHourly();
+
+        when(() => weather.temperature).thenReturn([42.42, 40.0]);
+        when(() => weather.weatherCode).thenReturn([0, 1]);
+        when(() => weather.isDay).thenReturn([1, 0]);
+        when(() => weather.time)
+            .thenReturn(["2025-04-17T09:00", "2025-04-17T10:00"]);
+
+        when(() => weatherApiClient.getForecastHourly(
+              latitude: any(named: "latitude"),
+              longitude: any(named: "longitude"),
+            )).thenAnswer((_) async => weather);
+        final actual =
+            await weatherRepository.getForecastHourly(latitude, longitude);
+        expect(
+            actual,
+            WeatherHourly(
+              temperature: [42.42, 40.0],
+              condition: [WeatherCondition.clear, WeatherCondition.mainlyClear],
+              isDay: [true, false],
+              time: ["09:00", "10:00"],
             ));
       });
     });
