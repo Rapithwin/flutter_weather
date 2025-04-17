@@ -42,6 +42,29 @@ class WeatherRepository {
       visibility: weather.visibility,
     );
   }
+
+  Future<WeatherHourly> getForecastHourly(
+    double latitude,
+    double longitude,
+  ) async {
+    final hourly = await _weatherApiClient.getForecastHourly(
+      latitude: latitude,
+      longitude: longitude,
+    );
+    final List<String> timeSplit =
+        hourly.time.map((element) => element.split("T")[1]).toList();
+    final List<bool> dayBool =
+        hourly.isDay.map((element) => element.toBool).toList();
+    final List<WeatherCondition> weatherCondition =
+        hourly.weatherCode.map((element) => element.toCondition).toList();
+
+    return WeatherHourly(
+      time: timeSplit,
+      temperature: hourly.temperature,
+      isDay: dayBool,
+      condition: weatherCondition,
+    );
+  }
 }
 
 extension on int {
