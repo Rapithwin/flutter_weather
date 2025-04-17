@@ -9,7 +9,7 @@ part 'weather_hourly.g.dart';
 /// in other words it should be completely decoupled from the API client and raw data format.
 @JsonSerializable()
 class WeatherHourly extends Equatable {
-  final List<DateTime> time;
+  final List<String> time;
   final List<double> temperature;
   final List<bool> isDay;
   final List<WeatherCondition> condition;
