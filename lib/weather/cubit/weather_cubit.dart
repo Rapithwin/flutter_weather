@@ -158,7 +158,14 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
     }
 
     final weather = state.weather;
-    if (weather != Weather.empty) {
+    final weatherHourly = state.hourly;
+
+    if (weather != Weather.empty && weather != WeatherHourly.empty) {
+      // For hourly forecast
+      final temperatureHourly = units.isImperial
+          ? weatherHourly.temperature.map((e) => e.toFahrenheit()).toList()
+          : weatherHourly.temperature.map((e) => e.toCelsius()).toList();
+
       final temperature = weather.temperature;
       final temperatureValue = units.isMetric
           ? temperature.value.toCelsius()
@@ -177,14 +184,16 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
           : weather.feelsLike.toFahrenheit();
       emit(
         state.copyWith(
-          units: units,
-          weather: weather.copyWith(
-            temperature: Temperature(value: temperatureValue),
-            windSpeed: windSpeed,
-            visibility: visibility,
-            feelsLike: feelsLike,
-          ),
-        ),
+            units: units,
+            weather: weather.copyWith(
+              temperature: Temperature(value: temperatureValue),
+              windSpeed: windSpeed,
+              visibility: visibility,
+              feelsLike: feelsLike,
+            ),
+            hourly: weatherHourly.copyWith(
+              temperature: temperatureHourly,
+            )),
       );
     }
   }
