@@ -1,4 +1,5 @@
-import 'package:weather_repository/weather_repository.dart' hide Weather;
+import 'package:weather_repository/weather_repository.dart'
+    hide Weather, WeatherHourly;
 import 'package:bloc_weather/weather/weather.dart';
 
 extension WeatherConditionToEmoji on WeatherCondition {
@@ -29,31 +30,11 @@ extension WeatherConditionToEmoji on WeatherCondition {
   }
 }
 
-extension WeatherFormatting on Weather {
-  /// This method added to [Weather] allows you to
-  /// format the temperature.
-  String formattedTemperature(Units units) {
-    return '''${temperature.value.toStringAsPrecision(2)}°${units.isMetric ? 'C' : 'F'}''';
-  }
-
-  String formattedFeelsLike(Units units) {
-    return '''${feelsLike.toStringAsPrecision(2)}°${units.isMetric ? 'C' : 'F'}''';
-  }
-
-  String formattedSpeed(Units units) {
-    return '''${windSpeed.toStringAsPrecision(3)}
-${units.isMetric ? 'kmph' : 'mph'}''';
-  }
-
-  String formattedVisibility(Units units) {
-    return '''${(visibility / 1000).toStringAsFixed(1)}
-${units.isMetric ? 'km' : 'miles'}''';
-  }
-
-  /// This method added to [Weather] allows you to
+extension WindDirectionToIcon on String {
+  /// This method added to [String] allows you to
   /// show an icon for each wind direction.
   int windDirectionToIcon() {
-    switch (windDirection) {
+    switch (this) {
       case "N":
         return 0xf058;
       case "NE":
@@ -73,5 +54,23 @@ ${units.isMetric ? 'km' : 'miles'}''';
       default:
         return 0xf07b;
     }
+  }
+}
+
+extension WeatherFormatting on double {
+  /// This method added to [double] allows you to
+  /// format the temperature.
+  String formattedTemperature(Units units) {
+    return '''${toStringAsPrecision(2)}°${units.isMetric ? 'C' : 'F'}''';
+  }
+
+  String formattedSpeed(Units units) {
+    return '''${toStringAsPrecision(3)}
+${units.isMetric ? 'kmph' : 'mph'}''';
+  }
+
+  String formattedVisibility(Units units) {
+    return '''${(this / 1000).toStringAsFixed(1)}
+${units.isMetric ? 'km' : 'miles'}''';
   }
 }
