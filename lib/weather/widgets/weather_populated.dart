@@ -2,7 +2,8 @@ import 'package:bloc_weather/settings/settings.dart';
 import 'package:bloc_weather/weather/weather.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_repository/weather_repository.dart' hide Weather;
+import 'package:weather_repository/weather_repository.dart'
+    hide Weather, WeatherHourly;
 import 'package:bloc_weather/weather/extensions/extensions.dart';
 
 /// This screen will display after the user has selected a city
@@ -13,9 +14,11 @@ class WeatherPopulated extends StatefulWidget {
     required this.weather,
     required this.units,
     required this.onRefresh,
+    required this.hourly,
   });
 
   final Weather weather;
+  final WeatherHourly hourly;
   final Units units;
   final AsyncValueGetter<void> onRefresh;
 
@@ -109,7 +112,7 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                                 height: size.height / 30,
                               ),
                               Text(
-                                widget.weather
+                                widget.weather.temperature.value
                                     .formattedTemperature(widget.units),
                                 style: theme.textTheme.displayMedium?.copyWith(
                                   fontWeight: FontWeight.bold,
@@ -136,14 +139,16 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            widget.weather.formattedSpeed(widget.units),
+                            widget.weather.windSpeed
+                                .formattedSpeed(widget.units),
                             style: theme.textTheme.displayMedium,
                             maxLines: 2,
                             textAlign: TextAlign.center,
                           ),
                           Icon(
                             IconData(
-                              widget.weather.windDirectionToIcon(),
+                              widget.weather.windDirection
+                                  .windDirectionToIcon(),
                               fontFamily: "CustomIcons",
                             ),
                             size: 60,
@@ -156,7 +161,8 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                       theme: theme,
                       title: "Feels like",
                       value: Text(
-                        widget.weather.formattedFeelsLike(widget.units),
+                        widget.weather.feelsLike
+                            .formattedTemperature(widget.units),
                         style: theme.textTheme.displayMedium,
                         maxLines: 2,
                         textAlign: TextAlign.center,
@@ -176,7 +182,8 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                       theme: theme,
                       title: "Visibility",
                       value: Text(
-                        widget.weather.formattedVisibility(widget.units),
+                        widget.weather.visibility
+                            .formattedVisibility(widget.units),
                         style: theme.textTheme.displayMedium,
                         maxLines: 2,
                         textAlign: TextAlign.center,
@@ -190,7 +197,13 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                   ),
                   GridContainer(
                     theme: theme,
+                    title: "24-hour forecast",
                     height: 230,
+                    value: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: widget.hourly.time.length,
+                      itemBuilder: hourlyBuilder,
+                    ),
                   ),
                   SizedBox(
                     height: 130,
@@ -200,6 +213,18 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget? hourlyBuilder(BuildContext context, int index) {
+    return Container(
+      child: Column(
+        children: [
+          Text(widget.hourly.temperature[index]
+              .formattedTemperature(widget.units)),
+          Text(widget.hourly.time[index]),
+        ],
       ),
     );
   }
