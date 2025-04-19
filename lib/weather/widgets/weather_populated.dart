@@ -107,6 +107,7 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                               _WeatherIcon(
                                 condition: widget.weather.condition,
                                 isDay: widget.weather.isDay,
+                                iconSize: 105.0,
                               ),
                               SizedBox(
                                 height: size.height / 30,
@@ -198,7 +199,7 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                   GridContainer(
                     theme: theme,
                     title: "24-hour forecast",
-                    height: 230,
+                    height: size.height / 4.7,
                     value: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: widget.hourly.time.length,
@@ -206,7 +207,7 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                     ),
                   ),
                   SizedBox(
-                    height: 130,
+                    height: size.height / 9,
                   )
                 ])
               ],
@@ -218,11 +219,29 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
   }
 
   Widget? hourlyBuilder(BuildContext context, int index) {
-    return Container(
+    final size = MediaQuery.sizeOf(context);
+    final theme = Theme.of(context);
+    return SizedBox(
+      width: size.width / 7,
       child: Column(
         children: [
-          Text(widget.hourly.temperature[index]
-              .formattedTemperature(widget.units)),
+          Text(
+            widget.hourly.temperature[index].formattedTemperature(widget.units),
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontSize: 20,
+            ),
+          ),
+          SizedBox(
+            height: size.height / 15,
+          ),
+          _WeatherIcon(
+            condition: widget.hourly.condition[index],
+            isDay: widget.hourly.isDay[index],
+            iconSize: 30.0,
+          ),
+          SizedBox(
+            height: size.height / 60,
+          ),
           Text(widget.hourly.time[index]),
         ],
       ),
@@ -274,12 +293,15 @@ class GridContainer extends StatelessWidget {
 }
 
 class _WeatherIcon extends StatelessWidget {
-  const _WeatherIcon({required this.condition, required this.isDay});
+  const _WeatherIcon({
+    required this.condition,
+    required this.isDay,
+    required this.iconSize,
+  });
 
   final WeatherCondition condition;
   final bool isDay;
-
-  static const _iconSize = 105.0;
+  final double iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -288,7 +310,7 @@ class _WeatherIcon extends StatelessWidget {
         condition.toEmoji(isDay),
         fontFamily: "CustomIcons",
       ),
-      size: _iconSize,
+      size: iconSize,
       color: Theme.of(context).colorScheme.onPrimary,
     );
   }
