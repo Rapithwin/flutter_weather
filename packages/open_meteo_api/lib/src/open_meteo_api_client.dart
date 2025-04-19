@@ -113,6 +113,7 @@ class OpenMeteoApiClient {
       {
         "latitude": "$latitude",
         "longitude": "$longitude",
+        "forecast_hours": "24",
         "hourly": hourlyQuery,
       },
     );
