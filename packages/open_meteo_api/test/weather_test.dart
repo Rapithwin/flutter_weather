@@ -68,4 +68,58 @@ void main() {
       });
     });
   });
+
+  group("WeatherDaily", () {
+    group("fromJson", () {
+      test("returns the correct WeatherDaily object", () {
+        expect(
+          WeatherDaily.fromJson(<String, dynamic>{
+            "weathercode": [63],
+            "time": ["2025-04-15T15:00"],
+            "temperature_2m_max": [15.3],
+            "temperature_2m_min": [14.3],
+            "wind_speed_10m_max": [30.3],
+            "wind_direction_10m_dominant": [273],
+          }),
+          isA<WeatherDaily>()
+              .having(
+                (w) => w.weatherCode,
+                "weatherCode",
+                isA<List<int>>()
+                    .having((w) => w.first, "weatherCode index", 63),
+              )
+              .having(
+                (w) => w.time,
+                "isDay",
+                isA<List<String>>()
+                    .having((w) => w.first, "time index", "2025-04-15T15:00"),
+              )
+              .having(
+                (w) => w.maxTemperature,
+                "max temperature",
+                isA<List<double>>()
+                    .having((w) => w.first, "max temperature index", 15.3),
+              )
+              .having(
+                (w) => w.minTemperature,
+                "min temperature",
+                isA<List<double>>()
+                    .having((w) => w.first, "min temperature index", 14.3),
+              )
+              .having(
+                (w) => w.windSpeed,
+                "wind speed",
+                isA<List<double>>()
+                    .having((w) => w.first, "wind speed index", 30.3),
+              )
+              .having(
+                (w) => w.windDirection,
+                "wind direction",
+                isA<List<double>>()
+                    .having((w) => w.first, "wind direction index", 273),
+              ),
+        );
+      });
+    });
+  });
 }
