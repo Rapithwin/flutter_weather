@@ -354,5 +354,130 @@ void main() {
         );
       });
     });
+    group("getForecastDaily", () {
+      const latitude = 41.85003;
+      const longitude = -87.6500;
+      test("makes correct http request", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        try {
+          await apiClient.getForecastDaily(
+            latitude: latitude,
+            longitude: longitude,
+          );
+        } catch (_) {}
+        verify(
+          () => httpClient.get(
+            Uri.https(
+              "api.open-meteo.com",
+              "/v1/forecast",
+              {
+                "latitude": "$latitude",
+                "longitude": "$longitude",
+                "daily":
+                    "temperature_2m_max,temperature_2m_min,weather_code,wind_speed_10m_max,wind_direction_10m_dominant",
+              },
+            ),
+          ),
+        ).called(1);
+      });
+      test("throws WeatherRequestFailure on non-200 response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(400);
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getForecastDaily(
+            latitude: latitude,
+            longitude: longitude,
+          ),
+          throwsA(isA<WeatherRequestFailure>()),
+        );
+      });
+      test("throws WeatherNotFoundFailure on error response", () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn("{}");
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        await expectLater(
+          apiClient.getForecastDaily(
+            latitude: latitude,
+            longitude: longitude,
+          ),
+          throwsA(isA<WeatherNotFoundFailure>()),
+        );
+      });
+      test('returns WeatherDaily on valid response', () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn(
+          '''
+{
+"latitude": 43,
+"longitude": -87.875,
+"generationtime_ms": 0.2510547637939453,
+"utc_offset_seconds": 0,
+"timezone": "GMT",
+"timezone_abbreviation": "GMT",
+"elevation": 189,
+"daily": {
+    "weathercode": [63],
+    "time": ["2025-04-15T15:00"],
+    "temperature_2m_max": [15.3],
+    "temperature_2m_min": [14.3],
+    "wind_speed_10m_max": [30.3],
+    "wind_direction_10m_dominant": [273]
+}
+}
+        ''',
+        );
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        final actual = await apiClient.getForecastDaily(
+          latitude: latitude,
+          longitude: longitude,
+        );
+        expect(
+          actual,
+          isA<WeatherDaily>()
+              .having(
+                (w) => w.weatherCode,
+                "weatherCode",
+                isA<List<int>>()
+                    .having((w) => w.first, "weatherCode index", 63),
+              )
+              .having(
+                (w) => w.time,
+                "isDay",
+                isA<List<String>>()
+                    .having((w) => w.first, "time index", "2025-04-15T15:00"),
+              )
+              .having(
+                (w) => w.maxTemperature,
+                "max temperature",
+                isA<List<double>>()
+                    .having((w) => w.first, "max temperature index", 15.3),
+              )
+              .having(
+                (w) => w.minTemperature,
+                "min temperature",
+                isA<List<double>>()
+                    .having((w) => w.first, "min temperature index", 14.3),
+              )
+              .having(
+                (w) => w.windSpeed,
+                "wind speed",
+                isA<List<double>>()
+                    .having((w) => w.first, "wind speed index", 30.3),
+              )
+              .having(
+                (w) => w.windDirection,
+                "wind direction",
+                isA<List<double>>()
+                    .having((w) => w.first, "wind direction index", 273),
+              ),
+        );
+      });
+    });
   });
 }
