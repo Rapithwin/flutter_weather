@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.3.0
+  intl: ^0.20.2
   json_annotation: ^4.9.0
   open_meteo_api:
     path: ../open_meteo_api
