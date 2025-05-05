@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:open_meteo_api/open_meteo_api.dart' show OpenMeteoApiClient;
 import 'package:weather_repository/weather_repository.dart';
 
@@ -62,6 +63,36 @@ class WeatherRepository {
       time: timeSplit,
       temperature: hourly.temperature,
       isDay: dayBool,
+      condition: weatherCondition,
+    );
+  }
+
+  Future<WeatherDaily> getForecastDaily(
+    double latitude,
+    double longitude,
+  ) async {
+    final daily = await _weatherApiClient.getForecastDaily(
+      latitude: latitude,
+      longitude: longitude,
+    );
+
+    final formattedWeekday = daily.time.map((element) {
+      final DateTime toDateTime = DateTime.parse(element);
+      return DateFormat("E").format(toDateTime);
+    }).toList();
+
+    final List<String> windDirectionStr =
+        daily.windDirection.map((element) => element.toDirectionStr).toList();
+
+    final List<WeatherCondition> weatherCondition =
+        daily.weatherCode.map((element) => element.toCondition).toList();
+
+    return WeatherDaily(
+      time: formattedWeekday,
+      temperatureMin: daily.minTemperature,
+      temperatureMax: daily.maxTemperature,
+      windSpeed: daily.windSpeed,
+      windDirection: windDirectionStr,
       condition: weatherCondition,
     );
   }
