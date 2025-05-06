@@ -13,6 +13,8 @@ class MockWeather extends Mock implements open_meteo_api.WeatherCurrent {}
 
 class MockWeatherHourly extends Mock implements open_meteo_api.WeatherHourly {}
 
+class MockWeatherDaily extends Mock implements open_meteo_api.WeatherDaily {}
+
 void main() {
   group("WeatherRepository", () {
     late open_meteo_api.OpenMeteoApiClient weatherApiClient;
@@ -345,6 +347,62 @@ void main() {
               condition: [WeatherCondition.clear, WeatherCondition.mainlyClear],
               isDay: [true, false],
               time: ["09:00", "10:00"],
+            ));
+      });
+    });
+    group("getForecastDaily", () {
+      const latitude = 41.85003;
+      const longitude = -87.65005;
+
+      test("calls getForecastDaily with correct latitude/longitude", () async {
+        try {
+          await weatherRepository.getForecastDaily(latitude, longitude);
+        } catch (_) {}
+        verify(() => weatherApiClient.getForecastDaily(
+              latitude: latitude,
+              longitude: longitude,
+            )).called(1);
+      });
+      test("throws when getForecastDaily fails", () async {
+        final location = MockLocation();
+        final exception = Exception("oops");
+        when(() => location.latitude).thenReturn(latitude);
+        when(() => location.longitude).thenReturn(longitude);
+        when(() => weatherApiClient.getForecastDaily(
+              latitude: any(named: "latitude"),
+              longitude: any(named: "longitude"),
+            )).thenThrow(exception);
+        expect(
+          weatherRepository.getForecastDaily(latitude, longitude),
+          throwsA(exception),
+        );
+      });
+
+      test("Returns correct response on success", () async {
+        final weather = MockWeatherDaily();
+
+        when(() => weather.maxTemperature).thenReturn([42.42, 40.0]);
+        when(() => weather.minTemperature).thenReturn([42.42, 40.0]);
+        when(() => weather.windDirection).thenReturn([283, 284]);
+        when(() => weather.windSpeed).thenReturn([41.1, 47.1]);
+        when(() => weather.weatherCode).thenReturn([0, 1]);
+        when(() => weather.time).thenReturn(["2025-04-17", "2025-04-18"]);
+
+        when(() => weatherApiClient.getForecastDaily(
+              latitude: any(named: "latitude"),
+              longitude: any(named: "longitude"),
+            )).thenAnswer((_) async => weather);
+        final actual =
+            await weatherRepository.getForecastDaily(latitude, longitude);
+        expect(
+            actual,
+            WeatherDaily(
+              temperatureMax: [42.42, 40.0],
+              temperatureMin: [42.42, 40.0],
+              condition: [WeatherCondition.clear, WeatherCondition.mainlyClear],
+              windSpeed: [41.1, 47.1],
+              windDirection: ["W", "W"],
+              time: ["Thu", "Fri"],
             ));
       });
     });
