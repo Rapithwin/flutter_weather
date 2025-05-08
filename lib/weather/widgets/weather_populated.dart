@@ -47,7 +47,6 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
         onRefresh: widget.onRefresh,
         child: Stack(
           children: [
-            _WeatherBackground(),
             CustomScrollView(
               slivers: [
                 SliverAppBar(
@@ -312,30 +311,6 @@ class _WeatherIcon extends StatelessWidget {
       ),
       size: iconSize,
       color: Theme.of(context).colorScheme.onPrimary,
-    );
-  }
-}
-
-class _WeatherBackground extends StatelessWidget {
-  @override
-  Widget build(context) {
-    final color = Theme.of(context).colorScheme.primary;
-    return SizedBox.expand(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              color.withValues(alpha: 60),
-              color.withValues(alpha: 90),
-              color.withValues(alpha: 120),
-              color.withValues(alpha: 150),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0.21, 0.40, 0.65, 1],
-          ),
-        ),
-      ),
     );
   }
 }

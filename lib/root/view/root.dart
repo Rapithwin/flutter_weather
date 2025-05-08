@@ -13,6 +13,7 @@ class RootPage extends StatelessWidget {
     final selectedTab = context.select((TabCubit cubit) => cubit.state.tab);
     final theme = Theme.of(context);
     return Scaffold(
+      backgroundColor: theme.colorScheme.primary,
       body: IndexedStack(
         index: selectedTab.index,
         children: <Widget>[
@@ -22,7 +23,7 @@ class RootPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: theme.colorScheme.primary.withAlpha(170),
+        color: theme.colorScheme.primary,
         shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
