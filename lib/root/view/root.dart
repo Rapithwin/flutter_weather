@@ -1,4 +1,4 @@
-import 'package:bloc_weather/forecast/view/forecast_page.dart';
+import 'package:bloc_weather/forecast/view/daily_forecast_page.dart';
 import 'package:bloc_weather/root/cubit/tab_cubit.dart';
 import 'package:bloc_weather/saved/view/saved_page.dart';
 import 'package:bloc_weather/weather/view/weather_page.dart';
