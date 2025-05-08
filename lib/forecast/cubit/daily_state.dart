@@ -9,7 +9,7 @@ extension ForecastStatusX on ForecastStatus {
   bool get isFailure => this == ForecastStatus.failure;
 }
 
-sealed class DailyState extends Equatable {
+class DailyState extends Equatable {
   DailyState({
     this.status = ForecastStatus.initial,
     WeatherDaily? daily,
@@ -20,6 +20,22 @@ sealed class DailyState extends Equatable {
   final WeatherDaily daily;
   final Units units;
 
+  DailyState copyWith({
+    ForecastStatus? status,
+    WeatherDaily? daily,
+    Units? units,
+  }) {
+    return DailyState(
+      status: status ?? this.status,
+      daily: daily ?? this.daily,
+      units: units ?? this.units,
+    );
+  }
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        status,
+        daily,
+        units,
+      ];
 }
