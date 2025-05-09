@@ -13,6 +13,12 @@ class ForecastSuccess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ListView.builder(
+      itemCount: daily.time.length,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return Container();
+      },
+    );
   }
 }
