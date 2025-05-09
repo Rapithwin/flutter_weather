@@ -1,3 +1,4 @@
+import 'package:bloc_weather/forecast/cubit/daily_cubit.dart';
 import 'package:bloc_weather/root/cubit/tab_cubit.dart';
 import 'package:bloc_weather/root/view/root.dart';
 import 'package:bloc_weather/search/cubit/location_cubit.dart';
@@ -26,6 +27,9 @@ class WeatherApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => TabCubit(),
+        ),
+        BlocProvider(
+          create: (_) => DailyCubit(_weatherRepository),
         )
       ],
       child: const WeatherAppView(),
