@@ -55,16 +55,16 @@ class RootPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final location = await Navigator.of(context).push(SearchPage.route());
-          if (!context.mounted) return;
+          if (!context.mounted || location == null) return;
           await context.read<WeatherCubit>().fetchWeather(
-                location?.city,
-                location?.latitude,
-                location?.longitude,
+                location.city,
+                location.latitude,
+                location.longitude,
               );
           if (!context.mounted) return;
           await context.read<DailyCubit>().fetchDaily(
-                location?.latitude,
-                location?.longitude,
+                location.latitude,
+                location.longitude,
               );
         },
         child: const Icon(
