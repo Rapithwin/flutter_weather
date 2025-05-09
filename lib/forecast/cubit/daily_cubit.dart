@@ -24,9 +24,17 @@ class DailyCubit extends Cubit<DailyState> {
         await _weatherRepository.getForecastDaily(latitude, longitude),
       );
       emit(state.copyWith(
-          status: ForecastStatus.success,
-          units: state.units,
-          daily: weatherDaily));
+        status: ForecastStatus.success,
+        units: state.units,
+        daily: weatherDaily.copyWith(
+          time: weatherDaily.time,
+          temperatureMax: weatherDaily.temperatureMax,
+          temperatureMin: weatherDaily.temperatureMin,
+          windSpeed: weatherDaily.windSpeed,
+          windDirection: weatherDaily.windDirection,
+          condition: weatherDaily.condition,
+        ),
+      ));
     } on Exception {
       emit(state.copyWith(
         status: ForecastStatus.failure,
