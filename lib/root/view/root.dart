@@ -1,6 +1,8 @@
 import 'package:bloc_weather/forecast/view/daily_forecast_page.dart';
 import 'package:bloc_weather/root/cubit/tab_cubit.dart';
 import 'package:bloc_weather/saved/view/saved_page.dart';
+import 'package:bloc_weather/search/view/search_page.dart';
+import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:bloc_weather/weather/view/weather_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,6 +49,21 @@ class RootPage extends StatelessWidget {
               selectedIcon: Icon(Icons.favorite),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final location = await Navigator.of(context).push(SearchPage.route());
+          if (!context.mounted) return;
+          await context.read<WeatherCubit>().fetchWeather(
+                location?.city,
+                location?.latitude,
+                location?.longitude,
+              );
+        },
+        child: const Icon(
+          Icons.search,
+          semanticLabel: "search",
         ),
       ),
     );
