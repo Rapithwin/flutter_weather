@@ -37,7 +37,7 @@ WeatherDaily _$WeatherDailyFromJson(Map<String, dynamic> json) =>
                   .map((e) => (e as num).toDouble())
                   .toList()),
           weatherCode: $checkedConvert(
-              'weathercode',
+              'weather_code',
               (v) =>
                   (v as List<dynamic>).map((e) => (e as num).toInt()).toList()),
         );
@@ -48,6 +48,6 @@ WeatherDaily _$WeatherDailyFromJson(Map<String, dynamic> json) =>
         'maxTemperature': 'temperature_2m_max',
         'windSpeed': 'wind_speed_10m_max',
         'windDirection': 'wind_direction_10m_dominant',
-        'weatherCode': 'weathercode'
+        'weatherCode': 'weather_code'
       },
     );

@@ -133,7 +133,6 @@ class OpenMeteoApiClient {
     }
 
     final weatherJson = bodyJson["hourly"] as Map<String, dynamic>;
-
     return WeatherHourly.fromJson(weatherJson);
   }
 

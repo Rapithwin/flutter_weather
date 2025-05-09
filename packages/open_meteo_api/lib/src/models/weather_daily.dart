@@ -19,7 +19,7 @@ class WeatherDaily {
   @JsonKey(name: "wind_direction_10m_dominant")
   final List<double> windDirection;
 
-  @JsonKey(name: "weathercode")
+  @JsonKey(name: "weather_code")
   final List<int> weatherCode;
 
   factory WeatherDaily.fromJson(Map<String, dynamic> json) =>
