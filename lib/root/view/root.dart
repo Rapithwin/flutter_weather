@@ -1,3 +1,4 @@
+import 'package:bloc_weather/forecast/cubit/daily_cubit.dart';
 import 'package:bloc_weather/forecast/view/daily_forecast_page.dart';
 import 'package:bloc_weather/root/cubit/tab_cubit.dart';
 import 'package:bloc_weather/saved/view/saved_page.dart';
@@ -57,6 +58,11 @@ class RootPage extends StatelessWidget {
           if (!context.mounted) return;
           await context.read<WeatherCubit>().fetchWeather(
                 location?.city,
+                location?.latitude,
+                location?.longitude,
+              );
+          if (!context.mounted) return;
+          await context.read<DailyCubit>().fetchDaily(
                 location?.latitude,
                 location?.longitude,
               );
