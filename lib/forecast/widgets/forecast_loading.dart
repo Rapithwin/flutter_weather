@@ -5,6 +5,11 @@ class ForecastLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final ThemeData theme = Theme.of(context);
+    return Center(
+      child: CircularProgressIndicator(
+        color: theme.colorScheme.onPrimary,
+      ),
+    );
   }
 }
