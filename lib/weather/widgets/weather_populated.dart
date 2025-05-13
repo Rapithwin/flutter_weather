@@ -103,7 +103,7 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               SizedBox(height: 100),
-                              _WeatherIcon(
+                              WeatherIcon(
                                 condition: widget.weather.condition,
                                 isDay: widget.weather.isDay,
                                 iconSize: 105.0,
@@ -233,7 +233,7 @@ class _WeatherPopulatedState extends State<WeatherPopulated> {
           SizedBox(
             height: size.height / 15,
           ),
-          _WeatherIcon(
+          WeatherIcon(
             condition: widget.hourly.condition[index],
             isDay: widget.hourly.isDay[index],
             iconSize: 30.0,
@@ -291,8 +291,9 @@ class GridContainer extends StatelessWidget {
   }
 }
 
-class _WeatherIcon extends StatelessWidget {
-  const _WeatherIcon({
+class WeatherIcon extends StatelessWidget {
+  const WeatherIcon({
+    super.key,
     required this.condition,
     required this.isDay,
     required this.iconSize,
