@@ -39,7 +39,6 @@ class _ForecastPageState extends State<ForecastPage> {
         ),
         body: Center(
           child: BlocBuilder<DailyCubit, DailyState>(
-            buildWhen: (previous, current) => previous.status != current.status,
             builder: (context, state) {
               return switch (state.status) {
                 ForecastStatus.initial => const ForecastEmpty(),
