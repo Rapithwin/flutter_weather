@@ -16,12 +16,14 @@ class WeatherLoading extends StatelessWidget {
         Text(
           "Loading...",
           style: theme.textTheme.headlineSmall?.copyWith(
-            color: Colors.black,
+            color: theme.colorScheme.onInverseSurface,
           ),
         ),
-        const Padding(
+        Padding(
           padding: EdgeInsets.all(16),
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            color: theme.colorScheme.onPrimary,
+          ),
         )
       ],
     );

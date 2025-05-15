@@ -14,6 +14,7 @@ class WeatherPage extends StatelessWidget {
     final theme = Theme.of(context);
     final status = context.read<WeatherCubit>().state.status;
     return Scaffold(
+      backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: true,
       appBar: status != WeatherStatus.success
           ? AppBar(
