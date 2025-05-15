@@ -1,3 +1,4 @@
+import 'package:bloc_weather/forecast/cubit/daily_cubit.dart';
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:bloc_weather/weather/models/weather.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,10 @@ class SettingsPage extends StatelessWidget {
                   activeTrackColor:
                       Theme.of(context).colorScheme.secondaryContainer,
                   value: state.units.isMetric,
-                  onChanged: (_) => context.read<WeatherCubit>().toggleUnits(),
+                  onChanged: (_) {
+                    context.read<WeatherCubit>().toggleUnits();
+                    context.read<DailyCubit>().toggleUnits();
+                  },
                 ),
               );
             },
