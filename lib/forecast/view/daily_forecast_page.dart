@@ -1,6 +1,5 @@
 import 'package:bloc_weather/forecast/cubit/daily_cubit.dart';
 import 'package:bloc_weather/forecast/widgets/widgets.dart';
-import 'package:bloc_weather/search/cubit/location_cubit.dart';
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
