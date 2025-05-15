@@ -5,6 +5,14 @@ class ForecastError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final ThemeData theme = Theme.of(context);
+    return Center(
+      child: Text(
+        "Something went wrong",
+        style: theme.textTheme.displayMedium?.copyWith(
+          color: theme.colorScheme.onPrimary,
+        ),
+      ),
+    );
   }
 }
