@@ -22,7 +22,7 @@ class ForecastSuccess extends StatelessWidget {
       alignment: Alignment.topCenter,
       child: Container(
         margin: EdgeInsets.only(top: 20),
-        height: size.height / 2,
+        height: size.height / 2.5,
         child: ListView.builder(
           itemCount: daily.time.length,
           scrollDirection: Axis.horizontal,
