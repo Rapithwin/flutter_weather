@@ -41,4 +41,31 @@ class DailyCubit extends Cubit<DailyState> {
       ));
     }
   }
+
+  Future<void> refreshDaily(double? latitude, double? longitude) async {
+    if (!state.status.isSuccess) return;
+    if (state.daily == WeatherDaily.empty) return;
+
+    try {
+      final weatherDaily = WeatherDaily.fromRepository(
+        await _weatherRepository.getForecastDaily(latitude!, longitude!),
+      );
+      emit(state.copyWith(
+        status: ForecastStatus.success,
+        units: state.units,
+        daily: weatherDaily.copyWith(
+          time: weatherDaily.time,
+          temperatureMax: weatherDaily.temperatureMax,
+          temperatureMin: weatherDaily.temperatureMin,
+          windSpeed: weatherDaily.windSpeed,
+          windDirection: weatherDaily.windDirection,
+          condition: weatherDaily.condition,
+        ),
+      ));
+    } on Exception {
+      emit(
+        state.copyWith(status: ForecastStatus.failure),
+      );
+    }
+  }
 }

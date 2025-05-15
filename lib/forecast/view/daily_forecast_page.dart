@@ -1,10 +1,29 @@
 import 'package:bloc_weather/forecast/cubit/daily_cubit.dart';
 import 'package:bloc_weather/forecast/widgets/widgets.dart';
+import 'package:bloc_weather/search/cubit/location_cubit.dart';
+import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ForecastPage extends StatelessWidget {
+class ForecastPage extends StatefulWidget {
   const ForecastPage({super.key});
+
+  @override
+  State<ForecastPage> createState() => _ForecastPageState();
+}
+
+class _ForecastPageState extends State<ForecastPage> {
+  @override
+  void initState() {
+    final dailyCubit = context.read<DailyCubit>();
+    if (dailyCubit.state.status != ForecastStatus.success) {
+      final weather = context.read<WeatherCubit>().state.weather;
+      if (weather.latitude != null && weather.longitude != null) {
+        dailyCubit.fetchDaily(weather.latitude, weather.longitude);
+      }
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +49,13 @@ class ForecastPage extends StatelessWidget {
                 ForecastStatus.success => ForecastSuccess(
                     daily: state.daily,
                     units: state.units,
+                    onRefresh: () {
+                      final weather =
+                          context.read<WeatherCubit>().state.weather;
+                      return context
+                          .read<DailyCubit>()
+                          .refreshDaily(weather.latitude, weather.longitude);
+                    },
                   ),
               };
             },
