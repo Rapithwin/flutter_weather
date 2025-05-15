@@ -1,5 +1,6 @@
 import 'package:bloc_weather/forecast/cubit/daily_cubit.dart';
 import 'package:bloc_weather/forecast/widgets/widgets.dart';
+import 'package:bloc_weather/settings/view/settings_page.dart';
 import 'package:bloc_weather/weather/cubit/weather_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,6 +37,17 @@ class _ForecastPageState extends State<ForecastPage> {
               color: theme.colorScheme.onPrimary,
             ),
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(SettingsPage.route());
+              },
+              icon: Icon(
+                Icons.settings,
+                color: theme.colorScheme.onPrimary,
+              ),
+            )
+          ],
         ),
         body: Center(
           child: BlocBuilder<DailyCubit, DailyState>(
