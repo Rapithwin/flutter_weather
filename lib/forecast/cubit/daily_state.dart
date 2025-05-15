@@ -9,6 +9,7 @@ extension ForecastStatusX on ForecastStatus {
   bool get isFailure => this == ForecastStatus.failure;
 }
 
+@JsonSerializable()
 class DailyState extends Equatable {
   DailyState({
     this.status = ForecastStatus.initial,
@@ -19,6 +20,11 @@ class DailyState extends Equatable {
   final ForecastStatus status;
   final WeatherDaily daily;
   final Units units;
+
+  factory DailyState.fromJson(Map<String, dynamic> json) =>
+      _$DailyStateFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DailyStateToJson(this);
 
   DailyState copyWith({
     ForecastStatus? status,
