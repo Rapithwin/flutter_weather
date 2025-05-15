@@ -56,7 +56,8 @@ class _ForecastSuccessState extends State<ForecastSuccess> {
                                 iconSize: 30,
                               ),
                               Text(
-                                widget.daily.temperatureMax[index].toString(),
+                                widget.daily.temperatureMax[index]
+                                    .formattedTemperature(widget.units),
                                 style: theme.textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -67,7 +68,8 @@ class _ForecastSuccessState extends State<ForecastSuccess> {
                             spacing: 15,
                             children: <Widget>[
                               Text(
-                                widget.daily.temperatureMin[index].toString(),
+                                widget.daily.temperatureMin[index]
+                                    .formattedTemperature(widget.units),
                                 style: theme.textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
